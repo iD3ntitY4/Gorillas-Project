@@ -75,6 +75,8 @@ public class Gorillas extends TWLStateBasedGame {
 		app.setTargetFrameRate(TARGET_FRAME_RATE);
 		app.start();
 	}
+	
+	//Wichtiger Kommentar
 
 	@Override
 	public void initStatesList(GameContainer gameContainer)
