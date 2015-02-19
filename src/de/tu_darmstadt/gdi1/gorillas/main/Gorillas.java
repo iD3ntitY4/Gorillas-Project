@@ -77,6 +77,8 @@ public class Gorillas extends TWLStateBasedGame {
 	}
 	
 	//Wichtiger Kommentar
+	
+	//Noch ein wichtiger Kommentar
 
 	@Override
 	public void initStatesList(GameContainer gameContainer)
