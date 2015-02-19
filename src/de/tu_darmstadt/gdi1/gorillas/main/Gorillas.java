@@ -78,6 +78,7 @@ public class Gorillas extends TWLStateBasedGame {
 	
 	//Test Kommentar
 	//bla
+	// LUSTIG LUSTIG
 	
 	
 	//klajselöfkjasöelfjaö
