@@ -76,15 +76,6 @@ public class Gorillas extends TWLStateBasedGame {
 		app.start();
 	}
 	
-	//Test Kommentar
-	//bla
-	// LUSTIG LUSTIG
-	
-	
-	//klajselöfkjasöelfjaö
-	//afasef
-	//aesf
-
 	@Override
 	public void initStatesList(GameContainer gameContainer)
 			throws SlickException {

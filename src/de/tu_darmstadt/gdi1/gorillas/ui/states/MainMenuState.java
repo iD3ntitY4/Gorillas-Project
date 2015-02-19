@@ -27,7 +27,7 @@ public class MainMenuState extends BasicTWLGameState {
 			throws SlickException {
 		// TODO Auto-generated method stub
 	}
-	//Mast have
+	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
