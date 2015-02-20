@@ -10,8 +10,11 @@ import de.matthiasmann.twl.slick.TWLStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState;
 import eea.engine.entity.StateBasedEntityManager;
 
+import de.tu_darmstadt.gdi1.gorillas.game.states.*;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
+
 /**
- * Main class of the gorilla game
+ * Main class of the gorilla game (Launch)
  * 
  * @author Peter Kloeckner, Sebastian Fach
  * @version 1.0
@@ -81,12 +84,20 @@ public class Gorillas extends TWLStateBasedGame {
 			throws SlickException {
 
 		// Add states to the StateBasedGame
-		this.addState(new MainMenuState(MAINMENUSTATE));
-		// TODO: Add the other states...
+		this.addState(new MainMenuState(MAINMENUSTATE));	
+		/*this.addState(new GameSetupState(GAMESETUPSTATE));	// TODO: Missing constructor in States with (int ID)
+		this.addState(new HighScoreState(HIGHSCORESTATE));
+		this.addState(new OptionsState(OPTIONSTATE));
+		this.addState(new InstructionsState(INSTRUCTIONSSTATE));		
+		this.addState(new GamePlayState(GAMEPLAYSTATE));*/
 
 		// Add states to the StateBasedEntityManager
 		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
-		// TODO: Add the other states...
+		StateBasedEntityManager.getInstance().addState(GAMESETUPSTATE);
+		StateBasedEntityManager.getInstance().addState(HIGHSCORESTATE);
+		StateBasedEntityManager.getInstance().addState(OPTIONSTATE);
+		StateBasedEntityManager.getInstance().addState(INSTRUCTIONSSTATE);
+		StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
 	}
 
 	@Override
