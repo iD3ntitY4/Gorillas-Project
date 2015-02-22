@@ -35,6 +35,8 @@ public class Gorillas extends TWLStateBasedGame {
 	public static final int TARGET_FRAME_RATE = 120;
 
 	public static boolean debug = false;
+	
+	static AppGameContainer app;
 
 	public Gorillas(boolean debug) {
 		super("Gorillas");
@@ -70,7 +72,7 @@ public class Gorillas extends TWLStateBasedGame {
 		// @formatter:on
 
 		// Insert this StateBasedGame into an AppContainer (a window)
-		AppGameContainer app = new AppGameContainer(new Gorillas(false));
+		app = new AppGameContainer(new Gorillas(false));
 
 		// Set window properties and start it
 		app.setShowFPS(false);
@@ -84,7 +86,7 @@ public class Gorillas extends TWLStateBasedGame {
 			throws SlickException {
 
 		// Add states to the StateBasedGame
-		this.addState(new MainMenuState(MAINMENUSTATE));	
+		this.addState(new MainMenuState(MAINMENUSTATE, app, this));	// Added new parameters which are used in the states
 		/*this.addState(new GameSetupState(GAMESETUPSTATE));	// TODO: Missing constructor in States with (int ID)
 		this.addState(new HighScoreState(HIGHSCORESTATE));
 		this.addState(new OptionsState(OPTIONSTATE));

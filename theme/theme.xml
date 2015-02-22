@@ -150,6 +150,14 @@
 			offsetY="1" />
 		<fontParam if="hover" color="#C3313131" />
 	</fontDef>
+	<fontDef name="menu_button_font" filename="pixel-font.fnt" color="#C32B2B2B">
+		<fontParam if="error" color="red" />
+		<fontParam if="warning" color="orange" />
+		<fontParam if="disabled" color="gray" />
+		<fontParam if="pressed|selected" color="#C26824" offsetX="1"
+			offsetY="1" />
+		<fontParam if="hover" color="#C3313131" />
+	</fontDef>
 
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
@@ -171,7 +179,7 @@
 			<image>none</image>
 		</param>
 		<param name="textAlignment">
-			<enum type="alignment">left</enum>
+			<enum type="alignment">center</enum>
 		</param>
 		<param name="minWidth">
 			<int>0</int>
@@ -212,6 +220,23 @@
 		</param>
 		<param name="font">
 			<font>button_font</font>
+		</param>
+	</theme>
+	<theme name="menu_button" ref="label">
+		<param name="border">
+			<border>6,0</border>
+		</param>
+		<param name="background">
+			<image>button_background</image>
+		</param>
+		<param name="minHeight">
+			<int>30</int>
+		</param>
+		<param name="minWidth">
+			<int>30</int>
+		</param>
+		<param name="font">
+			<font>menu_button_font</font>
 		</param>
 	</theme>
 	<theme name="radiobutton" ref="button">
