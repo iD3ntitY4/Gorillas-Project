@@ -5,7 +5,9 @@ import java.net.URL;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.OptionsState;
 import eea.engine.entity.StateBasedEntityManager;
 
 /**
@@ -44,12 +46,20 @@ public class TestGorillas extends TWLTestStateBasedGame {
 			throws SlickException {
 
 		// Add states to the StateBasedGame
-		this.addState(new MainMenuState(MAINMENUSTATE));
-		// TODO: Add the other states...
+		this.addState(new MainMenuState(MAINMENUSTATE, this));	// Added new parameters which are used in the states
+		this.addState(new GameSetupState(GAMESETUPSTATE, this));
+		//this.addState(new HighScoreState(HIGHSCORESTATE));
+		this.addState(new OptionsState(OPTIONSTATE, this));
+		//this.addState(new InstructionsState(INSTRUCTIONSSTATE));		
+		//this.addState(new GamePlayState(GAMEPLAYSTATE));
 
 		// Add states to the StateBasedEntityManager
 		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);
-		// TODO: Add the other states...
+		StateBasedEntityManager.getInstance().addState(GAMESETUPSTATE);
+		StateBasedEntityManager.getInstance().addState(HIGHSCORESTATE);
+		StateBasedEntityManager.getInstance().addState(OPTIONSTATE);
+		StateBasedEntityManager.getInstance().addState(INSTRUCTIONSSTATE);
+		StateBasedEntityManager.getInstance().addState(GAMEPLAYSTATE);
 	}
 
 	@Override

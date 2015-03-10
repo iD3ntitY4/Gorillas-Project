@@ -32,8 +32,8 @@ public class MainMenuState extends BasicTWLGameState {
 
 	private int stateID;
 	private StateBasedEntityManager entityManager;
-	private AppGameContainer gc;
-	private Gorillas sb;
+	//private AppGameContainer gc;
+	private StateBasedGame sb;
 	
 	private Button startGameButton;
 	private Button optionsButton;
@@ -46,10 +46,9 @@ public class MainMenuState extends BasicTWLGameState {
 	private int startGameKey = Input.KEY_N;
 	
 
-	public MainMenuState(int sid, AppGameContainer gameContainer, Gorillas gameState) {
+	public MainMenuState(int sid, StateBasedGame gameState) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
-		gc = gameContainer;
 		sb = gameState;
 	}
 

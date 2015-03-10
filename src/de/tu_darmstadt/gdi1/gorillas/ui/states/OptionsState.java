@@ -24,8 +24,8 @@ public class OptionsState extends BasicTWLGameState {
 	
 	private int stateID;
 	private StateBasedEntityManager entityManager;
-	private AppGameContainer gc;
-	private Gorillas sb;
+	//private AppGameContainer gc;
+	private StateBasedGame sb;
 	
 	
 	private Button saveButton 					= new Button("SAVE");
@@ -33,6 +33,10 @@ public class OptionsState extends BasicTWLGameState {
 	
 	private ValueAdjusterFloat gravityAdjust 	= new ValueAdjusterFloat();
 	private Button gravityStandard 				= new Button();
+	private Button gravityMoon					= new Button();
+	private Button gravityJupiter				= new Button();
+	private Button gravityMars					= new Button();
+	
 	
 	private ToggleButton windToggle 			= new ToggleButton();
 	private Button windStaticDynamic 			= new Button();
@@ -46,8 +50,13 @@ public class OptionsState extends BasicTWLGameState {
 	
 	/*============VALUES=======================*/
 	
+	/* Gravity values */
 	float gravity;
 	float standardGravity;
+	float moonGravity = 1.62f;
+	float jupiterGravity = 24.79f;
+	float marsGravity = 3.71f;
+	/*----------------*/
 	boolean wind;
 	boolean windDynamic;
 	float windStaticSpeed;
@@ -56,10 +65,9 @@ public class OptionsState extends BasicTWLGameState {
 	
 	/*=========================================*/
 	
-	public OptionsState(int sid, AppGameContainer gameContainer, Gorillas gameState) {
+	public OptionsState(int sid, StateBasedGame gameState) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
-		gc = gameContainer;
 		sb = gameState;
 		
 	}
@@ -147,12 +155,31 @@ public class OptionsState extends BasicTWLGameState {
 		
 		
 		// Reset Gravity
-		gravityStandard.setText("Set to\nStandard");
+		gravityStandard.setText("Earth");
 		gravityStandard.addCallback(new Runnable() {
 			public void run(){
 				gravityAdjust.setValue(standardGravity);
 			}
 		});
+		gravityMoon.setText("Moon");
+		gravityMoon.addCallback(new Runnable() {
+			public void run(){
+				gravityAdjust.setValue(moonGravity);
+			}
+		});
+		gravityJupiter.setText("Jupiter");
+		gravityJupiter.addCallback(new Runnable() {
+			public void run(){
+				gravityAdjust.setValue(jupiterGravity);
+			}
+		});
+		gravityMars.setText("Mars");
+		gravityMars.addCallback(new Runnable() {
+			public void run(){
+				gravityAdjust.setValue(marsGravity);
+			}
+		});
+		
 		
 		
 		// Wind or no Wind?
@@ -242,6 +269,9 @@ public class OptionsState extends BasicTWLGameState {
 		
 		rp.add(gravityAdjust);
 		rp.add(gravityStandard);
+		rp.add(gravityMoon);
+		rp.add(gravityMars);
+		rp.add(gravityJupiter);
 		rp.add(windToggle);
 		rp.add(windStaticDynamic);
 		rp.add(windSpeedAdjust);
@@ -259,18 +289,33 @@ public class OptionsState extends BasicTWLGameState {
 		int paneHeight = this.getRootPane().getHeight();
 		int paneWidth = this.getRootPane().getWidth();
 
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		gravityAdjust.setSize(paneWidth / 3, paneHeight / 12);
 		gravityAdjust.setPosition(paneWidth / 2 - gravityAdjust.getWidth() / 2,
 				paneHeight / 2 - (gravityAdjust.getHeight() / 2) - (paneHeight / 4));
 		
-		gravityStandard.setSize(paneWidth / 10, paneHeight / 12);
-		gravityStandard.setPosition(paneWidth / 2 + (gravityAdjust.getWidth() / 2) + (paneWidth / 80),
-				paneHeight / 2 - (gravityStandard.getHeight() / 2) - (paneHeight / 4));
+		gravityStandard.setSize((gravityAdjust.getWidth() / 4), paneHeight / 24);
+		gravityStandard.setPosition(gravityAdjust.getX(),
+				gravityAdjust.getY() + gravityAdjust.getHeight());
 		
-		windToggle.setSize(paneWidth / 3, paneHeight / 12);
+		gravityMoon.setSize((gravityAdjust.getWidth() / 4), paneHeight / 24);
+		gravityMoon.setPosition(gravityAdjust.getX() + (gravityAdjust.getWidth() / 4),
+				gravityAdjust.getY() + gravityAdjust.getHeight());
+		
+		gravityMars.setSize((gravityAdjust.getWidth() / 4), paneHeight / 24);
+		gravityMars.setPosition(gravityAdjust.getX() + 2 * (gravityAdjust.getWidth() / 4),
+				gravityAdjust.getY() + gravityAdjust.getHeight());
+		
+		gravityJupiter.setSize((gravityAdjust.getWidth() / 4), paneHeight / 24);
+		gravityJupiter.setPosition(gravityAdjust.getX() + 3 * (gravityAdjust.getWidth() / 4),
+				gravityAdjust.getY() + gravityAdjust.getHeight());
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		windToggle.setSize(paneWidth / 3, (paneHeight / 12));
 		windToggle.setPosition(paneWidth / 2 - windToggle.getWidth() / 2,
-				paneHeight / 2 - (windToggle.getHeight() / 2) - (paneHeight / 8));
+				paneHeight / 2 - (paneHeight / 12) - (windToggle.getHeight() / 2));
 		
 		windStaticDynamic.setSize(paneWidth / 6, paneHeight / 12);
 		windStaticDynamic.setPosition(windToggle.getX(),
@@ -280,9 +325,11 @@ public class OptionsState extends BasicTWLGameState {
 		windSpeedAdjust.setPosition(windToggle.getX() + (windToggle.getWidth() / 2),
 				windToggle.getY() + windToggle.getHeight());
 		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		volumeAdjust.setSize(paneWidth / 3, paneHeight / 12);
 		volumeAdjust.setPosition(paneWidth / 2 - volumeAdjust.getWidth() / 2,
-				paneHeight / 2 - (volumeAdjust.getHeight() / 2) + (paneHeight / 12));
+				paneHeight / 2 - (volumeAdjust.getHeight() / 2) + (paneHeight / 8));
 		
 		muteButton.setSize(paneWidth / 26, paneHeight / 20);
 		muteButton.setPosition(paneWidth / 2  + (volumeAdjust.getWidth() / 2) + (paneWidth / 80),
@@ -292,6 +339,7 @@ public class OptionsState extends BasicTWLGameState {
 		muteLabel.setPosition(paneWidth / 2 /*- muteButton.getWidth() / 2 */ + (volumeAdjust.getWidth() / 2) + (muteButton.getWidth() + (paneWidth / 160)),
 				muteButton.getY());
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		saveButton.setSize(paneWidth / 5, paneHeight / 12);
 		saveButton.setPosition((paneWidth - (paneWidth / 8)) - saveButton.getWidth() / 2,

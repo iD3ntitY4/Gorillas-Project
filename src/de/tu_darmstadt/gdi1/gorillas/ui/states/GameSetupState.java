@@ -4,6 +4,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,18 +15,21 @@ import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.dropofwater.Launch;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+import eea.engine.event.basicevents.KeyPressedEvent;
 
 public class GameSetupState extends BasicTWLGameState {
 
 	
 	private int stateID;
 	private StateBasedEntityManager entityManager;
-	private AppGameContainer gc;
-	private Gorillas sb;
+	//private AppGameContainer gc;
+	private StateBasedGame sb;
 	
 	private Button startGameButton = new Button("START");
 	private Button cancelButton = new Button("CANCEL");
@@ -42,10 +46,9 @@ public class GameSetupState extends BasicTWLGameState {
 	private Label player2Error = new Label();
 	
 
-	public GameSetupState(int sid, AppGameContainer gameContainer, Gorillas gameState) {
+	public GameSetupState(int sid, StateBasedGame gameState) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
-		gc = gameContainer;
 		sb = gameState;
 		
 	}
@@ -53,7 +56,14 @@ public class GameSetupState extends BasicTWLGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-			
+		
+		// Bei Druecken der ESC-Taste zurueck ins Hauptmenue wechseln
+		Entity escListener = new Entity("ESC_Listener");
+		KeyPressedEvent escPressed = new KeyPressedEvent(Input.KEY_ESCAPE);
+		escPressed.addAction(new ChangeStateAction(Gorillas.MAINMENUSTATE));
+		escListener.addComponent(escPressed);
+		entityManager.addEntity(stateID, escListener);
+		
 		Entity background = new Entity("menu"); // 
 		background.setPosition(new Vector2f(400, 300)); 
 																
@@ -87,12 +97,18 @@ public class GameSetupState extends BasicTWLGameState {
 		return stateID;
 	}
 	
-	private boolean validatePlayerNames()
+	public void setPlayerNames(String player1, String player2)
 	{
-		boolean p1empty = player1Edit.getTextLength() == 0;
-		boolean p2empty = player2Edit.getTextLength() == 0;
+		player1Edit.setText(player1);
+		player2Edit.setText(player2);
+	}
+	
+	private boolean validatePlayerNames(String one, String two)
+	{
+		boolean p1empty = one.isEmpty();
+		boolean p2empty = two.isEmpty();
 		boolean isEmpty = p1empty || p2empty;
-		boolean areEqual = player1Edit.getText().equals(player2Edit.getText());
+		boolean areEqual = one.equals(two);
 		
 		if(isEmpty)
 		{
@@ -153,7 +169,7 @@ public class GameSetupState extends BasicTWLGameState {
 		startGameButton.addCallback(new Runnable() {
 			public void run() {
 				
-				if(validatePlayerNames())
+				if(validatePlayerNames(player1Edit.getText(), player2Edit.getText()))
 				{
 					sb.enterState(Gorillas.GAMEPLAYSTATE);
 				}
