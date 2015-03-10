@@ -1,20 +1,30 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.awt.Component;
+
+import javax.swing.JFrame;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.matthiasmann.twl.BorderLayout;
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.PopupWindow;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
+import eea.engine.event.basicevents.KeyPressedEvent;
 
 
 public class MainMenuState extends BasicTWLGameState {
@@ -30,6 +40,11 @@ public class MainMenuState extends BasicTWLGameState {
 	private Button highscoreButton;
 	private Button exitButton;
 	
+	//private Button aboutButton;
+	//private PopupWindow aboutWindow;
+	
+	private int startGameKey = Input.KEY_N;
+	
 
 	public MainMenuState(int sid, AppGameContainer gameContainer, Gorillas gameState) {
 		stateID = sid;
@@ -42,6 +57,15 @@ public class MainMenuState extends BasicTWLGameState {
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		
+		// Start a new Game when the specific key is pressed
+		Entity newGameKeyListener = new Entity("Start_game_key_listener");
+		KeyPressedEvent newGameKeyPressed = new KeyPressedEvent(startGameKey);
+		newGameKeyPressed.addAction(new ChangeStateAction(Gorillas.GAMESETUPSTATE));
+		newGameKeyListener.addComponent(newGameKeyPressed);
+		entityManager.addEntity(stateID, newGameKeyListener);
+		
+		
+		// Add a background
 		Entity background = new Entity("menu"); // 
 		background.setPosition(new Vector2f(400, 300)); 
 																
@@ -54,7 +78,7 @@ public class MainMenuState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
+		
 		entityManager.updateEntities(container, game, delta);
 	}
 
@@ -75,6 +99,8 @@ public class MainMenuState extends BasicTWLGameState {
 
 		RootPane rp = super.createRootPane();
 
+		// Add all actions to the buttons
+		// Set the Menu button theme
 		
 		startGameButton = new Button("START");
 		startGameButton.setTheme("menu_button");
@@ -114,11 +140,22 @@ public class MainMenuState extends BasicTWLGameState {
 			}
 		});
 		
+		/*aboutButton = new Button("ABOUT");
+		aboutButton.setTheme("menu_button");
+		aboutButton.addCallback(new Runnable() {
+			public void run() {
+				aboutWindow.openPopupCentered();
+			}
+		});*/
+		
+		
 
 		rp.add(startGameButton);
 		rp.add(optionsButton);
 		rp.add(highscoreButton);
 		rp.add(exitButton);
+		//rp.add(aboutButton);
+		//rp.add(aboutWindow);
 		return rp;
 	}
 

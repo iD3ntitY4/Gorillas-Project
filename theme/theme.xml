@@ -28,6 +28,7 @@
 		<area name="hscrollbar" xywh="87,21,18,12" splitx="L5,R5" />
 		<area name="icon_arrow" xywh="20,33,11,7" center="true" />
 		<area name="icon_checkbox" xywh="0,33,16,14" />
+		<area name="icon_cross" xywh="34,33,8,8" />
 		<area name="tooltip_background" xywh="67,34,7,14" splitx="L3,R3"
 			splity="T5,B6" />
 		<area name="panel_background" xywh="0,48,34,34" splitx="L14,R14"
@@ -158,6 +159,16 @@
 			offsetY="1" />
 		<fontParam if="hover" color="#C3313131" />
 	</fontDef>
+	<fontDef name="white_font" filename="ptsans.fnt" color="#FFFFFF">
+		<fontParam if="error" color="red" />
+		<fontParam if="warning" color="orange" />
+		<fontParam if="disabled" color="gray" />
+	</fontDef>
+	<fontDef name="red_font" filename="ptsans.fnt" color="#FF0000">
+		<fontParam if="error" color="red" />
+		<fontParam if="warning" color="orange" />
+		<fontParam if="disabled" color="gray" />
+	</fontDef>
 
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
@@ -204,6 +215,34 @@
 	<theme name="*" ref="-defaults" />
 
 	<theme name="label" ref="-defaults" allowWildcard="true">
+	</theme>
+	<theme name="white_label" ref="label">
+		<param name="border">
+			<border>6,0</border>
+		</param>
+		<param name="minHeight">
+			<int>30</int>
+		</param>
+		<param name="minWidth">
+			<int>30</int>
+		</param>
+		<param name="font">
+			<font>white_font</font>
+		</param>
+	</theme>
+	<theme name="red_label" ref="label">
+		<param name="border">
+			<border>6,0</border>
+		</param>
+		<param name="minHeight">
+			<int>30</int>
+		</param>
+		<param name="minWidth">
+			<int>30</int>
+		</param>
+		<param name="font">
+			<font>red_font</font>
+		</param>
 	</theme>
 	<theme name="button" ref="label">
 		<param name="border">
@@ -495,6 +534,7 @@
 		</param>
 
 	</theme>
+	
 	<theme name="panel" ref="dialoglayout">
 		<param name="background">
 			<image>panel_background</image>
