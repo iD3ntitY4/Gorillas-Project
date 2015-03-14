@@ -1,7 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
-import java.awt.image.BufferedImage;
-
+import eea.engine.component.render.DestructionRenderComponent;
 import eea.engine.entity.DestructibleImageEntity;
 
 /**
@@ -18,8 +17,8 @@ import eea.engine.entity.DestructibleImageEntity;
  */
 public class Skyscraper extends DestructibleImageEntity{
 	
-	public Skyscraper(String id)
+	public Skyscraper(String id, DestructionRenderComponent comp)
 	{
-		//super(id);
+		super(id, comp);
 	}
 }
