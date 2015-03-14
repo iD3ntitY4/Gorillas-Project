@@ -9,6 +9,7 @@ import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestAppGameContainer;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.entity.StateBasedEntityManager;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
 
 public class GorillasTestAdapterMinimal {
 
@@ -132,7 +133,11 @@ public class GorillasTestAdapterMinimal {
 	 *            the name of player 2
 	 */
 	public void setPlayerNames(String player1Name, String player2Name) {
-		
+
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMESETUPSTATE)
+		{
+			((GameSetupState) gorillas.getCurrentState()).setPlayerNames(player1Name, player2Name);
+		}
 	}
 
 	/**
@@ -142,7 +147,11 @@ public class GorillasTestAdapterMinimal {
 	 * GamePlayState. Otherwise it should stay in the GameSetupState.
 	 */
 	public void startGameButtonPressed() {
-		// TODO: Implement
+		
+		if(((GameSetupState) gorillas.getCurrentState()).validatePlayerNames())
+		{
+			gorillas.enterState(TestGorillas.GAMEPLAYSTATE);
+		}
 	}
 
 	/**
@@ -254,8 +263,15 @@ public class GorillasTestAdapterMinimal {
 	 *         left empty and the start game button is pressed
 	 */
 	public String getEmptyError() {
-		// TODO: Implement
-		return null;
+		
+		if(gorillas.getCurrentStateID() == TestGorillas.GAMESETUPSTATE)
+		{
+			return GameSetupState.emptyMsg;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**
@@ -267,8 +283,15 @@ public class GorillasTestAdapterMinimal {
 	 * 
 	 */
 	public String getEqualError() {
-		// TODO: Implement
-		return null;
+		
+		if(gorillas.getCurrentStateID() == TestGorillas.GAMESETUPSTATE)
+		{
+			return GameSetupState.equalMsg;
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**
@@ -279,8 +302,15 @@ public class GorillasTestAdapterMinimal {
 	 *         GameSetupState
 	 */
 	public String getPlayer1Error() {
-		// TODO: Implement
-		return null;
+		
+		if(gorillas.getCurrentStateID() == TestGorillas.GAMESETUPSTATE)
+		{
+			return ((GameSetupState) gorillas.getCurrentState()).getPlayer1ErrorMsg();
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**
@@ -291,8 +321,15 @@ public class GorillasTestAdapterMinimal {
 	 *         GameSetupState
 	 */
 	public String getPlayer2Error() {
-		// TODO: Implement
-		return null;
+
+		if(gorillas.getCurrentStateID() == TestGorillas.GAMESETUPSTATE)
+		{
+			return ((GameSetupState) gorillas.getCurrentState()).getPlayer2ErrorMsg();
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/**

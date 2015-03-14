@@ -1,5 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.game.model.world_objects;
 
+import eea.engine.component.render.DestructionRenderComponent;
 import eea.engine.entity.*;
 
 /**
@@ -16,8 +17,8 @@ import eea.engine.entity.*;
  */
 public class Banana extends DestructibleImageEntity {
 
-	public Banana()
+	public Banana(String id, DestructionRenderComponent comp)
 	{
-		// TODO: Add the right constructor with id, image etc. as defined in DestructibleImageEntity
+		super(id, comp);
 	}
 }

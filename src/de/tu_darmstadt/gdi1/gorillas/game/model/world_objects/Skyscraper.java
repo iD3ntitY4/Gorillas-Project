@@ -16,8 +16,17 @@ import java.awt.image.BufferedImage;
  */
 public class Skyscraper extends BufferedImage{
 	
-	public Skyscraper()
+	private int width;
+	private int height;
+	private int imageType;
+	
+	
+	public Skyscraper(int w, int h,int iT)
 	{
-		//TODO: Add the right constructor with necessary parameters of BufferedImage
+		super(w,h,iT);
+		
+		width = w;
+		height = h;
+		imageType = iT;
 	}
 }

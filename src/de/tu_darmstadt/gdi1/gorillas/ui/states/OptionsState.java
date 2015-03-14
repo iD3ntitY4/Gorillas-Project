@@ -1,6 +1,5 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -19,6 +18,17 @@ import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 
+/**
+ * This class represents the options menu with all options that are changeable
+ * 
+ * @author Manuel Ketterer
+ * @author Nils Dycke, Felix Kaiser, Niklas Mast
+ * 
+ * @version 1.0
+ * 
+ * @see de.matthiasmann.twl.slick.BasicTWLGameState
+ */
+
 public class OptionsState extends BasicTWLGameState {
 
 	
@@ -26,6 +36,7 @@ public class OptionsState extends BasicTWLGameState {
 	private StateBasedEntityManager entityManager;
 	//private AppGameContainer gc;
 	private StateBasedGame sb;
+	private boolean debug = true;
 	
 	
 	private Button saveButton 					= new Button("SAVE");
@@ -70,23 +81,29 @@ public class OptionsState extends BasicTWLGameState {
 		entityManager = StateBasedEntityManager.getInstance();
 		sb = gameState;
 		
+		if(sb.getClass().equals(Gorillas.class))
+			debug = ((Gorillas) sb).getDebug();
 	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		
-		//Add a background
-		Entity background = new Entity("menu"); // 
-		background.setPosition(new Vector2f(400, 300)); 
-																
-		background.addComponent(new ImageRenderComponent(new Image(
-					"/assets/gorillas/background/background.png"))); 
-
-		entityManager.addEntity(stateID, background);
+		if(!debug)
+		{
+			//Add a background
+			Entity background = new Entity("menu"); // 
+			background.setPosition(new Vector2f(400, 300)); 
+																	
+			background.addComponent(new ImageRenderComponent(new Image(
+						"/assets/gorillas/background/background.png"))); 
+	
+			entityManager.addEntity(stateID, background);
+			
+			this.initUIElements();
+		}
 		
 		this.resetVariables();
-		this.initUIElements();
 	}
 	
 	// Resets all variables for the game
@@ -127,9 +144,12 @@ public class OptionsState extends BasicTWLGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		
-		// Update the variable to the Adjuster every frame
-		gravity = gravityAdjust.getValue();
-		volume = volumeAdjust.getValue();
+		if(!debug)
+		{
+			// Update the variable to the Adjuster every frame
+			gravity = gravityAdjust.getValue();
+			volume = volumeAdjust.getValue();
+		}
 		
 		entityManager.updateEntities(container, game, delta);
 	}

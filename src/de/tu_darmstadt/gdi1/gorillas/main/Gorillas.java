@@ -107,4 +107,9 @@ public class Gorillas extends TWLStateBasedGame {
 	protected URL getThemeURL() {
 		return getClass().getResource("/theme.xml");
 	}
+	
+	public boolean getDebug()
+	{
+		return debug;
+	}
 }
