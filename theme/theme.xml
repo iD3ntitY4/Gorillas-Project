@@ -213,6 +213,13 @@
 	</theme>
 
 	<theme name="*" ref="-defaults" />
+	
+	<theme name="state0" ref="-defaults"></theme>
+	<theme name="state1" ref="-defaults"></theme>
+	<theme name="state2" ref="-defaults"></theme>
+	<theme name="state3" ref="-defaults"></theme>
+	<theme name="state4" ref="-defaults"></theme>
+	<theme name="state5" ref="-defaults"></theme>
 
 	<theme name="label" ref="-defaults" allowWildcard="true">
 	</theme>
