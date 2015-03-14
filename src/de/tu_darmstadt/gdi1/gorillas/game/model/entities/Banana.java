@@ -4,8 +4,14 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BounceOffAction;
+import de.tu_darmstadt.gdi1.gorillas.game.model.actions.FlyParabolicAction;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.OutOfBoundEvent;
+import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.*;
+import eea.engine.event.NOTEvent;
+import eea.engine.event.basicevents.CollisionEvent;
 
 import org.newdawn.slick.geom.Vector2f;
 
@@ -23,15 +29,33 @@ import org.newdawn.slick.geom.Vector2f;
  */
 public class Banana extends Entity {
 	
+	private float angle;
+	private int speed;
+	
 	/**
 	 * The constructor sets the image by a default path and calls the super constructor.
 	 * 
 	 * @param id
 	 */
-	public Banana(String id)
+	public Banana(String id, float initialAngle, int initialSpeed)
 	{
 		super(id);		
-		this.setImage(".\\assets\\gorillas\\banana.png");
+		this.setImage(".\\assets\\gorillas\\banana_new.png");		
+		angle = ((initialAngle <= 359) && (initialAngle >= 0)) ? initialAngle : 0;
+		speed = ((initialSpeed <= 200) && (initialSpeed >= 0)) ? initialSpeed : 0;
+		
+		CollisionEvent colliding = new CollisionEvent();
+		colliding.addAction(new DestroyEntityAction());		// Probably causes problems with sun! Has to have no collision!
+		
+		NOTEvent nonColliding = new NOTEvent(colliding);	// While not colliding the Banana flies.	
+		nonColliding.addAction(new FlyParabolicAction(angle, speed));
+		
+		OutOfBoundEvent hitBottom = new OutOfBoundEvent(World.worldHeight); //TODO: What is about the coordinate system?
+		hitBottom.addAction(new BounceOffAction());
+		
+		this.addComponent(nonColliding);
+		this.addComponent(colliding);	
+		this.addComponent(hitBottom);
 	}
 	
 	/**
@@ -48,5 +72,25 @@ public class Banana extends Entity {
 		{
 			se.printStackTrace();
 		}
+	}
+	
+	public float getAngle()
+	{
+		return angle;
+	}
+	
+	public void setAngle(float newAngle)
+	{
+		angle = ((newAngle <= 359) && (newAngle >= 0)) ? newAngle : angle;
+	}
+	
+	public int getSpeed()
+	{
+		return speed;
+	}
+	
+	public void setSpeed(int newSpeed)
+	{
+		speed = ((newSpeed <= 200) && (newSpeed >= 0)) ? newSpeed : speed;
 	}
 }

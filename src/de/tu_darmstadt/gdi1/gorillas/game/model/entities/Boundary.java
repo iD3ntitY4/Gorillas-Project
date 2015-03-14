@@ -13,6 +13,7 @@ import eea.engine.entity.*;
  *
  * @see eea.engine.entity.Entity
  */
+@Deprecated 
 public class Boundary extends Entity {
 	
 	public Boundary(String id)

@@ -24,7 +24,7 @@ import javax.swing.JFrame;
 public class SoundAnimation { 
 	
 	/**
-	 * All necessary sounds with their datapath, to be used as a parameter for the method {@link playSound()} .
+	 * All necessary sounds with their datapath, to be used as a parameter for the method {@link #playSound()} .
 	 */
 	public static final String FART = ".\\assets\\gorillas\\noise\\soundFart.wav";
 	
