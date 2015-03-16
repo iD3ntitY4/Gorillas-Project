@@ -85,11 +85,12 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		sun = new Sun("Sun",
 				sb.getContainer().getWidth() / 2,
-				sb.getContainer().getHeight() / 2 + sb.getContainer().getHeight() / 4,
+				sb.getContainer().getHeight() / 4,
 				debug);
 		
 		entityManager.addEntity(stateID, gorillaOne);
 		entityManager.addEntity(stateID, gorillaTwo);
+		entityManager.addEntity(stateID, sun);
 	}
 
 	@Override

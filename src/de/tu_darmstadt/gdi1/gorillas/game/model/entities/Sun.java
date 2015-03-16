@@ -21,9 +21,9 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
  */
 public class Sun extends Entity {
 	
-	public final String standartDataPath = ".\\assets\\gorillas\\sun_smiling.png";
+	public final String standartDataPath = ".\\assets\\gorillas\\sun\\sun_smiling.png";
 	
-	public final String astonishedDataPath = ".\\assets\\gorillas\\sun_astonished.png";
+	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\sun_astonished.png";
 	
 	private int posX;
 	private int posY;
@@ -41,6 +41,7 @@ public class Sun extends Entity {
 		this.addComponent(bananaHit);
 		NOTEvent nonCollision = new NOTEvent(bananaHit);
 		nonCollision.addAction(new SunImageAction(standartDataPath));
+		this.addComponent(nonCollision);
 		
 		if(!debug)
 			this.setImage(standartDataPath);
