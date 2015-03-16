@@ -2,15 +2,12 @@ package de.tu_darmstadt.gdi1.gorillas.game.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
 /**
  * This class implements useful methods for simple sound animations. 

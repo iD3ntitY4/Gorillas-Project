@@ -71,7 +71,7 @@ public class Banana extends Entity {
 		endOfRoundEvent.addAction(new EndOfTurnAction());		// TODO: What is about the interaction with gameplay state?
 		
 		//Event while not colliding
-		NOTEvent nonColliding = new NOTEvent(colliding);	// While not colliding the Banana flies.	
+		NOTEvent nonColliding = new NOTEvent(colliding);
 		nonColliding.setOwnerEntity(this);
 		
 		// Actions for not colliding
