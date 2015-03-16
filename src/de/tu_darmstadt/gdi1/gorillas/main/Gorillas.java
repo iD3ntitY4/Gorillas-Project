@@ -12,6 +12,8 @@ import eea.engine.entity.StateBasedEntityManager;
 import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+
 /**
  * Main class of the gorilla game (Launch)
  * 
@@ -79,6 +81,8 @@ public class Gorillas extends TWLStateBasedGame {
 		app.setTargetFrameRate(TARGET_FRAME_RATE);
 		app.setIcon("\\assets\\other\\gorilla_new_icon.png");
 		app.start();
+		
+		initWorld();
 	}
 	
 	@Override
@@ -110,5 +114,11 @@ public class Gorillas extends TWLStateBasedGame {
 	public boolean getDebug()
 	{
 		return debug;
+	}
+	
+	public static void initWorld()
+	{
+		World.setWorldWidth(FRAME_WIDTH);
+		World.setWorldHeight(FRAME_HEIGHT);
 	}
 }

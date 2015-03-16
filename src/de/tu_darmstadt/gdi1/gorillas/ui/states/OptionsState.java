@@ -13,6 +13,7 @@ import de.matthiasmann.twl.ToggleButton;
 import de.matthiasmann.twl.ValueAdjusterFloat;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
@@ -109,12 +110,12 @@ public class OptionsState extends BasicTWLGameState {
 	// Resets all variables for the game
 	private void resetVariables()
 	{
-		gravity = 9.81f;//World.getGravity();
-		standardGravity = 9.81f; //World.getStandardWorldGravity();
-		wind = false; //World.getWindStatus();
-		windDynamic = true; //World.getWindStaticDynamic();
-		windStaticSpeed = 3; //World.getStaticWindSpeed();
-		volume = 1.0f; //World.getSoundVolume();
+		gravity 		= World.gravitation;
+		standardGravity = 9.81f;
+		wind 			= (World.WIND.x != 0);
+		windDynamic 	= (World.WIND_TYPE == 2);
+		windStaticSpeed = World.WIND.x;
+		volume 			= 1.0f; //World.getSoundVolume();
 	}
 	
 	// Init/Reset all the Elements of the GUI
@@ -126,8 +127,8 @@ public class OptionsState extends BasicTWLGameState {
 		windStaticDynamic.setText((windDynamic ? "Dynamic" : "Static"));
 		windStaticDynamic.setEnabled(wind);
 		windSpeedAdjust.setValue(windStaticSpeed);
-		windSpeedAdjust.setEnabled(!windDynamic);
-		windSpeedAdjust.setVisible(!windDynamic);
+		windSpeedAdjust.setEnabled(!windDynamic && wind);
+		windSpeedAdjust.setVisible(!windDynamic && wind);
 		volumeAdjust.setValue(volume);
 	}
 	
@@ -237,8 +238,8 @@ public class OptionsState extends BasicTWLGameState {
 		windSpeedAdjust.setMinMaxValue(0, 99);
 		windSpeedAdjust.setStepSize(0.1f);
 		windSpeedAdjust.setValue(windStaticSpeed);
-		windSpeedAdjust.setEnabled(!windDynamic);
-		windSpeedAdjust.setVisible(!windDynamic);
+		windSpeedAdjust.setEnabled(!windDynamic && wind);
+		windSpeedAdjust.setVisible(!windDynamic && wind);
 		
 		
 		
@@ -271,6 +272,15 @@ public class OptionsState extends BasicTWLGameState {
 				World.setStaticWindSpeed(windStaticSpeed);
 				World.setSoundVolume(volume);
 				*/
+				World.setGravity(gravity);
+				
+				if(wind)
+					World.setWindType(windDynamic ? World.WIND_DYNAMIC : World.WIND_STATIC);
+				else
+					World.setWindType(0);
+				
+				World.setWind(new Vector2f(windStaticSpeed,World.WIND.y));
+				
 				sb.enterState(Gorillas.MAINMENUSTATE);
 			}
 		});

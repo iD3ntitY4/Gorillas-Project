@@ -38,7 +38,7 @@ public class BananaFlyParabolicAction implements Action{
 		int deltaAdj = delta - owner.getBounceTime(); 
 		
 		Vector2f startPos =owner.getPosition();
-		float windSpeed = World.wind.getX();
+		float windSpeed = World.WIND.getX();
 		float gravAccel = World.gravitation;
 		float speedX = (float) Math.cos(angle)*speed;
 		float speedY = (float) Math.sin(angle)*speed;

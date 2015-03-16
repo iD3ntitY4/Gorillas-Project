@@ -16,6 +16,6 @@ public class OutOfBoundsEvent extends Event{
 	protected boolean performAction(GameContainer gc, StateBasedGame sb, int delta) {
 		float xPos = this.getOwnerEntity().getPosition().getX();
 		
-		return !(xPos <= World.worldWidth && xPos >= 0); 
+		return !(xPos <= World.WORLD_WIDTH && xPos >= 0); 
 	}	
 }

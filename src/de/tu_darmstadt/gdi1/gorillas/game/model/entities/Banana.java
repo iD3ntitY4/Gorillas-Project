@@ -54,8 +54,8 @@ public class Banana extends Entity {
 		bounceTime = 0;
 		
 		//Events when hitting bottom
-		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(World.worldHeight); //TODO: What is about the coordinate system? Should it be zero?
-		BananaBottomOutEvent hitBottom = new BananaBottomOutEvent(World.worldHeight);	 //TODO: What is about the coordinate system? Should it be zero?
+		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(World.WORLD_HEIGHT); //TODO: What is about the coordinate system? Should it be zero?
+		BananaBottomOutEvent hitBottom = new BananaBottomOutEvent(World.WORLD_HEIGHT);	 //TODO: What is about the coordinate system? Should it be zero?
 		
 		//Action when hitting bottom
 		bounceBottom.addAction(new BananaBounceOffAction());

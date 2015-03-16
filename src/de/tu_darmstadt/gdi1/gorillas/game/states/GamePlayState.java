@@ -65,7 +65,6 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 		
 		
-		
 		gorillaOne = new Gorilla(1, 
 				sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
@@ -130,7 +129,7 @@ public class GamePlayState extends BasicTWLGameState {
 				
 				if(((button2Edit1.getText()).matches("\\d+")) && ((button2Edit2.getText()).matches("\\d+")))
 				{
-					gorillaOne.throwBanana(entityManager,
+					gorillaTwo.throwBanana(entityManager,
 							Integer.parseInt(button2Edit1.getText()),
 							Integer.parseInt(button2Edit2.getText())
 							);
