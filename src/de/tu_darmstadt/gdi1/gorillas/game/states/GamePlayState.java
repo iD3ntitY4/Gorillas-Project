@@ -1,8 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.game.states;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.*;
-import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
-import de.tu_darmstadt.gdi1.gorillas.game.model.*;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 
 import org.newdawn.slick.GameContainer;
@@ -70,12 +68,14 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		gorillaOne = new Gorilla(1, 
 				sb.getContainer().getWidth() / 4, 
-				sb.getContainer().getHeight() / 2);
+				sb.getContainer().getHeight() / 2,
+				debug);
 		
 		
 		gorillaTwo = new Gorilla(2, 
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
-				sb.getContainer().getHeight() / 2);
+				sb.getContainer().getHeight() / 2,
+				debug);
 		
 		
 		entityManager.addEntity(stateID, gorillaOne);
@@ -108,7 +108,6 @@ public class GamePlayState extends BasicTWLGameState {
 	protected RootPane createRootPane()
 	{
 		RootPane rp = super.createRootPane();
-		
 		
 		
 		button1 = new Button("Throw");

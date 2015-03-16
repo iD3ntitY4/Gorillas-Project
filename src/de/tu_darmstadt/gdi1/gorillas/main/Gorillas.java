@@ -77,7 +77,7 @@ public class Gorillas extends TWLStateBasedGame {
 		app.setShowFPS(false);
 		app.setDisplayMode(FRAME_WIDTH, FRAME_HEIGHT, false);
 		app.setTargetFrameRate(TARGET_FRAME_RATE);
-		app.setIcon("assets/other/gorilla_icon.png");
+		app.setIcon("\\assets\\other\\gorilla_new_icon.png");
 		app.start();
 	}
 	

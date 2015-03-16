@@ -1,6 +1,5 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,7 +7,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.*;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.slick.BasicTWLGameState;

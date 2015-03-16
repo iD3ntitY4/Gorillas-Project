@@ -5,6 +5,7 @@ import java.net.URL;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.OptionsState;
@@ -51,7 +52,7 @@ public class TestGorillas extends TWLTestStateBasedGame {
 		//this.addState(new HighScoreState(HIGHSCORESTATE));
 		this.addState(new OptionsState(OPTIONSTATE, this));
 		//this.addState(new InstructionsState(INSTRUCTIONSSTATE));		
-		//this.addState(new GamePlayState(GAMEPLAYSTATE));
+		this.addState(new GamePlayState(GAMEPLAYSTATE, this));
 
 		// Add states to the StateBasedEntityManager
 		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);

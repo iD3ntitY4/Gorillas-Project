@@ -36,10 +36,12 @@ public class Gorilla extends Entity{
 	 * 
 	 * @param idNum is the id-number; should be unique.
 	 */
-	public Gorilla(int idNum, int posX, int posY)
+	public Gorilla(int idNum, int posX, int posY, boolean debug)
 	{
 		super("Gorilla" + Integer.toString(idNum) );
-		this.setImage(defaultImagePathNormal);
+		
+		if(!debug)
+			this.setImage(defaultImagePathNormal);
 		
 		this.setPosition(new Vector2f(posX, posY));
 		this.setSize(new Vector2f(64,64));
