@@ -7,7 +7,7 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBottomOutEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBounds;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.OutOfBoundsEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
@@ -57,14 +57,21 @@ public class Banana extends Entity {
 		this.setScale(0.5f);
 		
 		//Events when hitting bottom
-		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(World.worldHeight); //TODO: What is about the coordinate system? Should it be zero?
-		BananaBottomOutEvent hitBottom = new BananaBottomOutEvent(World.worldHeight);	 //TODO: What is about the coordinate system? Should it be zero?
+		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?
+		BananaOutOfBounds outOfBound = new BananaOutOfBounds();	 //TODO: What is about the coordinate system? Should it be zero?
 		
 		//Action when hitting bottom
-		//bounceBottom.addAction(new BananaBounceOffAction());
+		bounceBottom.setOwnerEntity(this);
+		bounceBottom.addAction(new BananaBounceOffAction());
+		outOfBound.addAction(new DestroyEntityAction());
+		outOfBound.addAction(new EndOfTurnAction());
+		this.addComponent(outOfBound);
 		
 		//Events to end the round
-		//CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		colliding.addAction(new DestroyEntityAction());
+		colliding.addAction(new EndOfTurnAction());
+		this.addComponent(colliding);
 		//OutOfBoundsEvent outOfBounds = new OutOfBoundsEvent();		
 		//OREvent endOfRoundEvent = new OREvent(colliding, outOfBounds, new ANDEvent(new NOTEvent(bounceBottom), hitBottom));
 		//endOfRoundEvent.setOwnerEntity(this);
@@ -88,7 +95,7 @@ public class Banana extends Entity {
 		// Adding combined Events to banana Entity
 		//this.addComponent(nonColliding);
 		//this.addComponent(endOfRoundEvent);	
-		//this.addComponent(bounceBottom);
+		this.addComponent(bounceBottom);
 		LoopEvent loop = new LoopEvent();
 		loop.addAction(new BananaFlyParabolicAction());
 		this.addComponent(loop);		
@@ -151,7 +158,7 @@ public class Banana extends Entity {
 	 * 
 	 *  @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public float getFLightTime()
+	public float getFlightTime()
 	{
 		return flightTime;
 	}

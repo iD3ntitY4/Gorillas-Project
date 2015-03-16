@@ -9,25 +9,37 @@ import eea.engine.event.Event;
 
 public class BananaBounceOffEvent extends Event {
 	
-	private int horizontalBound;
+	//private int horizontalBound;
 	
-	Banana owner = (Banana) this.getOwnerEntity();
+	private Banana bananaOwner;
 		
 	/**
 	 * This event is true, if the owner entity is beneath the given boundary.
 	 * 
 	 * @param horizontalBound is the horizontal line the entity may not cross.	 * 
 	 */
-	public BananaBounceOffEvent(int horizontalBound) {
+	public BananaBounceOffEvent() {//(int horizontalBound) {
 		super("OutOfBoundEvent");
-		this.horizontalBound = horizontalBound;
+		bananaOwner = (Banana) owner;
+		//this.horizontalBound = horizontalBound;
 	}
 
 
 	@Override
 	protected boolean performAction(GameContainer gc, StateBasedGame sb, int delta) {
-		float yPos = this.getOwnerEntity().getPosition().getY();
-		
-		return yPos <= horizontalBound ? owner.getSpeed() < World.BOUNCE_SPEED_THRESHOLD : false; 
+		bananaOwner = (Banana) this.getOwnerEntity();
+		float yPos = bananaOwner.getPosition().getY();	
+		if(yPos >= World.worldHeight)
+		{
+			if(bananaOwner.getSpeed() >= World.BOUNCE_SPEED_THRESHOLD)
+			{
+				bananaOwner.setSpeed((int) (bananaOwner.getSpeed()/World.BOUNCE_SPEED_DECREASE));
+				return true;
+			}else
+			{
+				return false;
+			}
+		}
+		return false;
 	}
 }

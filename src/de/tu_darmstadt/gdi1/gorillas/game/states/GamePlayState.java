@@ -67,21 +67,21 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		
 		
-		gorillaOne = new Gorilla(1, 
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
 				sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
 				debug);
 		
 		
-		gorillaTwo = new Gorilla(2, 
+		gorillaTwo = new Gorilla(Gorilla.GorillaSide.LEFT, 
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
 				debug);
 		
-		//Banana banana = new Banana("Banane", 45, 10);
-		//Vector2f newPos = new Vector2f(sb.getContainer().getWidth() / 2, sb.getContainer().getWidth() / 2);
-		//(banana.setPosition(newPos);
-		//entityManager.addEntity(stateID, banana);
+		/*Banana banana = new Banana("Banane", 45, 10);
+		Vector2f newPos = new Vector2f(100, 200);
+		banana.setPosition(newPos);
+		entityManager.addEntity(stateID, banana);*/
 		
 		
 		entityManager.addEntity(stateID, gorillaOne);
