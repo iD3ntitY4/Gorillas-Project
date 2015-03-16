@@ -2,16 +2,13 @@ package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-<<<<<<< HEAD
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
-=======
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfRoundAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.GorillaDanceAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.GorillaHitEvent;
->>>>>>> a3257c90c53097077d14fdd37d7496c5a5e88d5a
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.*;
 import eea.engine.event.basicevents.TimeEvent;
@@ -27,38 +24,7 @@ import eea.engine.event.basicevents.TimeEvent;
  * @see eea.engine.entity.Entity
  */
 public class Gorilla extends Entity{
-<<<<<<< HEAD
 		
-	private int x;
-	private int y;
-	
-	public Gorilla(String id,int posX, int posY)
-	{
-		super(id);
-		
-		this.setPosition(new Vector2f(posX, posY));
-		this.setSize(new Vector2f(64,64));
-		
-		try {
-			this.addComponent(new ImageRenderComponent(new Image(
-					"\\assets\\gorillas\\gorillas\\gorilla_new.png")));
-		} catch (SlickException e) {
-			System.err.println("Cannot find file assets/gorillas/gorillas/gorilla_new.png");
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public void throwBanana(StateBasedEntityManager entityManager, int angle, int speed)
-	{
-		Banana banana = new Banana("Banana", angle, speed);
-		
-		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, banana);
-	}
-	
-	
-=======
-	
 	private final String defaultImagePathNormal = ".\\assets\\gorillas\\gorillas\\gorilla_new.png";
 	private final String defaultImagePathRight = ".\\assets\\gorillas\\gorillas\\gorilla_new_right_up.png";
 	private final String defaultImagePathLeft = ".\\assets\\gorillas\\gorillas\\gorilla_new_left_up.png";
@@ -70,10 +36,13 @@ public class Gorilla extends Entity{
 	 * 
 	 * @param idNum is the id-number; should be unique.
 	 */
-	public Gorilla(int idNum)
+	public Gorilla(int idNum, int posX, int posY)
 	{
 		super("Gorilla" + Integer.toString(idNum) );
 		this.setImage(defaultImagePathNormal);
+		
+		this.setPosition(new Vector2f(posX, posY));
+		this.setSize(new Vector2f(64,64));
 		
 		//End of round event
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();
@@ -103,5 +72,12 @@ public class Gorilla extends Entity{
 			se.printStackTrace();
 		}
 	}
->>>>>>> a3257c90c53097077d14fdd37d7496c5a5e88d5a
+	
+	
+	public void throwBanana(StateBasedEntityManager entityManager, int angle, int speed)
+	{
+		Banana banana = new Banana("Banana", angle, speed);
+		
+		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, banana);
+	}
 }

@@ -68,12 +68,12 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		
 		
-		gorillaOne = new Gorilla("Gorilla 1", 
+		gorillaOne = new Gorilla(1, 
 				sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2);
 		
 		
-		gorillaTwo = new Gorilla("Gorilla 2", 
+		gorillaTwo = new Gorilla(2, 
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2);
 		
