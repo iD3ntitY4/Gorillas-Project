@@ -31,6 +31,7 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	private Gorilla gorillaOne;
 	private Gorilla gorillaTwo;
+	private Sun sun;
 	
 	private Label gorillaOneLabel = new Label();
 	private Label gorillaTwoLabel = new Label();
@@ -62,7 +63,6 @@ public class GamePlayState extends BasicTWLGameState {
 			//Add a background
 			Entity background = new Entity("menu"); // 
 			background.setPosition(new Vector2f(400, 300)); 
-			background.setPassable(true);
 																	
 			background.addComponent(new ImageRenderComponent(new Image(
 						"/assets/gorillas/background/background.png"))); 
@@ -78,23 +78,15 @@ public class GamePlayState extends BasicTWLGameState {
 				debug);
 		
 		
-		
 		gorillaTwo = new Gorilla(2, 
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
 				debug);
 		
-		
-		
-		
-		
-		
-		
-		//Banana banana = new Banana("Banane", 45, 10);
-		//Vector2f newPos = new Vector2f(sb.getContainer().getWidth() / 2, sb.getContainer().getWidth() / 2);
-		//(banana.setPosition(newPos);
-		//entityManager.addEntity(stateID, banana);
-		
+		sun = new Sun("Sun",
+				sb.getContainer().getWidth() / 2,
+				sb.getContainer().getHeight() / 2 + sb.getContainer().getHeight() / 4,
+				debug);
 		
 		entityManager.addEntity(stateID, gorillaOne);
 		entityManager.addEntity(stateID, gorillaTwo);
@@ -111,10 +103,10 @@ public class GamePlayState extends BasicTWLGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
+		
 		gorillaOneLabel.setText(World.PLAYER_ONE_NAME);
 		gorillaTwoLabel.setText(World.PLAYER_TWO_NAME);
-		
+
 		entityManager.updateEntities(container, game, delta);
 		
 	}
@@ -153,7 +145,7 @@ public class GamePlayState extends BasicTWLGameState {
 				
 				if(((button2Edit1.getText()).matches("\\d+")) && ((button2Edit2.getText()).matches("\\d+")))
 				{
-					gorillaTwo.throwBanana(entityManager,
+					gorillaOne.throwBanana(entityManager,
 							Integer.parseInt(button2Edit1.getText()),
 							Integer.parseInt(button2Edit2.getText())
 							);
@@ -179,8 +171,6 @@ public class GamePlayState extends BasicTWLGameState {
 		button2Edit2.setMaxTextLength(3);
 		
 		
-		rp.add(gorillaOneLabel);
-		rp.add(gorillaTwoLabel);
 		rp.add(button1);
 		rp.add(button2);
 		rp.add(button1Edit1);
