@@ -64,6 +64,9 @@ public class GameSetupState extends BasicTWLGameState {
 	private static final String player1LabelText = "Player1";
 	private static final String player2LabelText = "Player2";
 	
+	private static final String player1Initial = "Player 1";
+	private static final String player2Initial = "Player 2";
+	
 	// Error Messages
 	public static final String emptyMsg = "No name set";
 	public static final String equalMsg = "Names must be different";
@@ -237,10 +240,11 @@ public class GameSetupState extends BasicTWLGameState {
 		player1Cont.setTheme("menu_button");
 		player2Cont.setTheme("menu_button");
 		
-	
+		player1Edit.setText(player1Initial);
 		player1Edit.setMultiLine(false);
 		player1Edit.setMaxTextLength(16);
 		
+		player2Edit.setText(player2Initial);
 		player2Edit.setMultiLine(false);
 		player2Edit.setMaxTextLength(16);
 		

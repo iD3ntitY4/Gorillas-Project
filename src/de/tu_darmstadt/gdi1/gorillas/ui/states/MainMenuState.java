@@ -1,5 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -7,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.*;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
@@ -83,7 +85,7 @@ public class MainMenuState extends BasicTWLGameState {
 			background.setPosition(new Vector2f(400, 300)); 
 																	
 			background.addComponent(new ImageRenderComponent(new Image(
-						"assets/gorillas/background/background.png"))); 
+						"\\assets\\gorillas\\background\\background.png"))); 
 	
 			entityManager.addEntity(stateID, background);
 		}
@@ -121,8 +123,8 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton1.addCallback(new Runnable() {
 			public void run() {
 				
+				//sb.enterState(Gorillas.GAMESETUPSTATE);
 				sb.enterState(Gorillas.GAMESETUPSTATE);
-				
 				
 			}
 		});
