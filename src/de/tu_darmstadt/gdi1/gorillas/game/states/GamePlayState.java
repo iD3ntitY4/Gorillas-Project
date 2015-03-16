@@ -1,5 +1,6 @@
 package de.tu_darmstadt.gdi1.gorillas.game.states;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.*;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 
@@ -12,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.EditField;
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import eea.engine.component.render.ImageRenderComponent;
@@ -29,6 +31,9 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	private Gorilla gorillaOne;
 	private Gorilla gorillaTwo;
+	
+	private Label gorillaOneLabel = new Label();
+	private Label gorillaTwoLabel = new Label();
 	
 	
 	private Button button1;
@@ -73,10 +78,17 @@ public class GamePlayState extends BasicTWLGameState {
 				debug);
 		
 		
+		
 		gorillaTwo = new Gorilla(2, 
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
 				debug);
+		
+		
+		
+		
+		
+		
 		
 		//Banana banana = new Banana("Banane", 45, 10);
 		//Vector2f newPos = new Vector2f(sb.getContainer().getWidth() / 2, sb.getContainer().getWidth() / 2);
@@ -100,6 +112,9 @@ public class GamePlayState extends BasicTWLGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 
+		gorillaOneLabel.setText(World.PLAYER_ONE_NAME);
+		gorillaTwoLabel.setText(World.PLAYER_TWO_NAME);
+		
 		entityManager.updateEntities(container, game, delta);
 		
 	}
@@ -115,6 +130,8 @@ public class GamePlayState extends BasicTWLGameState {
 	{
 		RootPane rp = super.createRootPane();
 		
+		gorillaOneLabel.setTheme("white_label");
+		gorillaTwoLabel.setTheme("white_label");
 		
 		button1 = new Button("Throw");
 		button1.addCallback(new Runnable() {
@@ -162,6 +179,8 @@ public class GamePlayState extends BasicTWLGameState {
 		button2Edit2.setMaxTextLength(3);
 		
 		
+		rp.add(gorillaOneLabel);
+		rp.add(gorillaTwoLabel);
 		rp.add(button1);
 		rp.add(button2);
 		rp.add(button1Edit1);
@@ -178,6 +197,13 @@ public class GamePlayState extends BasicTWLGameState {
 		int paneHeight = this.getRootPane().getHeight();
 		int paneWidth = this.getRootPane().getWidth();
 		
+		gorillaOneLabel.setSize((int) gorillaOne.getSize().x, 32);
+		gorillaOneLabel.setPosition((int) gorillaOne.getPosition().x - (int) gorillaOne.getSize().x / 2,
+				(int) gorillaOne.getPosition().y - (int) gorillaOne.getSize().y);
+		
+		gorillaTwoLabel.setSize((int) gorillaTwo.getSize().x, 32);
+		gorillaTwoLabel.setPosition((int) gorillaTwo.getPosition().x - (int) gorillaOne.getSize().x / 2,
+				(int) gorillaTwo.getPosition().y - (int) gorillaTwo.getSize().y);
 		
 		button1.setSize(paneWidth / 10, paneHeight / 20);
 		button1.setPosition(paneWidth / 80,

@@ -14,6 +14,7 @@ import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -259,6 +260,8 @@ public class GameSetupState extends BasicTWLGameState {
 				if(validatePlayerNames())
 				{
 					updateNameFromEdit();
+					World.setPlayerOneName(player1Name);
+					World.setPlayerTwoName(player2Name);
 					sb.enterState(Gorillas.GAMEPLAYSTATE);
 				}
 				

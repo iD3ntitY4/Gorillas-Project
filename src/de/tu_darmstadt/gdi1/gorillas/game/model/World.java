@@ -17,7 +17,7 @@ public class World {
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static float DELTA_TIME_SCALING = 0.0001f;
+	public final static float DELTA_TIME_SCALING = 0.001f;
 	
 	/**
 	 * Scaling variable for the calculation of the impact of wind to movement speed.
@@ -49,8 +49,24 @@ public class World {
 	public static Vector2f wind = new Vector2f(0,0);
 	public static float gravitation = 100f; 
 	
+	
+	public static String PLAYER_ONE_NAME = "";
+	public static String PLAYER_TWO_NAME = "";
+	
+	
+	
 	public World()
 	{
 		
+	}
+	
+	public static void setPlayerOneName(String name)
+	{
+		PLAYER_ONE_NAME = name;
+	}
+	
+	public static void setPlayerTwoName(String name)
+	{
+		PLAYER_TWO_NAME = name;
 	}
 }

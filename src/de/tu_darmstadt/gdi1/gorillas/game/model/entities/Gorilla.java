@@ -46,6 +46,7 @@ public class Gorilla extends Entity{
 		this.setPosition(new Vector2f(posX, posY));
 		this.setSize(new Vector2f(64,64));
 		
+		
 		//End of round event
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();
 		TimeEvent danceAfterRound = new TimeEvent(100, false);//TODO: Replace false with a variable expressing a won round!
