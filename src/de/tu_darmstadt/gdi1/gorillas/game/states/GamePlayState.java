@@ -57,6 +57,7 @@ public class GamePlayState extends BasicTWLGameState {
 			//Add a background
 			Entity background = new Entity("menu"); // 
 			background.setPosition(new Vector2f(400, 300)); 
+			background.setPassable(true);
 																	
 			background.addComponent(new ImageRenderComponent(new Image(
 						"/assets/gorillas/background/background.png"))); 
@@ -76,6 +77,11 @@ public class GamePlayState extends BasicTWLGameState {
 				sb.getContainer().getWidth() / 2 + sb.getContainer().getWidth() / 4, 
 				sb.getContainer().getHeight() / 2,
 				debug);
+		
+		//Banana banana = new Banana("Banane", 45, 10);
+		//Vector2f newPos = new Vector2f(sb.getContainer().getWidth() / 2, sb.getContainer().getWidth() / 2);
+		//(banana.setPosition(newPos);
+		//entityManager.addEntity(stateID, banana);
 		
 		
 		entityManager.addEntity(stateID, gorillaOne);
@@ -130,7 +136,7 @@ public class GamePlayState extends BasicTWLGameState {
 				
 				if(((button2Edit1.getText()).matches("\\d+")) && ((button2Edit2.getText()).matches("\\d+")))
 				{
-					gorillaOne.throwBanana(entityManager,
+					gorillaTwo.throwBanana(entityManager,
 							Integer.parseInt(button2Edit1.getText()),
 							Integer.parseInt(button2Edit2.getText())
 							);

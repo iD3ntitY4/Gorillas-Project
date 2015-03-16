@@ -17,7 +17,7 @@ public class World {
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static int DELTA_TIME_SCALING = 1;
+	public final static float DELTA_TIME_SCALING = 0.0001f;
 	
 	/**
 	 * Scaling variable for the calculation of the impact of wind to movement speed.
@@ -40,11 +40,14 @@ public class World {
 	 */
 	public final static int BOUNCE_SPEED_THRESHOLD = 10;
 	
+	public final static int MAX_SPEED = 200;
+	public final static int MAX_ANGLE = 180;
+	
 	public static int worldWidth = 400; //TODO: This should be set by the GUI because this depends on the window size
 	public static int worldHeight= 300;//TODO: This should be set by the GUI because this depends on the window size
 	
 	public static Vector2f wind = new Vector2f(0,0);
-	public static float gravitation = (float) 9.81; 
+	public static float gravitation = 100f; 
 	
 	public World()
 	{

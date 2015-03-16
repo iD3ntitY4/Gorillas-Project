@@ -54,6 +54,6 @@ public class BananaFlyParabolicAction implements Action{
 		newPos.set(newXPos, newYPos);
 		owner.setPosition(newPos);
 		
-		owner.setRotation((float) owner.getRotation() + 5); // Rotates the Banana by 15 degrees
+		owner.setRotation((float) owner.getRotation() + 5); // Rotates the Banana by 5 degrees
 	}
 }

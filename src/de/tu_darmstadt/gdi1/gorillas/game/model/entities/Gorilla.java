@@ -32,7 +32,7 @@ public class Gorilla extends Entity{
 	public String[] imagePaths = {defaultImagePathNormal, defaultImagePathRight, defaultImagePathLeft};
 	
 	/**
-	 * Gorilla is constructed with a identification number, to differ the gorillas.
+	 * Gorilla is constructed with a identification number, to differentiate the gorillas.
 	 * 
 	 * @param idNum is the id-number; should be unique.
 	 */
@@ -79,6 +79,8 @@ public class Gorilla extends Entity{
 	public void throwBanana(StateBasedEntityManager entityManager, int angle, int speed)
 	{
 		Banana banana = new Banana("Banana", angle, speed);
+		Vector2f newPos = new Vector2f(this.getPosition().getX(), this.getPosition().getY());//TODO: Relativ zur Size ändern.
+		banana.setPosition(newPos);
 		
 		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, banana);
 	}
