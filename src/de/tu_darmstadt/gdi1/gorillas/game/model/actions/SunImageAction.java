@@ -22,7 +22,7 @@ public class SunImageAction implements Action{
 	public void update(GameContainer gc, StateBasedGame sb, int delta,
 		      Component event) 
 	{
-		owner = (Sun) event.getOwnerEntity();
+		owner = (Skyscraper) event.getOwnerEntity();
 		owner.setImage(imagePath);
     }
 }
