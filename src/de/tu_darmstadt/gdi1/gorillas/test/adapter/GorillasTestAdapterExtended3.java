@@ -56,7 +56,8 @@ public class GorillasTestAdapterExtended3 extends GorillasTestAdapterExtended2 {
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, int wind, int gravity, boolean fromLeftToRight,
 			int deltaTime) {
-		// TODO: Implement
+		
 		return null;
+		
 	}
 }

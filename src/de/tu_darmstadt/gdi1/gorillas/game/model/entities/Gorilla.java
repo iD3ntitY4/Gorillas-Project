@@ -43,7 +43,7 @@ public class Gorilla extends Entity{
 	{
 		super("Gorilla" + position.toString());
 		imageNumber=0;
-		
+		this.setPassable(false);
 		side = position;
 		
 		if(!debug)

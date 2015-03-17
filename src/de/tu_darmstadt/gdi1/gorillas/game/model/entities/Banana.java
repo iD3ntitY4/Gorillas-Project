@@ -8,8 +8,9 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBounds;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.action.basicactions.MoveDownAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -60,21 +61,30 @@ public class Banana extends Entity {
 		
 		//Events when hitting bottom
 		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?
-		BananaOutOfBounds outOfBound = new BananaOutOfBounds();	 //TODO: What is about the coordinate system? Should it be zero?
-		
-		//Action when hitting bottom
 		bounceBottom.setOwnerEntity(this);
 		bounceBottom.addAction(new BananaBounceOffAction());
 		this.addComponent(bounceBottom);
+		
+		BananaOutOfBoundsEvent outOfBound = new BananaOutOfBoundsEvent();	 //TODO: What is about the coordinate system? Should it be zero?
+		outOfBound.addAction(new DestroyEntityAction());
+		outOfBound.addAction(new EndOfTurnAction());
+		this.addComponent(outOfBound);
+		//Action when hitting bottom
+		
 		//outOfBound.addAction(new DestroyEntityAction());
 		//outOfBound.addAction(new EndOfTurnAction());
-		this.addComponent(outOfBound);
 		
 		//Events to end the round
-		//CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
-		//colliding.addAction(new DestroyEntityAction());
-		//colliding.addAction(new EndOfTurnAction());
-		//this.addComponent(colliding);
+		/*CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		colliding.addAction(new DestroyEntityAction());
+		colliding.addAction(new EndOfTurnAction());
+		this.addComponent(colliding);*/
+		CollisionWorldEvent collides = new CollisionWorldEvent();
+		collides.addAction(new DestroyEntityAction());
+		collides.addAction(new EndOfTurnAction());
+		this.addComponent(collides);
+		
+		
 		//OutOfBoundsEvent outOfBounds = new OutOfBoundsEvent();		
 		//OREvent endOfRoundEvent = new OREvent(colliding, outOfBounds, new ANDEvent(new NOTEvent(bounceBottom), hitBottom));
 		//endOfRoundEvent.setOwnerEntity(this);
