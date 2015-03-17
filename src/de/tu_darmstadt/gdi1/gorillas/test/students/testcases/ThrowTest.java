@@ -61,7 +61,7 @@ public class ThrowTest {
 				"After 30 seconds the shot should definitly have fallen below its starting y value",
 				nextPosition3.y > 400);
 	}
-
+	
 	@Test
 	public void testThrow1() {
 		testSingleThrow(60, 300, 60, 40, true, 13, 320, 694.6668f);
