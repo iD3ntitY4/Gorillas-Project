@@ -2,6 +2,8 @@ package de.tu_darmstadt.gdi1.gorillas.test.adapter;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+
 public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 
 	public GorillasTestAdapterExtended2() {
@@ -64,7 +66,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 * @return the wind scaling factor for the parabolic flight calculation
 	 */
 	public float getWindScalingFactor() {
-		return -1;
+		return World.WIND_SCALING;
 	}
 
 	/**

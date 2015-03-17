@@ -4,6 +4,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestAppGameContainer;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
@@ -250,8 +251,7 @@ public class GorillasTestAdapterMinimal {
 	 * @return the time scaling factor for the parabolic flight calculation
 	 */
 	public float getTimeScalingFactor() {
-		// TODO: Implement
-		return -1;
+		return World.DELTA_TIME_SCALING;
 	}
 
 	/**

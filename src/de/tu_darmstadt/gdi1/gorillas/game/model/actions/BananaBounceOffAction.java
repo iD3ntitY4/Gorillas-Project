@@ -31,10 +31,10 @@ public class BananaBounceOffAction implements Action {
 		//timeOffset = (int) ((gc.getTime() <= Integer.MAX_VALUE) ? gc.getTime() : 0);//TODO: Change that. Could go wrong with this cast...
 		owner.setFlightTime(0); 
 		//System.out.println(owner.getFlightTime());
-		owner.setAngle(45);//TODO: Better angle modifiaction
-		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-20));// Sets Position to a higher level, to go on flying
-		//System.out.println(owner.getSpeed());
+		//float newAngle = (float) (owner.getAngle() + Math.toDegrees(Math.acos(owner.initialPosition.distance(ownerPos) / ownerPos.getX())));
+		//owner.setAngle(owner.getAngle()+45);
+		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-10));// Sets Position to a higher level, to go on flying
 		
-		sound.playSound(sound.FART);
+		//sound.playSound(SoundAnimation.FART);
 	}
 }

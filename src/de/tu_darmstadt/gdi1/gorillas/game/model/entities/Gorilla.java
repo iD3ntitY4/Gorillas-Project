@@ -50,7 +50,7 @@ public class Gorilla extends Entity{
 			this.setImage(defaultImagePathNormal);
 		
 		this.setPosition(new Vector2f(posX, posY));
-		this.setSize(new Vector2f(64,64));
+		this.setSize(new Vector2f(54,64));
 		
 		//End of round event
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();
@@ -94,8 +94,12 @@ public class Gorilla extends Entity{
 			banana = new Banana("Banana", angle, speed);
 		else
 			banana = new Banana("Banana", (180-angle), speed);
+		Vector2f newPos;
+		if(this.side == GorillaSide.RIGHT)
+			newPos = new Vector2f(this.getPosition().getX()+ this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+		else
+			newPos = new Vector2f(this.getPosition().getX()- this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
 		
-		Vector2f newPos = new Vector2f(this.getPosition().getX()+32, this.getPosition().getY()-48);
 		banana.setPosition(newPos);
 		
 		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, banana);

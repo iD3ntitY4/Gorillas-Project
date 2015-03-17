@@ -29,11 +29,11 @@ public class BananaBounceOffEvent extends Event {
 	protected boolean performAction(GameContainer gc, StateBasedGame sb, int delta) {
 		bananaOwner = (Banana) this.getOwnerEntity();
 		float yPos = bananaOwner.getPosition().getY();	
-		if(yPos >= World.worldHeight)
+		if(yPos >= World.worldHeight - owner.getSize().getX())
 		{
 			if(bananaOwner.getSpeed() >= World.BOUNCE_SPEED_THRESHOLD)
 			{
-				bananaOwner.setSpeed((int) (bananaOwner.getSpeed()/World.BOUNCE_SPEED_DECREASE));
+				//System.out.println("Bounce bro");
 				return true;
 			}else
 			{

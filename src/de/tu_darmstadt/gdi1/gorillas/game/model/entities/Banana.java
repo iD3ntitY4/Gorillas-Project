@@ -2,6 +2,7 @@ package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
@@ -9,7 +10,6 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBounds;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.OutOfBoundsEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.action.basicactions.MoveDownAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -37,6 +37,7 @@ public class Banana extends Entity {
 	private float angle;
 	private int speed;
 	private float flightTime;
+	public Vector2f initialPosition;
 	
 	private String defaultImagePath = ".\\assets\\gorillas\\banana_new.png";
 	
@@ -55,6 +56,7 @@ public class Banana extends Entity {
 		speed = ((initialSpeed <= World.MAX_SPEED) && (initialSpeed >= 0)) ? initialSpeed : World.MAX_SPEED;
 		flightTime = 0;
 		this.setScale(0.5f);
+		initialPosition = this.getPosition();
 		
 		//Events when hitting bottom
 		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?
@@ -63,15 +65,16 @@ public class Banana extends Entity {
 		//Action when hitting bottom
 		bounceBottom.setOwnerEntity(this);
 		bounceBottom.addAction(new BananaBounceOffAction());
-		outOfBound.addAction(new DestroyEntityAction());
-		outOfBound.addAction(new EndOfTurnAction());
+		this.addComponent(bounceBottom);
+		//outOfBound.addAction(new DestroyEntityAction());
+		//outOfBound.addAction(new EndOfTurnAction());
 		this.addComponent(outOfBound);
 		
 		//Events to end the round
-		CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
-		colliding.addAction(new DestroyEntityAction());
-		colliding.addAction(new EndOfTurnAction());
-		this.addComponent(colliding);
+		//CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		//colliding.addAction(new DestroyEntityAction());
+		//colliding.addAction(new EndOfTurnAction());
+		//this.addComponent(colliding);
 		//OutOfBoundsEvent outOfBounds = new OutOfBoundsEvent();		
 		//OREvent endOfRoundEvent = new OREvent(colliding, outOfBounds, new ANDEvent(new NOTEvent(bounceBottom), hitBottom));
 		//endOfRoundEvent.setOwnerEntity(this);
@@ -95,10 +98,14 @@ public class Banana extends Entity {
 		// Adding combined Events to banana Entity
 		//this.addComponent(nonColliding);
 		//this.addComponent(endOfRoundEvent);	
-		this.addComponent(bounceBottom);
+		//this.addComponent(bounceBottom);
+		
 		LoopEvent loop = new LoopEvent();
 		loop.addAction(new BananaFlyParabolicAction());
-		this.addComponent(loop);		
+		this.addComponent(loop);	
+		//NOTEvent fly = new NOTEvent(colliding);
+		//fly.addAction(new BananaFlyParabolicAction());
+		//this.addComponent(fly);
 	}
 	
 	/**
