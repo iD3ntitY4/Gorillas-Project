@@ -26,7 +26,7 @@ public class BananaBounceOffAction implements Action {
 		
 		owner.setSpeed((int)owner.getSpeed()/World.BOUNCE_SPEED_DECREASE);	// Decreases Speed for parabolic fly action	
 		timeOffset = (int) ((gc.getTime() <= Integer.MAX_VALUE) ? gc.getTime() : 0);//TODO: Change that. Could go wrong with this cast...
-		owner.setBounceTime(timeOffset); 
+		owner.setFlightTime(timeOffset); 
 		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()+1));// Sets Position to a higher level, to go on flying
 	}
 }

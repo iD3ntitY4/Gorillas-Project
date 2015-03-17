@@ -1,7 +1,14 @@
 package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
-import eea.engine.entity.*;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
+import eea.engine.component.render.ImageRenderComponent;
+import eea.engine.entity.*;
+import eea.engine.event.NOTEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.*;
+import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
 /**
  * This class represents the entity of the sun in the game.
  * 
@@ -14,8 +21,48 @@ import eea.engine.entity.*;
  */
 public class Sun extends Entity {
 	
-	public Sun(String id)
+	public final String standartDataPath = ".\\assets\\gorillas\\sun\\sun_smiling.png";
+	
+	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\sun_astonished.png";
+	
+	private int posX;
+	private int posY;
+	
+	public Sun(String id, int positionX, int positionY, boolean debug)
 	{
 		super(id);
+		
+		posX = positionX;
+		posY = positionY;
+		
+		this.setPosition(new Vector2f(posX, posY));
+		BananaHitsSun bananaHit = new BananaHitsSun();
+		bananaHit.addAction(new SunImageAction(astonishedDataPath));
+		this.addComponent(bananaHit);
+		NOTEvent nonCollision = new NOTEvent(bananaHit);
+		nonCollision.addAction(new SunImageAction(standartDataPath));
+		this.addComponent(nonCollision);
+		
+		if(!debug)
+			this.setImage(standartDataPath);
 	}
+	
+	/**
+	 * This method sets the image of the sun to the image of the given path.
+	 * 
+	 * @param pathPic should be given as a relative path; e.g.: .\\super\\name.png
+	 */
+	public void setImage (String pathPic)
+	{
+		try
+		{
+			this.addComponent(new ImageRenderComponent(new Image(pathPic)));
+		} catch(SlickException se)
+		{
+			se.printStackTrace();
+		}
+	}
+	
+	
+	
 }

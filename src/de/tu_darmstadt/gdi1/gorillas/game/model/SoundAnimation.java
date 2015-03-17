@@ -2,15 +2,12 @@ package de.tu_darmstadt.gdi1.gorillas.game.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 
 /**
  * This class implements useful methods for simple sound animations. 
@@ -23,16 +20,19 @@ import javax.swing.JFrame;
  */
 public class SoundAnimation { 
 	
+
+	
+	
 	/**
 	 * All necessary sounds with their datapath, to be used as a parameter for the method {@link #playSound()} .
 	 */
-	public static final String FART = ".\\assets\\gorillas\\noise\\soundFart.wav";
-	
+	public static final String FART = ".\\assets\\gorillas.noise\\soundFart.wav";
+
 	/**
 	 * There is only one clip allowed for background music. Set this variable by {@link setBackgroundMusic()} and erase it's content by {@link flushBackgroundMusic()} 
 	 */
 	private Clip backgroundMusic;
-	
+
 	/**
 	 * This methods plays the given sound once. Used for explosions, noises, etc.
 	 * 
@@ -44,11 +44,11 @@ public class SoundAnimation {
 		{			
 			File soundFile = new File(filePath);
 			AudioInputStream audio = AudioSystem.getAudioInputStream(soundFile);			
-			
+
 			Clip clip = AudioSystem.getClip();
 			clip.open(audio);
 			clip.start(); //Not tested
-			
+
 		}catch(IOException io)
 		{
 			io.printStackTrace();
@@ -59,7 +59,7 @@ public class SoundAnimation {
 			lu.printStackTrace();
 		}		
 	}
-	
+
 	/**
 	 * This methods plays the given sound for a <b>finite number of loops </b> . Used for steps, claps, etc.
 	 * 
@@ -72,12 +72,12 @@ public class SoundAnimation {
 		{
 			File soundFile = new File(filePath);
 			AudioInputStream audio = AudioSystem.getAudioInputStream(soundFile);
-			
+
 			Clip clip = AudioSystem.getClip();
 			clip.open(audio);
-			
+
 			clip.loop(loops);
-			
+
 		}catch(IOException io)
 		{
 			io.printStackTrace();
@@ -88,7 +88,7 @@ public class SoundAnimation {
 			lu.printStackTrace();
 		}
 	}	
-	
+
 	/**
 	 * This methods resets the background music by the given music. It loops infinitely until flushing!
 	 * 
@@ -99,15 +99,14 @@ public class SoundAnimation {
 		try
 		{
 			this.flushBackgroundMusic();		
-			
+
 			File soundFile = new File(filePath);
 			AudioInputStream audio = AudioSystem.getAudioInputStream(soundFile);
-			
+
 			Clip clip = AudioSystem.getClip();
 			clip.open(audio);
-			
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			
+
 		}catch(IOException io)
 		{
 			io.printStackTrace();
@@ -118,7 +117,7 @@ public class SoundAnimation {
 			lu.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * This methods flushes the current content of the background clip. This means all information on the background music are lost.
 	 */

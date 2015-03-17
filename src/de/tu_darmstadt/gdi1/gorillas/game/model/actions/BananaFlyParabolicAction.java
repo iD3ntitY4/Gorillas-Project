@@ -24,31 +24,37 @@ public class BananaFlyParabolicAction implements Action{
 	private float angle = 0;
 	private int speed = 0;
 	private Banana owner;
+	private float startTime;
 		
 	public BananaFlyParabolicAction()
 	{
-
+		startTime = 0f;
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta, Component event) {
 		owner = (Banana) event.getOwnerEntity();
-		angle = owner.getAngle();
+		angle = (float) Math.toRadians(owner.getAngle());
 		speed = owner.getSpeed();
-		int deltaAdj = delta - owner.getBounceTime(); 
+		startTime = owner.getFLightTime() + delta*World.DELTA_TIME_SCALING;
+		owner.setFlightTime(startTime);
+				
+		//System.out.println(startTime + "| Delta: " + delta);
 		
-		Vector2f startPos =owner.getPosition();
+		Vector2f startPos = owner.getPosition();
 		float windSpeed = World.wind.getX();
 		float gravAccel = World.gravitation;
 		float speedX = (float) Math.cos(angle)*speed;
 		float speedY = (float) Math.sin(angle)*speed;
 		
+		
 		Vector2f newPos = new Vector2f();
-		float newXPos = (float) (startPos.getX() + speedX * (deltaAdj*World.DELTA_TIME_SCALING) + (0.5* windSpeed*World.WIND_SCALING * Math.pow((deltaAdj*World.DELTA_TIME_SCALING),2)));
-		float newYPos = (float) (startPos.getY() - speedY * (deltaAdj*World.DELTA_TIME_SCALING) + (0.5* gravAccel * Math.pow((deltaAdj*World.DELTA_TIME_SCALING),2)));
+		float newXPos = (float) (startPos.getX() + speedX * startTime + (0.5* windSpeed* World.WIND_SCALING * Math.pow(startTime,2)));
+		float newYPos = (float) (startPos.getY() - speedY * startTime + (0.5* gravAccel * Math.pow(startTime,2)));
+		//System.out.println("X: " + newXPos + " Y: " + newYPos + ". Steigung: " +  (newXPos/newYPos));
 		newPos.set(newXPos, newYPos);
 		owner.setPosition(newPos);
 		
-		owner.setRotation((float) owner.getRotation() + 15); // Rotates the Banana by 15 degrees
+		owner.setRotation((float) owner.getRotation() + 5); // Rotates the Banana by 5 degrees
 	}
 }

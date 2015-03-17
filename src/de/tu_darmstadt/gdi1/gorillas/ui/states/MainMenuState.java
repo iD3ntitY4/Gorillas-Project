@@ -42,15 +42,21 @@ public class MainMenuState extends BasicTWLGameState {
 	private Button mainButton2;
 	private Button mainButton3;
 	private Button mainButton4;
+	private Button mainButton5;
 	
 	//private Button aboutButton;
-	//private PopupWindow aboutWindow;
+	
 	
 	// Button labels
 	private static final String mainButton1Text = "START";
 	private static final String mainButton2Text = "OPTIONS";
 	private static final String mainButton3Text = "HIGHSCORES";
-	private static final String mainButton4Text = "EXIT";
+	private static final String mainButton4Text = "INSTRUCTIONS";
+	private static final String mainButton5Text = "EXIT";
+	
+	
+	// private static final String aboutButtonText = "ABOUT";
+
 	
 	private int startGameKey = Input.KEY_N;
 	
@@ -151,26 +157,37 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton4.setTheme("menu_button");
 		mainButton4.addCallback(new Runnable() {
 			public void run() {
-				System.exit(0);
+				
+				sb.enterState(Gorillas.INSTRUCTIONSSTATE);
 			}
 		});
 		
-		/*aboutButton = new Button("ABOUT");
+		mainButton5 = new Button(mainButton5Text);
+		mainButton5.setTheme("menu_button");
+		mainButton5.addCallback(new Runnable() {
+			public void run() {
+				System.exit(0);
+			}
+		});
+			
+		/*aboutButton = new Button(aboutButtonText);
 		aboutButton.setTheme("menu_button");
 		aboutButton.addCallback(new Runnable() {
 			public void run() {
-				aboutWindow.openPopupCentered();
+				sb.enterState(Gorillas.ABOUTSTATE);
 			}
+		
 		});*/
-		
-		
 
+		
 		rp.add(mainButton1);
 		rp.add(mainButton2);
 		rp.add(mainButton3);
 		rp.add(mainButton4);
+		rp.add(mainButton5);
+		
 		//rp.add(aboutButton);
-		//rp.add(aboutWindow);
+		
 		return rp;
 	}
 
@@ -193,8 +210,14 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton3.setPosition(paneWidth / 2 - mainButton3.getWidth() / 2,
 				paneHeight / 2 - (mainButton3.getHeight() / 2));
 		
-		mainButton4.setSize(paneWidth / 4, paneHeight / 12);
+		mainButton4.setSize((int)(paneWidth / 2.4f), paneHeight / 12);
 		mainButton4.setPosition(paneWidth / 2 - mainButton4.getWidth() / 2,
 				paneHeight / 2 - (mainButton4.getHeight() / 2) + (paneHeight / 8));
+		
+		mainButton5.setSize(paneWidth / 4, paneHeight / 12);
+		mainButton5.setPosition(paneWidth / 2 - mainButton5.getWidth() / 2,
+				paneHeight / 2 - (mainButton5.getHeight() / 2) + (paneHeight / 4));
+		
+		
 	}
 }

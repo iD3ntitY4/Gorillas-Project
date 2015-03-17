@@ -14,6 +14,7 @@ import de.matthiasmann.twl.EditField;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -63,6 +64,9 @@ public class GameSetupState extends BasicTWLGameState {
 	// Label texts
 	private static final String player1LabelText = "Player1";
 	private static final String player2LabelText = "Player2";
+		
+	private static final String player1Initial = "Player 1";
+	private static final String player2Initial = "Player 2";
 	
 	// Error Messages
 	public static final String emptyMsg = "No name set";
@@ -237,10 +241,11 @@ public class GameSetupState extends BasicTWLGameState {
 		player1Cont.setTheme("menu_button");
 		player2Cont.setTheme("menu_button");
 		
-	
+		player1Edit.setText(player1Initial);
 		player1Edit.setMultiLine(false);
 		player1Edit.setMaxTextLength(16);
 		
+		player2Edit.setText(player2Initial);
 		player2Edit.setMultiLine(false);
 		player2Edit.setMaxTextLength(16);
 		
@@ -255,6 +260,8 @@ public class GameSetupState extends BasicTWLGameState {
 				if(validatePlayerNames())
 				{
 					updateNameFromEdit();
+					World.setPlayerOneName(player1Name);
+					World.setPlayerTwoName(player2Name);
 					sb.enterState(Gorillas.GAMEPLAYSTATE);
 				}
 				

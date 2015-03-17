@@ -7,9 +7,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import de.matthiasmann.twl.slick.TWLStateBasedGame;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.InstructionsState;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.MainMenuState;
 import eea.engine.entity.StateBasedEntityManager;
-
 import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
 
@@ -80,6 +80,7 @@ public class Gorillas extends TWLStateBasedGame {
 		app.setTargetFrameRate(TARGET_FRAME_RATE);
 		app.setIcon("assets/other/gorilla_icon.png");
 		app.start();
+		
 	}
 	
 	@Override
@@ -89,10 +90,10 @@ public class Gorillas extends TWLStateBasedGame {
 		// Add states to the StateBasedGame
 		this.addState(new MainMenuState(MAINMENUSTATE, this));	// Added new parameters which are used in the states
 		this.addState(new GameSetupState(GAMESETUPSTATE, this));
-		//this.addState(new HighScoreState(HIGHSCORESTATE));
+		this.addState(new HighScoreState(HIGHSCORESTATE, this));
 		this.addState(new OptionsState(OPTIONSTATE, this));
-		//this.addState(new InstructionsState(INSTRUCTIONSSTATE));		
-		//this.addState(new GamePlayState(GAMEPLAYSTATE));
+		this.addState(new InstructionsState(INSTRUCTIONSSTATE, this));
+		this.addState(new GamePlayState(GAMEPLAYSTATE, this));
 
 		// Add states to the StateBasedEntityManager
 		StateBasedEntityManager.getInstance().addState(MAINMENUSTATE);

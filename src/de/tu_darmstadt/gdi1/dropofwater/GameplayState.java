@@ -135,7 +135,7 @@ public class GameplayState extends BasicTWLGameState {
 	 * GameState mit Hilfe einer RootPane hinzugef�gt
 	 */
 	@Override
-	protected RootPane createRootPane() {
+	protected RootPane createRootPane() {	
 
 		// erstelle die RootPane
 		RootPane rp = super.createRootPane();
