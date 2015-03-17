@@ -21,7 +21,7 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
  */
 public class Sun extends Entity {
 	
-	public final String standartDataPath = ".\\assets\\gorillas\\sun\\sun_smiling.png";
+	public final String standartDataPath = ".\\assets\\other\\moon.png";
 	
 	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\sun_astonished.png";
 	

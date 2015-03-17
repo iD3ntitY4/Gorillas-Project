@@ -1,6 +1,10 @@
 package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
+import java.awt.image.BufferedImage;
+import java.net.URL;
+
 import eea.engine.component.render.DestructionRenderComponent;
+import eea.engine.component.render.ImageDestructionPattern;
 import eea.engine.entity.DestructibleImageEntity;
 
 /**
@@ -17,8 +21,16 @@ import eea.engine.entity.DestructibleImageEntity;
  */
 public class Skyscraper extends DestructibleImageEntity{
 	
-	public Skyscraper(String id, DestructionRenderComponent comp)
+	public Skyscraper(String id, BufferedImage image, String destructionPath, boolean debug)
 	{
-		super(id, comp);
+		super(id, image, destructionPath, debug);
+		
+		URL destructionURL = DestructibleImageEntity.class.getResource("/"
+				+ destructionPath);
+		ImageDestructionPattern pattern = new ImageDestructionPattern(
+				destructionURL);
+		this.addComponent(new DestructionRenderComponent(image, pattern, debug));
 	}
+	
+	
 }
