@@ -37,11 +37,12 @@ public class Skyscraper extends DestructibleImageEntity{
 				destructionURL);
 		this.addComponent(new DestructionRenderComponent(image, pattern, debug));
 		this.setPassable(false);
+		//this.
 		
 		
-		BananaHitsSkyscraperEvent skyscraperHit = new BananaHitsSkyscraperEvent();
-		skyscraperHit.addAction(new SkyscraperDestructionAction());
-		this.addComponent(skyscraperHit);
+		//BananaHitsSkyscraperEvent skyscraperHit = new BananaHitsSkyscraperEvent();
+		//skyscraperHit.addAction(new SkyscraperDestructionAction());
+		//this.addComponent(skyscraperHit);
 		
 	}
 	
