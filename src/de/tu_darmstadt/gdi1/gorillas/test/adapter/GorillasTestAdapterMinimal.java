@@ -10,6 +10,7 @@ import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.entity.StateBasedEntityManager;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
+import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 
 public class GorillasTestAdapterMinimal {
 
@@ -164,7 +165,11 @@ public class GorillasTestAdapterMinimal {
 	 *            the input character
 	 */
 	public void fillVelocityInput(char charac) {
-		// TODO: Implement
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			((GamePlayState) gorillas.getCurrentState()).setVelocityInput(charac);
+		}
 	}
 
 	/**
@@ -172,8 +177,13 @@ public class GorillasTestAdapterMinimal {
 	 *         nothing was put in the method should return -1.
 	 */
 	public int getVelocityInput() {
-		// TODO: Implement
-		return -1;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).getVelocityInput();
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -186,7 +196,11 @@ public class GorillasTestAdapterMinimal {
 	 *            the input character
 	 */
 	public void fillAngleInput(char charac) {
-		// TODO: Implement
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			((GamePlayState) gorillas.getCurrentState()).setAngleInput(charac);
+		}
 	}
 
 	/**
@@ -194,8 +208,13 @@ public class GorillasTestAdapterMinimal {
 	 *         was put in the method should return -1.
 	 */
 	public int getAngleInput() {
-		// TODO: Implement
-		return -1;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).getAngleInput();
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -203,11 +222,19 @@ public class GorillasTestAdapterMinimal {
 	 * player. Both angle value and velocity value should then be -1.
 	 */
 	public void resetPlayerWidget() {
-		// TODO: Implement
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			((GamePlayState) gorillas.getCurrentState()).resetPlayerInput();;
+		}
 	}
 
 	public void shootButtonPressed() {
-		// TODO: Implement
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			((GamePlayState) gorillas.getCurrentState()).throwButtonPressed();
+		}
 	}
 
 	/**
