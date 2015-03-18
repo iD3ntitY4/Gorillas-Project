@@ -238,14 +238,14 @@ public class GorillasTestAdapterMinimal {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, boolean fromLeftToRight, int deltaTime) {
-		float gravity = 9.81f;
+		float gravity = 10f;
 		float angleRad = fromLeftToRight ? (float) Math.toRadians(angle): (float) Math.toRadians(180-angle);
 		
 		float speedX = (float) Math.cos(angleRad)*speed;
 		float speedY = (float) Math.sin(angleRad)*speed;
 		
 		Vector2f newPos = new Vector2f();
-		float newXPos = (float) (startPosition.getX() + speedX * deltaTime*getTimeScalingFactor() + (0.5* Math.pow(deltaTime*getTimeScalingFactor(),2)));
+		float newXPos = (float) (startPosition.getX() + speedX * deltaTime*getTimeScalingFactor());
 		float newYPos = (float) (startPosition.getY() - speedY * deltaTime*getTimeScalingFactor() + (0.5* gravity * Math.pow(deltaTime*getTimeScalingFactor(),2)));
 		newPos.set(newXPos, newYPos);
 		

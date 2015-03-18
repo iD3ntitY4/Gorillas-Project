@@ -113,6 +113,7 @@ public class ThrowTest {
 		float deltaY = 0.001f;
 		Vector2f nextPosition = adapter.getNextShotPosition(new Vector2f(x0,
 				y0), angle, speed, fromLeftToRight, scaleTime(time));
+		System.out.println(":::::::::::::" + nextPosition.toString() + "::::::::::::::::::");
 		assertEquals("A shot, which is thrown from (" + x0 + ", " + y0
 				+ ") with an angle of " + angle + " degree and a speed of "
 				+ speed + ", has to be at (" + expectedX + ", " + expectedY
