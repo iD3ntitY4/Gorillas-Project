@@ -275,6 +275,19 @@ public class GamePlayState extends BasicTWLGameState {
 	}
 	
 	
+	public void endOfTurn() {
+		
+		switchTurn();
+		
+		// TODO add Highscore information
+		if(player1Turn)
+		{
+			
+		} else {
+			
+		}
+	}
+	
 	public DestructibleImageEntity[] createRandomSkyline(int frameWidth, int frameHeight, int gorillaWidth, int gorillaHeight)
 	{
 		
@@ -357,14 +370,14 @@ public class GamePlayState extends BasicTWLGameState {
 	{
 		
 		int g1place = (int) (1 + 2 * Math.random());
-		gorillaOne = new Gorilla(1, 
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
 				(int) (skyscraperArray[g1place].getPosition().x), 
 				(int) (skyscraperArray[g1place].getPosition().y - (skyscraperArray[g1place].getSize().y / 2) - gorillaHeight / 2),
 				debug);
 		
 		
 		int g2place = (int) (8 - 2 * Math.random());
-		gorillaTwo = new Gorilla(2, 
+		gorillaTwo = new Gorilla(Gorilla.GorillaSide.LEFT,
 				(int) (skyscraperArray[g2place].getPosition().x), 
 				(int) (skyscraperArray[g2place].getPosition().y - (skyscraperArray[g2place].getSize().y / 2) - gorillaHeight / 2),
 				debug);
@@ -382,8 +395,8 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	public Gorilla[] placeGorillasCustom(Vector2f leftGorillaCoordinate, Vector2f rightGorillaCoordinate)
 	{
-		gorillaOne = new Gorilla(1, (int) leftGorillaCoordinate.getX(), (int) leftGorillaCoordinate.getY(), debug);
-		gorillaOne = new Gorilla(1, (int) rightGorillaCoordinate.getX(), (int) rightGorillaCoordinate.getY(), debug);
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, (int) leftGorillaCoordinate.getX(), (int) leftGorillaCoordinate.getY(), debug);
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.LEFT, (int) rightGorillaCoordinate.getX(), (int) rightGorillaCoordinate.getY(), debug);
 		
 		Gorilla[] gorillas = new Gorilla[2];
 		gorillas[0] = gorillaOne;

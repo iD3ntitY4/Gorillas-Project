@@ -2,6 +2,8 @@ package de.tu_darmstadt.gdi1.gorillas.test.adapter;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+
 public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 
 	public GorillasTestAdapterExtended2() {
@@ -51,9 +53,18 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, int wind, boolean fromLeftToRight, int deltaTime) {
-
-		// TODO: Implement
-		return null;
+		float gravity = 10f;
+		float angleRad = fromLeftToRight ? (float) Math.toRadians(angle): (float) Math.toRadians(180-angle);
+		
+		float speedX = (float) Math.cos(angleRad)*speed;
+		float speedY = (float) Math.sin(angleRad)*speed;
+		
+		Vector2f newPos = new Vector2f();
+		float newXPos = (float) (startPosition.getX() + speedX * deltaTime* super.getTimeScalingFactor() + (0.5* wind* getWindScalingFactor() * Math.pow(deltaTime*super.getTimeScalingFactor(),2)));
+		float newYPos = (float) (startPosition.getY() - speedY * deltaTime*getTimeScalingFactor() + (0.5* gravity * Math.pow(deltaTime*getTimeScalingFactor(),2)));
+		newPos.set(newXPos, newYPos);
+		
+		return newPos;	
 	}
 
 	/**
@@ -64,7 +75,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 * @return the wind scaling factor for the parabolic flight calculation
 	 */
 	public float getWindScalingFactor() {
-		return -1;
+		return World.WIND_SCALING;
 	}
 
 	/**

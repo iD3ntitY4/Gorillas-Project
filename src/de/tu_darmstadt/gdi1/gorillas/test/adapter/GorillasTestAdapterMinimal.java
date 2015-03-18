@@ -4,6 +4,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestAppGameContainer;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TWLTestStateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
@@ -237,10 +238,20 @@ public class GorillasTestAdapterMinimal {
 	 */
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, boolean fromLeftToRight, int deltaTime) {
-
-		// TODO: Implement
-		return null;
+		float gravity = 10f;
+		float angleRad = fromLeftToRight ? (float) Math.toRadians(angle): (float) Math.toRadians(180-angle);
+		
+		float speedX = (float) Math.cos(angleRad)*speed;
+		float speedY = (float) Math.sin(angleRad)*speed;
+		
+		Vector2f newPos = new Vector2f();
+		float newXPos = (float) (startPosition.getX() + speedX * deltaTime*getTimeScalingFactor());
+		float newYPos = (float) (startPosition.getY() - speedY * deltaTime*getTimeScalingFactor() + (0.5* gravity * Math.pow(deltaTime*getTimeScalingFactor(),2)));
+		newPos.set(newXPos, newYPos);
+		
+		return newPos;
 	}
+
 
 	/**
 	 * Ensure that this method returns exactly the same time scaling factor,
@@ -250,8 +261,8 @@ public class GorillasTestAdapterMinimal {
 	 * @return the time scaling factor for the parabolic flight calculation
 	 */
 	public float getTimeScalingFactor() {
-		// TODO: Implement
-		return -1;
+		
+		return World.DELTA_TIME_SCALING;
 	}
 
 	/**

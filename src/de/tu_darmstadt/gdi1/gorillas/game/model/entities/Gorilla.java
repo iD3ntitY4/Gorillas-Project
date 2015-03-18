@@ -29,27 +29,32 @@ public class Gorilla extends Entity{
 	private final String defaultImagePathRight = ".\\assets\\gorillas\\gorillas\\gorilla_new_right_up.png";
 	private final String defaultImagePathLeft = ".\\assets\\gorillas\\gorillas\\gorilla_new_left_up.png";
 	
-	public String[] imagePaths = {defaultImagePathNormal, defaultImagePathRight, defaultImagePathLeft};
+	private String[] imagePaths = {defaultImagePathNormal, defaultImagePathRight, defaultImagePathLeft};
+	private int imageNumber;
+	
+	private GorillaSide side;
 	
 	/**
 	 * Gorilla is constructed with a identification number, to differentiate the gorillas.
 	 * 
 	 * @param idNum is the id-number; should be unique.
 	 */
-	public Gorilla(int idNum, int posX, int posY, boolean debug)
+	public Gorilla(GorillaSide position, int posX, int posY, boolean debug)
 	{
-		super("Gorilla" + Integer.toString(idNum) );
+		super("Gorilla" + position.toString());
+		imageNumber=0;
+		this.setPassable(false);
+		side = position;
 		
 		if(!debug)
 			this.setImage(defaultImagePathNormal);
 		
 		this.setPosition(new Vector2f(posX, posY));
-		this.setSize(new Vector2f(64,64));
-		
+		this.setSize(new Vector2f(54,64));
 		
 		//End of round event
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();
-		TimeEvent danceAfterRound = new TimeEvent(100, false);//TODO: Replace false with a variable expressing a won round!
+		TimeEvent danceAfterRound = new TimeEvent(200, false);//TODO: Replace false with a variable expressing a won round!
 				
 		//End of round Action
 		gorillaHit.addAction(new EndOfRoundAction());
@@ -76,13 +81,51 @@ public class Gorilla extends Entity{
 		}
 	}
 	
+	public void dance()
+	{
+		this.setImage(imagePaths[imageNumber]);
+		imageNumber = (imageNumber < imagePaths.length - 1) ? (imageNumber + 1) : 0;
+	}
 	
 	public void throwBanana(StateBasedEntityManager entityManager, int angle, int speed)
 	{
-		Banana banana = new Banana("Banana", angle, speed);
-		Vector2f newPos = new Vector2f(this.getPosition().getX(), this.getPosition().getY());//TODO: Relativ zur Size ändern.
+		Banana banana;
+		if(this.side == GorillaSide.RIGHT)
+			banana = new Banana("Banana", angle, speed);
+		else
+			banana = new Banana("Banana", (180-angle), speed);
+		Vector2f newPos;
+		if(this.side == GorillaSide.RIGHT)
+			newPos = new Vector2f(this.getPosition().getX()+ this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+		else
+			newPos = new Vector2f(this.getPosition().getX()- this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+		
 		banana.setPosition(newPos);
 		
 		entityManager.addEntity(Gorillas.GAMEPLAYSTATE, banana);
+	}
+	
+	public enum GorillaSide
+	{
+		RIGHT(0),
+		LEFT(180);
+		
+		private int angleOffset;
+		
+		GorillaSide(int angle)
+		{
+			angleOffset = angle;
+		}
+		
+		public int getAngleOffset()
+		{
+			return angleOffset;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return angleOffset == 0 ? "Right" : "Left"; 
+		}
 	}
 }

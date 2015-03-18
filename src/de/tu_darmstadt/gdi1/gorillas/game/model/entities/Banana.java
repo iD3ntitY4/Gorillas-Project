@@ -2,14 +2,15 @@ package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBottomOutEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.OutOfBoundsEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.action.basicactions.MoveDownAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -37,6 +38,7 @@ public class Banana extends Entity {
 	private float angle;
 	private int speed;
 	private float flightTime;
+	public Vector2f initialPosition;
 	
 	private String defaultImagePath = ".\\assets\\gorillas\\banana_new.png";
 	
@@ -55,16 +57,34 @@ public class Banana extends Entity {
 		speed = ((initialSpeed <= World.MAX_SPEED) && (initialSpeed >= 0)) ? initialSpeed : World.MAX_SPEED;
 		flightTime = 0;
 		this.setScale(0.5f);
+		initialPosition = this.getPosition();
 		
 		//Events when hitting bottom
-		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(World.worldHeight); //TODO: What is about the coordinate system? Should it be zero?
-		BananaBottomOutEvent hitBottom = new BananaBottomOutEvent(World.worldHeight);	 //TODO: What is about the coordinate system? Should it be zero?
+		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?
+		bounceBottom.setOwnerEntity(this);
+		bounceBottom.addAction(new BananaBounceOffAction());
+		this.addComponent(bounceBottom);
 		
+		BananaOutOfBoundsEvent outOfBound = new BananaOutOfBoundsEvent();	 //TODO: What is about the coordinate system? Should it be zero?
+		outOfBound.addAction(new DestroyEntityAction());
+		outOfBound.addAction(new EndOfTurnAction());
+		this.addComponent(outOfBound);
 		//Action when hitting bottom
-		//bounceBottom.addAction(new BananaBounceOffAction());
+		
+		//outOfBound.addAction(new DestroyEntityAction());
+		//outOfBound.addAction(new EndOfTurnAction());
 		
 		//Events to end the round
-		//CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		/*CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
+		colliding.addAction(new DestroyEntityAction());
+		colliding.addAction(new EndOfTurnAction());
+		this.addComponent(colliding);*/
+		CollisionWorldEvent collides = new CollisionWorldEvent();
+		collides.addAction(new DestroyEntityAction());
+		collides.addAction(new EndOfTurnAction());
+		this.addComponent(collides);
+		
+		
 		//OutOfBoundsEvent outOfBounds = new OutOfBoundsEvent();		
 		//OREvent endOfRoundEvent = new OREvent(colliding, outOfBounds, new ANDEvent(new NOTEvent(bounceBottom), hitBottom));
 		//endOfRoundEvent.setOwnerEntity(this);
@@ -89,9 +109,13 @@ public class Banana extends Entity {
 		//this.addComponent(nonColliding);
 		//this.addComponent(endOfRoundEvent);	
 		//this.addComponent(bounceBottom);
+		
 		LoopEvent loop = new LoopEvent();
 		loop.addAction(new BananaFlyParabolicAction());
-		this.addComponent(loop);		
+		this.addComponent(loop);	
+		//NOTEvent fly = new NOTEvent(colliding);
+		//fly.addAction(new BananaFlyParabolicAction());
+		//this.addComponent(fly);
 	}
 	
 	/**
@@ -151,7 +175,7 @@ public class Banana extends Entity {
 	 * 
 	 *  @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public float getFLightTime()
+	public float getFlightTime()
 	{
 		return flightTime;
 	}

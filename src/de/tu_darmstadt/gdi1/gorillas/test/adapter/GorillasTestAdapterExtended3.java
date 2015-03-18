@@ -56,7 +56,16 @@ public class GorillasTestAdapterExtended3 extends GorillasTestAdapterExtended2 {
 	public Vector2f getNextShotPosition(Vector2f startPosition, int angle,
 			int speed, int wind, int gravity, boolean fromLeftToRight,
 			int deltaTime) {
-		// TODO: Implement
-		return null;
+		float angleRad = fromLeftToRight ? (float) Math.toRadians(angle): (float) Math.toRadians(180-angle);
+		
+		float speedX = (float) Math.cos(angleRad)*speed;
+		float speedY = (float) Math.sin(angleRad)*speed;
+		
+		Vector2f newPos = new Vector2f();
+		float newXPos = (float) (startPosition.getX() + speedX * deltaTime*super.getTimeScalingFactor() + (0.5* wind* super.getWindScalingFactor() * Math.pow(deltaTime*super.getTimeScalingFactor(),2)));
+		float newYPos = (float) (startPosition.getY() - speedY * deltaTime* super.getTimeScalingFactor() + (0.5* gravity * Math.pow(deltaTime*super.getTimeScalingFactor(),2)));
+		newPos.set(newXPos, newYPos);
+		
+		return newPos;		
 	}
 }

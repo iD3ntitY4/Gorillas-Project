@@ -36,7 +36,8 @@ public class BananaFlyParabolicAction implements Action{
 		owner = (Banana) event.getOwnerEntity();
 		angle = (float) Math.toRadians(owner.getAngle());
 		speed = owner.getSpeed();
-		startTime = owner.getFLightTime() + delta*World.DELTA_TIME_SCALING;
+		//System.out.println(owner.getFlightTime());
+		startTime = owner.getFlightTime() + delta*World.DELTA_TIME_SCALING;
 		owner.setFlightTime(startTime);
 				
 		//System.out.println(startTime + "| Delta: " + delta);
@@ -46,7 +47,6 @@ public class BananaFlyParabolicAction implements Action{
 		float gravAccel = World.gravitation;
 		float speedX = (float) Math.cos(angle)*speed;
 		float speedY = (float) Math.sin(angle)*speed;
-		
 		
 		Vector2f newPos = new Vector2f();
 		float newXPos = (float) (startPos.getX() + speedX * startTime + (0.5* windSpeed* World.WIND_SCALING * Math.pow(startTime,2)));

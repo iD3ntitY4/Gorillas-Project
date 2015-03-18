@@ -17,7 +17,7 @@ public class World {
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static float DELTA_TIME_SCALING = 0.001f;
+	public final static float DELTA_TIME_SCALING = 0.01f;
 	
 	/**
 	 * Scaling variable for the calculation of the impact of wind to movement speed.
@@ -32,7 +32,7 @@ public class World {
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static int BOUNCE_SPEED_DECREASE = 2;
+	public final static float BOUNCE_SPEED_DECREASE = 1.5f;
 	
 	/**
 	 * This variable defines, until which velocity of the banana, it is still supposed to bounce off.

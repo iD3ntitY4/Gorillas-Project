@@ -5,8 +5,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import eea.engine.event.Event;
-
-public class OutOfBoundsEvent extends Event{
+@Deprecated class OutOfBoundsEvent extends Event{
 
 	public OutOfBoundsEvent() {
 		super("OutOfBoundsEvent");
