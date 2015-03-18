@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Gorilla;
+import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.entity.DestructibleImageEntity;
@@ -78,7 +79,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		gorillaWidth = gorillaW;
 		gorillaHeight = gorillaH;
 		
-		DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
+		Skyscraper[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
 		Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
 		
 		for(int i = 0; i < skyline.length; i++)
@@ -117,7 +118,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		
 		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
 		{
-			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
+			Skyscraper[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
 			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
 			
 			for(int i = 0; i < skyline.length; i++)

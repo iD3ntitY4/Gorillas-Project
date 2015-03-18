@@ -51,7 +51,7 @@ public class GamePlayState extends BasicTWLGameState {
 	private Gorilla gorillaOne;
 	private Gorilla gorillaTwo;
 	private Sun sun;
-	DestructibleImageEntity[] skyscrapers = new DestructibleImageEntity[numSkyscrapers];
+	Skyscraper[] skyscrapers = new Skyscraper[numSkyscrapers];
 	
 	
 	private Label gorillaOneLabel = new Label();
@@ -306,7 +306,28 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
-	public DestructibleImageEntity[] createRandomSkyline(int frameWidth, int frameHeight, int gorillaWidth, int gorillaHeight)
+	
+	public void switchTurn()
+	{
+		player1Turn = !player1Turn;
+		player2Turn = !player2Turn;
+		
+		canThrow = true;
+		
+		if(!debug) {
+			
+			throwButton1.setVisible(player1Turn);
+			angleInput1.setVisible(player1Turn);
+			velocityInput1.setVisible(player1Turn);
+			
+			throwButton2.setVisible(player2Turn);
+			angleInput2.setVisible(player2Turn);
+			velocityInput2.setVisible(player2Turn);
+		}
+	}
+	
+	
+	public Skyscraper[] createRandomSkyline(int frameWidth, int frameHeight, int gorillaWidth, int gorillaHeight)
 	{
 		
 		BufferedImage image = new BufferedImage(frameWidth / 8, frameHeight - 100,
@@ -347,7 +368,7 @@ public class GamePlayState extends BasicTWLGameState {
 	}
 	
 	
-	public DestructibleImageEntity[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
+	public Skyscraper[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
 				ArrayList<Vector2f> buildingCoordinates) {
 		
 		
@@ -372,7 +393,7 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		for(int i = 0; i < buildingCoordinates.size(); i++)
 		{
-			skyscrapers[i] = new DestructibleImageEntity(
+			skyscrapers[i] = new Skyscraper(
 					"skyscraper" + i, image, "gorillas/destruction.png", debug);
 			
 			skyscrapers[i].setPosition(new Vector2f(buildingCoordinates.get(i).getX(),
@@ -485,15 +506,7 @@ public class GamePlayState extends BasicTWLGameState {
 			}
 		}
 	}
-	
-	public void switchTurn()
-	{
-		player1Turn = !player1Turn;
-		player2Turn = !player2Turn;
 		
-		canThrow = true;
-	}
-	
 	
 	public void setVelocityInput(char velocity)
 	{
