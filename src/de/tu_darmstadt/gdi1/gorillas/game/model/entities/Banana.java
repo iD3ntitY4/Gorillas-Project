@@ -8,6 +8,8 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
+import de.tu_darmstadt.gdi1.gorillas.game.model.actions.SkyscraperDestructionAction;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkycraper;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
@@ -20,6 +22,7 @@ import eea.engine.event.NOTEvent;
 import eea.engine.event.OREvent;
 import eea.engine.event.basicevents.CollisionEvent;
 import eea.engine.event.basicevents.LoopEvent;
+import eea.engine.event.basicevents.TimeEvent;
 
 /**
  * This class represents the entity of the throwing object, in fact a banana, in the game.<p>
@@ -58,6 +61,15 @@ public class Banana extends Entity {
 		flightTime = 0;
 		this.setScale(0.5f);
 		initialPosition = this.getPosition();
+		this.setPassable(false);
+		//Banana on spawn no Collision
+		//TimeEvent passGorilla = new TimeEvent(2, false);
+		//passGorilla.addAction(action);
+		
+		//Destroy scraper
+		//BananaHitSkycraper hitSky = new BananaHitSkycraper();
+		//hitSky.setOwnerEntity(this);
+		//hitSky.addAction(new SkyscraperDestructionAction());
 		
 		//Events when hitting bottom
 		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?

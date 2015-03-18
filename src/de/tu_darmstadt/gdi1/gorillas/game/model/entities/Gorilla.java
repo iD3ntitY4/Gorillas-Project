@@ -59,7 +59,7 @@ public class Gorilla extends Entity{
 		//End of round Action
 		gorillaHit.addAction(new EndOfRoundAction());
 		danceAfterRound.addAction(new GorillaDanceAction()); //Problem: Gorilla kann auf falsches Bild enden; also muss "gelöscht" werden.
-		
+				
 		//Add all events to gorilla
 		this.addComponent(gorillaHit);
 		this.addComponent(danceAfterRound);
@@ -96,9 +96,9 @@ public class Gorilla extends Entity{
 			banana = new Banana("Banana", (180-angle), speed);
 		Vector2f newPos;
 		if(this.side == GorillaSide.RIGHT)
-			newPos = new Vector2f(this.getPosition().getX()+ this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+			newPos = new Vector2f(this.getPosition().getX(), this.getPosition().getY()-50);
 		else
-			newPos = new Vector2f(this.getPosition().getX()- this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+			newPos = new Vector2f(this.getPosition().getX(), this.getPosition().getY()-50);
 		
 		banana.setPosition(newPos);
 		

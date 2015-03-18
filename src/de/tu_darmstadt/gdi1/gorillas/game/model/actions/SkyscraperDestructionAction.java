@@ -16,7 +16,6 @@ public class SkyscraperDestructionAction implements Action{
 	  
 	  if(owner.collides(owner.getCP().getX(), owner.getCP().getY()))
 	   owner.impactAt(owner.getCP());
-	  
 	 }
 
 }
