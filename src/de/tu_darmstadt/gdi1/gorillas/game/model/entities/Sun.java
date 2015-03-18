@@ -21,12 +21,13 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
  */
 public class Sun extends Entity {
 	
-	public final String standartDataPath = ".\\assets\\other\\moon.png";
+	public final String standartDataPath = ".\\assets\\gorillas\\sun\\sun_smiling.png";
 	
 	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\sun_astonished.png";
 	
 	private int posX;
 	private int posY;
+	public boolean isAstonished;
 	
 	public Sun(String id, int positionX, int positionY, boolean debug)
 	{
@@ -35,19 +36,18 @@ public class Sun extends Entity {
 		posX = positionX;
 		posY = positionY;
 		
+		isAstonished = false;
 		this.setPosition(new Vector2f(posX, posY));
-		BananaHitsSun bananaHit = new BananaHitsSun();
+		BananaHitsSunEvent bananaHit = new BananaHitsSunEvent();
 		bananaHit.addAction(new SunImageAction(astonishedDataPath));
 		this.addComponent(bananaHit);
+		NOTEvent nonCollision = new NOTEvent(bananaHit);
+		nonCollision.addAction(new SunImageAction(standartDataPath));
+		this.addComponent(nonCollision);
+		this.setPassable(true);
 		
 		if(!debug)
-		{
-			NOTEvent nonCollision = new NOTEvent(bananaHit);
-			nonCollision.addAction(new SunImageAction(standartDataPath));
-			this.addComponent(nonCollision);
-			
 			this.setImage(standartDataPath);
-		}
 	}
 	
 	/**

@@ -99,6 +99,7 @@ public class GamePlayState extends BasicTWLGameState {
 																	
 			background.addComponent(new ImageRenderComponent(new Image(
 						"/assets/gorillas/background/background.png"))); 
+			background.setPassable(true);
 	
 			entityManager.addEntity(stateID, background);
 			
@@ -292,9 +293,9 @@ public class GamePlayState extends BasicTWLGameState {
 	{
 		
 		BufferedImage image = new BufferedImage(frameWidth / 8, frameHeight - 100,
-				BufferedImage.TYPE_INT_ARGB);
+				BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphic = image.createGraphics();
-		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		//graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
 		graphic.setColor(new Color(34, 34, 34, 255));
 		graphic.fillRect(0, 0, frameWidth / 8, frameHeight - 100);
 			
@@ -314,11 +315,13 @@ public class GamePlayState extends BasicTWLGameState {
 		{
 			int height = (int) (100 + ((frameHeight - 300) * Math.random()));
 		
-			skyscrapers[i] = new DestructibleImageEntity(
+			skyscrapers[i] = new Skyscraper(
 					"skyscraper" + i, image, "gorillas/destruction.png", debug);
 			
 			skyscrapers[i].setPosition(new Vector2f((frameWidth / 8) * i + (skyscrapers[i].getSize().x / 2),
 					(skyscrapers[i].getSize().y) / 2 + height));
+			
+			skyscrapers[i].setSize(new Vector2f(frameWidth / 8, frameHeight - 100));
 			
 			entityManager.addEntity(stateID, skyscrapers[i]);
 		
