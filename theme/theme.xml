@@ -169,6 +169,11 @@
 		<fontParam if="warning" color="orange" />
 		<fontParam if="disabled" color="gray" />
 	</fontDef>
+	<fontDef name="silkscreen_font" filename="silkscreen.fnt" color="#000000">
+		<fontParam if="error" color="red" />
+		<fontParam if="warning" color="orange" />
+		<fontParam if="disabled" color="gray" />
+	</fontDef>
 
 	<inputMapDef name="-defaultInputMap">
 		<action name="selectAll">ctrl A</action>
@@ -283,6 +288,20 @@
 		</param>
 		<param name="font">
 			<font>menu_button_font</font>
+		</param>
+	</theme>
+	<theme name="score_label" ref="label">
+		<param name="border">
+			<border>6,0</border>
+		</param>
+		<param name="minHeight">
+			<int>30</int>
+		</param>
+		<param name="minWidth">
+			<int>30</int>
+		</param>
+		<param name="font">
+			<font>silkscreen_font</font>
 		</param>
 	</theme>
 	<theme name="radiobutton" ref="button">

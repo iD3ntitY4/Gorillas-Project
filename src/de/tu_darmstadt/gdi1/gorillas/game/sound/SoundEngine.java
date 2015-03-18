@@ -11,6 +11,9 @@ public class SoundEngine {
 	
 	private Audio oggStream;
  
+	private float pausePosition = 0.0f;
+	
+	private float volume = 1.0f;
 	
     public void init() {
  
@@ -22,12 +25,11 @@ public class SoundEngine {
 
         } catch (IOException e) {
 	    e.printStackTrace();
-	}
+        }
+      
+    	
     }
  
-	/**
-	 * Game loop update
-	 */
 	public void update() {
 		
 		if(!oggStream.isPlaying())
@@ -36,5 +38,37 @@ public class SoundEngine {
 		// polling is required to allow streaming to get a chance to
 		// queue buffers.
 		SoundStore.get().poll(0);
+		SoundStore.get().setMusicVolume(volume);
+	}
+	
+	public void pause() {
+		
+		if(oggStream.isPlaying())
+		{
+			pausePosition = oggStream.getPosition();
+			oggStream.stop();
+		}	
+	}
+	
+	public void resume() {
+		oggStream.playAsMusic(1.0f, 1.0f, true);
+		oggStream.setPosition(pausePosition);
+	}
+	
+	public void mute() {
+		if(SoundStore.get().isMusicOn())
+		{
+			SoundStore.get().disable();
+		}
+	}
+	
+	public float getVolume()
+	{
+		return volume;
+	}
+	
+	public void setVolume(float vol)
+	{
+		volume = vol;
 	}
 }

@@ -11,6 +11,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.model.actions.ChangeStateMenuToGame;
+import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -34,9 +37,10 @@ public class MainMenuState extends BasicTWLGameState {
 
 	private int stateID;
 	private StateBasedEntityManager entityManager;
-	//private AppGameContainer gc;
 	private StateBasedGame sb;
 	private boolean debug = true;
+	
+	private SoundEngine sound;
 	
 	private Button mainButton1;
 	private Button mainButton2;
@@ -48,6 +52,7 @@ public class MainMenuState extends BasicTWLGameState {
 	
 	// Button labels
 	private static final String mainButton1Text = "START";
+	private static final String mainButton1Text2 = "BACK";
 	private static final String mainButton2Text = "OPTIONS";
 	private static final String mainButton3Text = "HIGHSCORES";
 	private static final String mainButton4Text = "EXIT";
@@ -63,18 +68,28 @@ public class MainMenuState extends BasicTWLGameState {
 		// enable GUI version
 		if(sb.getClass().equals(Gorillas.class))
 			debug = ((Gorillas) sb).getDebug();
+		
+		if(!debug)
+			sound = ((Gorillas)sb).getSoundEngine();
 	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		
-		// Start a new Game when the specific key is pressed
 		Entity newGameKeyListener = new Entity("Start_game_key_listener");
 		KeyPressedEvent newGameKeyPressed = new KeyPressedEvent(startGameKey);
 		newGameKeyPressed.addAction(new ChangeStateAction(Gorillas.GAMESETUPSTATE));
 		newGameKeyListener.addComponent(newGameKeyPressed);
 		entityManager.addEntity(stateID, newGameKeyListener);
+		
+		// Changes the state back to game, if a game is currently running
+		Entity escListener = new Entity("Esc_listener");
+		KeyPressedEvent escEvent = new KeyPressedEvent(Input.KEY_ESCAPE);
+		escEvent.addAction(new ChangeStateMenuToGame(Gorillas.GAMEPLAYSTATE));
+		//escEvent.addAction(new ChangeStateAction(Gorillas.GAMEPLAYSTATE));
+		escListener.addComponent(escEvent);
+		entityManager.addEntity(stateID, escListener);
 		
 		if(!debug)
 		{
@@ -86,12 +101,27 @@ public class MainMenuState extends BasicTWLGameState {
 						"\\assets\\gorillas\\background\\background.png"))); 
 	
 			entityManager.addEntity(stateID, background);
+			
+			sound.init();
 		}
+		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		
+		if(!debug)
+		{
+			sound.update();
+			
+			if(World.isRunningGame)
+			{
+				mainButton1.setText(mainButton1Text2);
+			} else {
+				mainButton1.setText(mainButton1Text);
+			}
+		}
 		
 		entityManager.updateEntities(container, game, delta);
 	}
@@ -120,9 +150,7 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton1.setTheme("menu_button");
 		mainButton1.addCallback(new Runnable() {
 			public void run() {
-				
-				//sb.enterState(Gorillas.GAMESETUPSTATE);
-				sb.enterState(Gorillas.GAMESETUPSTATE);
+				button1Action();
 				
 			}
 		});
@@ -197,4 +225,14 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton4.setPosition(paneWidth / 2 - mainButton4.getWidth() / 2,
 				paneHeight / 2 - (mainButton4.getHeight() / 2) + (paneHeight / 8));
 	}
+	
+	
+	private void button1Action()
+	{
+		if(World.isRunningGame)
+			sb.enterState(Gorillas.GAMEPLAYSTATE);
+		else
+			sb.enterState(Gorillas.GAMESETUPSTATE);
+	}
+	
 }

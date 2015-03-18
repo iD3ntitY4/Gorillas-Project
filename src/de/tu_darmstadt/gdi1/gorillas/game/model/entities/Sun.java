@@ -39,12 +39,15 @@ public class Sun extends Entity {
 		BananaHitsSun bananaHit = new BananaHitsSun();
 		bananaHit.addAction(new SunImageAction(astonishedDataPath));
 		this.addComponent(bananaHit);
-		NOTEvent nonCollision = new NOTEvent(bananaHit);
-		nonCollision.addAction(new SunImageAction(standartDataPath));
-		this.addComponent(nonCollision);
 		
 		if(!debug)
+		{
+			NOTEvent nonCollision = new NOTEvent(bananaHit);
+			nonCollision.addAction(new SunImageAction(standartDataPath));
+			this.addComponent(nonCollision);
+			
 			this.setImage(standartDataPath);
+		}
 	}
 	
 	/**

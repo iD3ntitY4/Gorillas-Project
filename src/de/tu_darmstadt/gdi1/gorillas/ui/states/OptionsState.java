@@ -8,11 +8,12 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
-import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.ToggleButton;
 import de.matthiasmann.twl.ValueAdjusterFloat;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
@@ -38,6 +39,7 @@ public class OptionsState extends BasicTWLGameState {
 	private StateBasedGame sb;
 	private boolean debug = true;
 	
+	private SoundEngine sound;
 	
 	private Button saveButton 					= new Button("SAVE");
 	private Button cancelButton 				= new Button("CANCEL");
@@ -54,8 +56,6 @@ public class OptionsState extends BasicTWLGameState {
 	private ValueAdjusterFloat windSpeedAdjust 	= new ValueAdjusterFloat();
 	
 	private ValueAdjusterFloat volumeAdjust 	= new ValueAdjusterFloat();
-	private ToggleButton muteButton 			= new ToggleButton();
-	private Label muteLabel 					= new Label();
 	
 	
 	
@@ -83,6 +83,9 @@ public class OptionsState extends BasicTWLGameState {
 		
 		if(sb.getClass().equals(Gorillas.class))
 			debug = ((Gorillas) sb).getDebug();
+		
+		if(!debug)
+			sound = ((Gorillas)sb).getSoundEngine();
 	}
 	
 	@Override
@@ -107,15 +110,15 @@ public class OptionsState extends BasicTWLGameState {
 	}
 	
 	// Resets all variables for the game
-	private void resetVariables()
-	{
-		gravity = 9.81f;//World.getGravity();
-		standardGravity = 9.81f; //World.getStandardWorldGravity();
-		wind = false; //World.getWindStatus();
-		windDynamic = true; //World.getWindStaticDynamic();
-		windStaticSpeed = 3; //World.getStaticWindSpeed();
-		volume = 1.0f; //World.getSoundVolume();
-	}
+		private void resetVariables()
+		{
+			gravity 		= World.gravitation;
+			standardGravity = 9.81f;
+			wind 			= (World.wind.x != 0);
+			windDynamic 	= (World.WIND_TYPE == 2);
+			windStaticSpeed = World.wind.x;
+			volume 			= 1.0f; //World.getSoundVolume();
+		}
 	
 	// Init/Reset all the Elements of the GUI
 	private void initUIElements()
@@ -137,7 +140,6 @@ public class OptionsState extends BasicTWLGameState {
 			throws SlickException {
 		
 		entityManager.renderEntities(container, game, g);
-		
 	}
 
 	@Override
@@ -146,9 +148,11 @@ public class OptionsState extends BasicTWLGameState {
 		
 		if(!debug)
 		{
-			// Update the variable to the Adjuster every frame
+			// Update the variable from the Adjuster every frame
 			gravity = gravityAdjust.getValue();
 			volume = volumeAdjust.getValue();
+			
+			sound.update();
 		}
 		
 		entityManager.updateEntities(container, game, delta);
@@ -249,31 +253,25 @@ public class OptionsState extends BasicTWLGameState {
 		volumeAdjust.setValue(volume);
 		
 		
-		// Mute the volume completely
-		muteButton.setTheme("checkbox");
-		muteButton.addCallback(new Runnable() {
-			public void run() {
-				volume = (muteButton.isActive() ? 0.0f : 0.5f);
-			}
-		});
-		muteLabel.setText("Mute");
-		muteLabel.setTheme("white_label");
-		
-		
 		// Save settings
-		saveButton.setTheme("menu_button");
-		saveButton.addCallback(new Runnable() {
-			public void run() {
-				/*
-				World.setGravity(gravity);
-				World.setWindStatus(wind);
-				World.setWindStaticDynamic(windDynamic);
-				World.setStaticWindSpeed(windStaticSpeed);
-				World.setSoundVolume(volume);
-				*/
-				sb.enterState(Gorillas.MAINMENUSTATE);
-			}
-		});
+				saveButton.setTheme("menu_button");
+				saveButton.addCallback(new Runnable() {
+					public void run() {
+						
+						World.setGravity(gravity);
+						
+						if(wind)
+							World.setWindType(windDynamic ? World.WIND_DYNAMIC : World.WIND_STATIC);
+						else
+							World.setWindType(0);
+						
+						World.setWind(new Vector2f(windStaticSpeed,World.wind.y));
+						
+						sound.setVolume(volume);
+						
+						sb.enterState(Gorillas.MAINMENUSTATE);
+					}
+				});
 		
 		// Abort all changes to the options
 		cancelButton.setTheme("menu_button");
@@ -296,8 +294,6 @@ public class OptionsState extends BasicTWLGameState {
 		rp.add(windStaticDynamic);
 		rp.add(windSpeedAdjust);
 		rp.add(volumeAdjust);
-		rp.add(muteButton);
-		rp.add(muteLabel);
 		rp.add(saveButton);
 		rp.add(cancelButton);
 		return rp;
@@ -350,14 +346,6 @@ public class OptionsState extends BasicTWLGameState {
 		volumeAdjust.setSize(paneWidth / 3, paneHeight / 12);
 		volumeAdjust.setPosition(paneWidth / 2 - volumeAdjust.getWidth() / 2,
 				paneHeight / 2 - (volumeAdjust.getHeight() / 2) + (paneHeight / 8));
-		
-		muteButton.setSize(paneWidth / 26, paneHeight / 20);
-		muteButton.setPosition(paneWidth / 2  + (volumeAdjust.getWidth() / 2) + (paneWidth / 80),
-				volumeAdjust.getY() + (volumeAdjust.getHeight() / 2) - (muteButton.getHeight() / 2));
-		
-		muteLabel.setSize(23, 23);
-		muteLabel.setPosition(paneWidth / 2 /*- muteButton.getWidth() / 2 */ + (volumeAdjust.getWidth() / 2) + (muteButton.getWidth() + (paneWidth / 160)),
-				muteButton.getY());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		

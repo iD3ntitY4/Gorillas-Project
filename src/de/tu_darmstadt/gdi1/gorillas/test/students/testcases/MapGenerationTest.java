@@ -17,7 +17,7 @@ public class MapGenerationTest {
 
 	@Before
 	public void setUp() {
-		adapter = new GorillasTestAdapterExtended2();
+		adapter = new GorillasTestAdapterExtended1();
 		adapter.createRandomMap(1000, 600, 50, 50);
 	}
 

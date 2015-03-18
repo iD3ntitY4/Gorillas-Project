@@ -8,7 +8,8 @@ import org.newdawn.slick.SlickException;
 
 import de.matthiasmann.twl.slick.TWLStateBasedGame;
 import eea.engine.entity.StateBasedEntityManager;
-
+import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
 
@@ -34,6 +35,9 @@ public class Gorillas extends TWLStateBasedGame {
 	public static final int TARGET_FRAME_RATE = 120;
 
 	public static boolean debug = false;
+	
+	public SoundEngine sound = new SoundEngine();
+	
 	
 	static AppGameContainer app;
 
@@ -76,6 +80,8 @@ public class Gorillas extends TWLStateBasedGame {
 		// Set window properties and start it
 		app.setShowFPS(false);
 		app.setDisplayMode(FRAME_WIDTH, FRAME_HEIGHT, false);
+		World.setWorldWidth(FRAME_WIDTH);
+		World.setWorldHeight(FRAME_HEIGHT);
 		app.setTargetFrameRate(TARGET_FRAME_RATE);
 		app.setIcon("\\assets\\other\\gorilla_new_icon.png");
 		app.start();
@@ -110,5 +116,10 @@ public class Gorillas extends TWLStateBasedGame {
 	public boolean getDebug()
 	{
 		return debug;
+	}
+	
+	public SoundEngine getSoundEngine()
+	{
+		return sound;
 	}
 }

@@ -15,6 +15,7 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -42,6 +43,7 @@ public class GameSetupState extends BasicTWLGameState {
 	private StateBasedGame sb;
 	private boolean debug = true;
 	
+	private SoundEngine sound;
 	
 	public static String player1Name = "";
 	public static String player2Name = "";
@@ -80,6 +82,9 @@ public class GameSetupState extends BasicTWLGameState {
 		
 		if(sb.getClass().equals(Gorillas.class))
 			debug = ((Gorillas) sb).getDebug();
+		
+		if(!debug)
+			sound = ((Gorillas)sb).getSoundEngine();
 	}
 	
 	@Override
@@ -119,7 +124,11 @@ public class GameSetupState extends BasicTWLGameState {
 
 		// Keep the names updated from the Edit fields
 		if(!debug)
+		{
 			updateNameFromEdit();
+			
+			sound.update();
+		}
 		
 		entityManager.updateEntities(container, game, delta);
 		
@@ -262,6 +271,7 @@ public class GameSetupState extends BasicTWLGameState {
 					updateNameFromEdit();
 					World.setPlayerOneName(player1Name);
 					World.setPlayerTwoName(player2Name);
+					World.setRunningGame(true);
 					sb.enterState(Gorillas.GAMEPLAYSTATE);
 				}
 				

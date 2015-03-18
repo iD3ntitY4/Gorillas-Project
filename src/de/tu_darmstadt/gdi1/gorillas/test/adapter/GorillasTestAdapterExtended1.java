@@ -4,10 +4,28 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Gorilla;
+import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
+import eea.engine.entity.DestructibleImageEntity;
+
 public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 
+	ArrayList<Vector2f> buildingCoordinates = new ArrayList<Vector2f>();
+	Vector2f positionLeftGorilla = new Vector2f();
+	Vector2f positionRightGorilla = new Vector2f();
+	
+	int frameWidth;
+	int frameHeight;
+	int gorillaWidth;
+	int gorillaHeight;
+	
+	TestGorillas gorillas;
+	
 	public GorillasTestAdapterExtended1() {
 		super();
+		gorillas = super.gorillas;
 	}
 
 	@Override
@@ -55,10 +73,27 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @param frameHeight
 	 *            the height of the frame/screen of the gorillas game
 	 */
-	public void createRandomMap(int frameWidth, int frameHeight,
-			int gorillaWidth, int gorillaHeight) {
-
-		// TODO: Implement
+	public void createRandomMap(int frameW, int frameH,
+			int gorillaW, int gorillaH) {
+		
+		frameWidth = frameW;
+		frameHeight = frameH;
+		gorillaWidth = gorillaW;
+		gorillaHeight = gorillaH;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
+			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
+			
+			for(int i = 0; i < skyline.length; i++)
+			{
+				buildingCoordinates.add(skyline[i].getPosition());
+			}
+			
+			positionLeftGorilla = gorillaEntities[0].getPosition();
+			positionRightGorilla = gorillaEntities[1].getPosition();
+		}
 	}
 
 	/**
@@ -81,7 +116,22 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 			ArrayList<Vector2f> buildingCoordinates,
 			Vector2f leftGorillaCoordinate, Vector2f rightGorillaCoordinate) {
 
-		// TODO: Implement
+		frameWidth = paneWidth;
+		frameHeight = paneHeight;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
+			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
+			
+			for(int i = 0; i < skyline.length; i++)
+			{
+				buildingCoordinates.add(skyline[i].getPosition());
+			}
+			
+			positionLeftGorilla = gorillaEntities[0].getPosition();
+			positionRightGorilla = gorillaEntities[1].getPosition();
+		}
 	}
 
 	/**
@@ -90,7 +140,10 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * should be set as current map in the game, if the game is in GamePlayState
 	 */
 	public void startCurrrentMap() {
-		// TODO: Implement
+		if(super.gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			
+		}
 	}
 
 	/**
@@ -100,8 +153,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         current map, ordered from left to right
 	 */
 	public ArrayList<Vector2f> getBuildingCoordinates() {
-		// TODO: Implement
-		return null;
+	
+		return buildingCoordinates;
 	}
 
 	/**
@@ -110,8 +163,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the center coordinate of the left gorilla
 	 */
 	public Vector2f getLeftGorillaCoordinate() {
-		// TODO: Implement
-		return null;
+		
+		return positionLeftGorilla;
 	}
 
 	/**
@@ -120,8 +173,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the center coordinate of the right gorilla
 	 */
 	public Vector2f getRightGorillaCoordinate() {
-		// TODO: Implement
-		return null;
+	
+		return positionRightGorilla;
 	}
 
 	/**
@@ -130,8 +183,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the frameWidth which was used to create the current map
 	 */
 	public float getMapFrameWidth() {
-		// TODO: Implement
-		return -1;
+		
+		return frameWidth;
 	}
 
 	/**
@@ -140,8 +193,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the frameHeight which was used to create the current map
 	 */
 	public float getMapFrameHeight() {
-		// TODO: Implement
-		return -1;
+		
+		return frameHeight;
 	}
 
 	/**
@@ -151,8 +204,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the gorillaHeight which was used to create the current map
 	 */
 	public float getGorillaHeight() {
-		// TODO: Implement
-		return -1;
+		
+		return gorillaHeight;
 	}
 
 	/**
@@ -161,8 +214,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return the gorillaWidth which was used to create the current map
 	 */
 	public float getGorillaWidth() {
-		// TODO: Implement
-		return -1;
+		
+		return gorillaWidth;
 	}
 
 	/**

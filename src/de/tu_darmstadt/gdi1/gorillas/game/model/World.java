@@ -43,22 +43,21 @@ public class World {
 	public final static int MAX_SPEED = 200;
 	public final static int MAX_ANGLE = 180;
 	
-	public static int worldWidth = 400; //TODO: This should be set by the GUI because this depends on the window size
-	public static int worldHeight= 300;//TODO: This should be set by the GUI because this depends on the window size
+	public static int worldWidth;
+	public static int worldHeight;
 	
 	public static Vector2f wind = new Vector2f(0,0);
-	public static float gravitation = 100f; 
+	public static int WIND_TYPE = 0;
+	public final static int WIND_STATIC = 1;
+	public final static int WIND_DYNAMIC = 2;
 	
+	public static float gravitation = 9.81f; 
 	
 	public static String PLAYER_ONE_NAME = "";
 	public static String PLAYER_TWO_NAME = "";
 	
+	public static boolean isRunningGame = false;
 	
-	
-	public World()
-	{
-		
-	}
 	
 	public static void setPlayerOneName(String name)
 	{
@@ -68,5 +67,36 @@ public class World {
 	public static void setPlayerTwoName(String name)
 	{
 		PLAYER_TWO_NAME = name;
+	}
+	
+	public static void setRunningGame(boolean mode)
+	{
+		isRunningGame = mode;
+	}
+	
+	public static void setWorldWidth(int width)
+	{
+		worldWidth = width;
+	}
+	
+	public static void setWorldHeight(int height)
+	{
+		worldHeight = height;
+	}
+	
+	public static void setWind(Vector2f newWind)
+	{
+		wind = newWind;
+	}
+	
+	public static void setWindType(int type)
+	{
+		if(WIND_TYPE >= 0 && WIND_TYPE <= 2)
+			WIND_TYPE = type;
+	}
+	
+	public static void setGravity(float newG)
+	{
+		gravitation = newG;
 	}
 }
