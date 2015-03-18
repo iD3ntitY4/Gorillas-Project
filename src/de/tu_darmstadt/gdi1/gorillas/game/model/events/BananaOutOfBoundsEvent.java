@@ -9,7 +9,7 @@ import eea.engine.event.Event;
 public class BananaOutOfBoundsEvent extends Event {
 		
 	public BananaOutOfBoundsEvent() {
-		super("BananaBottomOutEvent");
+		super("BananaOutOfBoundsEvent");
 	}
 
 	@Override
