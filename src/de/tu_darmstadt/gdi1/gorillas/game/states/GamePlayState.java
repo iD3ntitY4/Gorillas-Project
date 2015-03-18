@@ -65,14 +65,22 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	private Button throwButton1;
 	private Button throwButton2;
-	private EditField angleInput1;
-	private EditField velocityInput1;
-	private EditField angleInput2;
-	private EditField velocityInput2;
+	private EditField angleInput1 = new EditField();
+	private EditField velocityInput1 = new EditField();
+	private EditField angleInput2 = new EditField();
+	private EditField velocityInput2 = new EditField();
+	
+	
+	private int currentAngle = -1;
+	private int currentVelocity = -1;
+	private boolean canThrow = true;
 	
 	// TODO must switch at the end of a turn
 	private boolean player1Turn= true;
 	private boolean player2Turn = false;
+	
+	
+	
 	
 	public GamePlayState(int sid, StateBasedGame game)
 	{
@@ -137,6 +145,31 @@ public class GamePlayState extends BasicTWLGameState {
 			gorillaTwoLabel.setText(World.PLAYER_TWO_NAME);
 			
 			sound.update();
+			
+			
+			if(player1Turn)
+			{
+				if((angleInput1.getText()).matches("\\d+"))
+					currentAngle = Integer.parseInt(angleInput1.getText());
+				else
+					currentAngle = -1;
+				
+				if((velocityInput1.getText()).matches("\\d+"))
+					currentVelocity = Integer.parseInt(velocityInput1.getText());
+				else
+					currentVelocity = -1;
+				
+			} else {
+				if((angleInput2.getText()).matches("\\d+"))
+					currentAngle = Integer.parseInt(angleInput1.getText());
+				else
+					currentAngle = -1;
+				
+				if((velocityInput2.getText()).matches("\\d+"))
+					currentVelocity = Integer.parseInt(velocityInput2.getText());
+				else
+					currentVelocity = -1;
+			}
 		}
 
 		entityManager.updateEntities(container, game, delta);
@@ -165,14 +198,7 @@ public class GamePlayState extends BasicTWLGameState {
 		throwButton1.setVisible(player1Turn);
 		throwButton1.addCallback(new Runnable() {
 			public void run() {
-				
-				if(((angleInput1.getText()).matches("\\d+")) && ((velocityInput1.getText()).matches("\\d+")))
-				{
-					gorillaOne.throwBanana(entityManager,
-							Integer.parseInt(angleInput1.getText()),
-							Integer.parseInt(velocityInput1.getText())
-							);
-				}
+				throwButtonPressed();
 			}
 		});
 		
@@ -180,34 +206,22 @@ public class GamePlayState extends BasicTWLGameState {
 		throwButton2.setVisible(player2Turn);
 		throwButton2.addCallback(new Runnable() {
 			public void run() {
-				
-				if(((angleInput2.getText()).matches("\\d+")) && ((velocityInput2.getText()).matches("\\d+")))
-				{
-					gorillaOne.throwBanana(entityManager,
-							Integer.parseInt(angleInput2.getText()),
-							Integer.parseInt(velocityInput2.getText())
-							);
-				}
-				
+				throwButtonPressed();
 			}
 		});
 		
-		angleInput1 = new EditField();
 		angleInput1.setMultiLine(false);
 		angleInput1.setMaxTextLength(3);
 		angleInput1.setVisible(player1Turn);
-		
-		velocityInput1 = new EditField();
+
 		velocityInput1.setMultiLine(false);
 		velocityInput1.setMaxTextLength(3);
 		velocityInput1.setVisible(player1Turn);
 		
-		angleInput2 = new EditField();
 		angleInput2.setMultiLine(false);
 		angleInput2.setMaxTextLength(3);
 		angleInput2.setVisible(player2Turn);
 		
-		velocityInput2 = new EditField();
 		velocityInput2.setMultiLine(false);
 		velocityInput2.setMaxTextLength(3);
 		velocityInput2.setVisible(player2Turn);
@@ -418,10 +432,81 @@ public class GamePlayState extends BasicTWLGameState {
 		entityManager.addEntity(stateID, sun);
 	}
 	
+	public void throwButtonPressed()
+	{
+		if(currentAngle > -1 && currentAngle <= 360 && 
+				currentVelocity > -1 && currentVelocity <= 200 && canThrow)
+		{
+			if(player1Turn)
+				gorillaOne.throwBanana(entityManager, currentAngle, currentVelocity);
+			else
+				gorillaTwo.throwBanana(entityManager, currentAngle, currentVelocity);
+			
+			resetPlayerInput();
+			canThrow = false;
+		}
+	}
+	
+	public void resetPlayerInput()
+	{
+		currentAngle = -1;
+		currentVelocity = -1;
+		
+		if(!debug)
+		{
+			if(player1Turn)
+			{
+				angleInput1.setText("");
+				velocityInput1.setText("");
+			} else {
+				angleInput2.setText("");
+				velocityInput2.setText("");
+			}
+		}
+	}
 	
 	public void switchTurn()
 	{
 		player1Turn = !player1Turn;
 		player2Turn = !player2Turn;
+		
+		canThrow = true;
 	}
+	
+	
+	public void setVelocityInput(char velocity)
+	{
+		if(Character.isDigit(velocity))
+		{
+			if (currentVelocity > -1 && Integer.parseInt(Integer.toString(currentVelocity) + "" + Character.toString(velocity)) <= 200)
+			{
+				currentVelocity = Integer.parseInt(Integer.toString(currentVelocity) + "" + Character.toString(velocity));
+			} else if(currentVelocity == -1) {
+				currentVelocity = Integer.parseInt(Character.toString(velocity));
+			}
+		}
+	}
+	
+	public int getVelocityInput(){
+		return currentVelocity;
+	}
+	
+	public void setAngleInput(char angle)
+	{
+		if(Character.isDigit(angle))
+		{
+			if (currentAngle > -1 && Integer.parseInt(Integer.toString(currentAngle) + "" + Character.toString(angle)) <= 360)
+			{
+				currentAngle = Integer.parseInt(Integer.toString(currentAngle) + "" + Character.toString(angle));
+			} else if(currentAngle == -1) {
+				currentAngle = Integer.parseInt(Character.toString(angle));
+			}
+		}
+	}
+	
+	public int getAngleInput(){
+		return currentAngle;
+	}
+	
+	
 }
