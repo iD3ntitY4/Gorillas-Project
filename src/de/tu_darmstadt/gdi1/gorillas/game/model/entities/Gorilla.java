@@ -39,7 +39,7 @@ public class Gorilla extends Entity{
 	 * 
 	 * @param idNum is the id-number; should be unique.
 	 */
-	public Gorilla(GorillaSide position, int posX, int posY, boolean debug)
+	public Gorilla(GorillaSide position, float posX, float posY, int sizeX, int sizeY, boolean debug)
 	{
 		super("Gorilla" + position.toString());
 		imageNumber=0;
@@ -50,7 +50,7 @@ public class Gorilla extends Entity{
 			this.setImage(defaultImagePathNormal);
 		
 		this.setPosition(new Vector2f(posX, posY));
-		this.setSize(new Vector2f(54,64));
+		this.setSize(new Vector2f(sizeX, sizeY));
 		
 		//End of round event
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();

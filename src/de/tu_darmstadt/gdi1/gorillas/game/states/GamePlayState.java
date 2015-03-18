@@ -60,8 +60,8 @@ public class GamePlayState extends BasicTWLGameState {
 	// TODO muss aktualiesert werden auf die Punkte während des Spiels
 	private Label scoreLabel;
 	private Container scoreContainer = new Container();
-	private String scorePlayer1 = "0";
-	private String scorePlayer2 = "0";
+	private int scorePlayer1 = 0;
+	private int scorePlayer2 = 0;
 	
 	private Button throwButton1;
 	private Button throwButton2;
@@ -74,6 +74,9 @@ public class GamePlayState extends BasicTWLGameState {
 	private int currentAngle = -1;
 	private int currentVelocity = -1;
 	private boolean canThrow = true;
+	
+	private int gorillaSizeX = 54;
+	private int gorillaSizeY = 64;
 	
 	// TODO must switch at the end of a turn
 	private boolean player1Turn= true;
@@ -332,13 +335,12 @@ public class GamePlayState extends BasicTWLGameState {
 			skyscrapers[i] = new Skyscraper(
 					"skyscraper" + i, image, "gorillas/destruction.png", debug);
 			
-			skyscrapers[i].setPosition(new Vector2f((frameWidth / 8) * i + (skyscrapers[i].getSize().x / 2),
-					(skyscrapers[i].getSize().y) / 2 + height));
-			
 			skyscrapers[i].setSize(new Vector2f(frameWidth / 8, frameHeight - 100));
 			
+			skyscrapers[i].setPosition(new Vector2f((frameWidth / 8) * i + (skyscrapers[i].getSize().x / 2),
+					(skyscrapers[i].getSize().y) / 2 + height));
+
 			entityManager.addEntity(stateID, skyscrapers[i]);
-		
 		}
 		
 		return skyscrapers;
@@ -383,20 +385,25 @@ public class GamePlayState extends BasicTWLGameState {
 		
 	}
 	
+	
 	public Gorilla[] placeGorillasRandom(DestructibleImageEntity[] skyscraperArray, int gorillaWidth, int gorillaHeight)
 	{
 		
 		int g1place = (int) (1 + 2 * Math.random());
 		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
-				(int) (skyscraperArray[g1place].getPosition().x), 
-				(int) (skyscraperArray[g1place].getPosition().y - (skyscraperArray[g1place].getSize().y / 2) - gorillaHeight / 2),
+				skyscraperArray[g1place].getPosition().x, 
+				skyscraperArray[g1place].getPosition().y - (skyscraperArray[g1place].getSize().y / 2) - gorillaHeight / 2,
+				gorillaWidth,
+				gorillaHeight,
 				debug);
 		
 		
 		int g2place = (int) (8 - 2 * Math.random());
 		gorillaTwo = new Gorilla(Gorilla.GorillaSide.LEFT,
-				(int) (skyscraperArray[g2place].getPosition().x), 
-				(int) (skyscraperArray[g2place].getPosition().y - (skyscraperArray[g2place].getSize().y / 2) - gorillaHeight / 2),
+				(skyscraperArray[g2place].getPosition().x), 
+				(skyscraperArray[g2place].getPosition().y - (skyscraperArray[g2place].getSize().y / 2) - gorillaHeight / 2),
+				gorillaWidth,
+				gorillaHeight,
 				debug);
 		
 		
@@ -410,10 +417,21 @@ public class GamePlayState extends BasicTWLGameState {
 		return gorillas;
 	}
 	
+	
 	public Gorilla[] placeGorillasCustom(Vector2f leftGorillaCoordinate, Vector2f rightGorillaCoordinate)
 	{
-		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, (int) leftGorillaCoordinate.getX(), (int) leftGorillaCoordinate.getY(), debug);
-		gorillaOne = new Gorilla(Gorilla.GorillaSide.LEFT, (int) rightGorillaCoordinate.getX(), (int) rightGorillaCoordinate.getY(), debug);
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
+				(int) leftGorillaCoordinate.getX(), 
+				(int) leftGorillaCoordinate.getY(), 
+				gorillaSizeX,
+				gorillaSizeY,
+				debug);
+		gorillaOne = new Gorilla(Gorilla.GorillaSide.LEFT, 
+				(int) rightGorillaCoordinate.getX(), 
+				(int) rightGorillaCoordinate.getY(), 
+				gorillaSizeX,
+				gorillaSizeY,
+				debug);
 		
 		Gorilla[] gorillas = new Gorilla[2];
 		gorillas[0] = gorillaOne;
@@ -421,6 +439,7 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		return gorillas;
 	}
+	
 	
 	public void placeSun() {
 		
@@ -431,6 +450,7 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		entityManager.addEntity(stateID, sun);
 	}
+	
 	
 	public void throwButtonPressed()
 	{
@@ -446,6 +466,7 @@ public class GamePlayState extends BasicTWLGameState {
 			canThrow = false;
 		}
 	}
+	
 	
 	public void resetPlayerInput()
 	{
@@ -487,9 +508,11 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
+	
 	public int getVelocityInput(){
 		return currentVelocity;
 	}
+	
 	
 	public void setAngleInput(char angle)
 	{
@@ -504,9 +527,26 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
+	
 	public int getAngleInput(){
 		return currentAngle;
 	}
 	
+	
+	public int getPlayerOneScore() {
+		return scorePlayer1;
+	}
+	
+	public int getPlayerTwoScore() {
+		return scorePlayer2;
+	}
+	
+	public boolean isPlayerOneTurn() {
+		return player1Turn;
+	}
+	
+	public boolean isPlayerTwoTurn() {
+		return player2Turn;
+	}
 	
 }

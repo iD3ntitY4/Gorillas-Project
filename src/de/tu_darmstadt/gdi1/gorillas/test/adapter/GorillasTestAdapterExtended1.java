@@ -7,11 +7,10 @@ import org.newdawn.slick.geom.Vector2f;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Gorilla;
 import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
-import de.tu_darmstadt.gdi1.gorillas.ui.states.GameSetupState;
 import eea.engine.entity.DestructibleImageEntity;
 
 public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
-
+	
 	ArrayList<Vector2f> buildingCoordinates = new ArrayList<Vector2f>();
 	Vector2f positionLeftGorilla = new Vector2f();
 	Vector2f positionRightGorilla = new Vector2f();
@@ -21,11 +20,9 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	int gorillaWidth;
 	int gorillaHeight;
 	
-	TestGorillas gorillas;
-	
 	public GorillasTestAdapterExtended1() {
 		super();
-		gorillas = super.gorillas;
+		super.initializeGame();
 	}
 
 	@Override
@@ -81,19 +78,18 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		gorillaWidth = gorillaW;
 		gorillaHeight = gorillaH;
 		
-		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
+		Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
+		
+		for(int i = 0; i < skyline.length; i++)
 		{
-			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
-			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
-			
-			for(int i = 0; i < skyline.length; i++)
-			{
-				buildingCoordinates.add(skyline[i].getPosition());
-			}
-			
-			positionLeftGorilla = gorillaEntities[0].getPosition();
-			positionRightGorilla = gorillaEntities[1].getPosition();
+			buildingCoordinates.add(new Vector2f(
+					skyline[i].getPosition().x - (skyline[i].getSize().x / 2),
+					skyline[i].getPosition().y - (skyline[i].getSize().y / 2)));
 		}
+		
+		positionLeftGorilla = gorillaEntities[0].getPosition();
+		positionRightGorilla = gorillaEntities[1].getPosition();
 	}
 
 	/**
@@ -126,7 +122,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 			
 			for(int i = 0; i < skyline.length; i++)
 			{
-				buildingCoordinates.add(skyline[i].getPosition());
+				buildingCoordinates.add(new Vector2f(skyline[i].getPosition().x + skyline[i].getSize().x / 2,
+						skyline[i].getPosition().y + skyline[i].getSize().y / 2));
 			}
 			
 			positionLeftGorilla = gorillaEntities[0].getPosition();
@@ -140,7 +137,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * should be set as current map in the game, if the game is in GamePlayState
 	 */
 	public void startCurrrentMap() {
-		if(super.gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
 		{
 			
 		}
@@ -341,8 +338,13 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         GamePlayState
 	 */
 	public int getPlayer1Score() {
-		// TODO: Implement
-		return -1;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).getPlayerOneScore();
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -353,8 +355,13 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         GamePlayState
 	 */
 	public int getPlayer2Score() {
-		// TODO: Implement
-		return -1;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).getPlayerTwoScore();
+		} else {
+			return -1;
+		}
 	}
 
 	/**
@@ -369,8 +376,13 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         turn of anyone
 	 */
 	public boolean isPlayer1Turn() {
-		// TODO: Implement
-		return false;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).isPlayerOneTurn();
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -385,7 +397,12 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         turn of anyone
 	 */
 	public boolean isPlayer2Turn() {
-		// TODO: Implement
-		return false;
+		
+		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		{
+			return ((GamePlayState) gorillas.getCurrentState()).isPlayerTwoTurn();
+		} else {
+			return false;
+		}
 	}
 }
