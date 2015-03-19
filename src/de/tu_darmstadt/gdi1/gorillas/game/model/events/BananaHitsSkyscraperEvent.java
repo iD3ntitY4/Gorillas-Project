@@ -43,28 +43,6 @@ public class BananaHitsSkyscraperEvent extends CollisionEvent {
 			    // else, nothing is to be done
 			    return false;
 	 
-		
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	}

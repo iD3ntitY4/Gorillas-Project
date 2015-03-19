@@ -8,7 +8,7 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
+//import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
@@ -81,8 +81,8 @@ public class Banana extends Entity {
 		this.addComponent(collides);
 		
 		// Collision with Skyscraper:
-		BananaHitSkyscraperEvent colSky = new BananaHitSkyscraperEvent();
-		this.addComponent(colSky);
+		//BananaHitSkyscraperEvent colSky = new BananaHitSkyscraperEvent();
+		//this.addComponent(colSky);
 		
 		// Fly:
 		LoopEvent loop = new LoopEvent();
