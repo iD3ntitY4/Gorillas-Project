@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
+import eea.engine.entity.DestructibleImageEntity;
 
 public class SkyscraperDestructionAction implements Action{
 	Vector2f impactPos;
@@ -18,9 +19,9 @@ public class SkyscraperDestructionAction implements Action{
 	 @Override
 	 public void update(GameContainer gc, StateBasedGame sb, int delta,
 	   Component event) {
-		 Skyscraper owner;
-		  if(event.getOwnerEntity() instanceof Skyscraper)
-			 owner = (Skyscraper) event.getOwnerEntity();
+		 DestructibleImageEntity owner;
+		  if(event.getOwnerEntity() instanceof DestructibleImageEntity)
+			 owner = (DestructibleImageEntity) event.getOwnerEntity();
 		  else
 			  return;
 		  if(owner.collides(impactPos.getX(), impactPos.getY()))

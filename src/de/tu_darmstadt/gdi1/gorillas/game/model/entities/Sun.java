@@ -23,7 +23,7 @@ public class Sun extends Entity {
 	
 	public final String standartDataPath = ".\\assets\\gorillas\\sun\\moon.png";
 	
-	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\sun_astonished.png";
+	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\moon_astonished.png";
 	
 	private int posX;
 	private int posY;
@@ -42,13 +42,14 @@ public class Sun extends Entity {
 		bananaHit.addAction(new SunImageAction(astonishedDataPath));
 		this.addComponent(bananaHit);
 		
+		this.setPassable(true);
+		
 		if(!debug)
 		{
 			NOTEvent nonCollision = new NOTEvent(bananaHit);
 			nonCollision.addAction(new SunImageAction(standartDataPath));
 			this.addComponent(nonCollision);
-			this.setPassable(true);
-		
+			
 			this.setImage(standartDataPath);
 		}
 	}

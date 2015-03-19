@@ -97,9 +97,9 @@ public class Gorilla extends Entity{
 			banana = new Banana("Banana", (180-angle), speed);
 		Vector2f newPos;
 		if(this.side == GorillaSide.RIGHT)
-			newPos = new Vector2f(this.getPosition().getX()+ this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+			newPos = new Vector2f(this.getPosition().getX()+ this.getSize().getX(), this.getPosition().getY()-this.getSize().getY() - 25);
 		else
-			newPos = new Vector2f(this.getPosition().getX()- this.getSize().getX(), this.getPosition().getY()-this.getSize().getY()/2 + 10);
+			newPos = new Vector2f(this.getPosition().getX()- this.getSize().getX(), this.getPosition().getY()-this.getSize().getY() - 25);
 		
 		banana.setPosition(newPos);
 		

@@ -79,7 +79,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		gorillaWidth = gorillaW;
 		gorillaHeight = gorillaH;
 		
-		Skyscraper[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight);
+		DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight);
 		Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
 		
 		for(int i = 0; i < skyline.length; i++)
@@ -118,7 +118,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		
 		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
 		{
-			Skyscraper[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
+			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
 			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
 			
 			for(int i = 0; i < skyline.length; i++)

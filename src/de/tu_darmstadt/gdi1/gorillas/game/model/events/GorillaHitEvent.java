@@ -14,6 +14,7 @@ public class GorillaHitEvent extends CollisionEvent {
 
 	@Override
 	protected boolean performAction(GameContainer gc, StateBasedGame sb, int delta) {
+		
 		return super.performAction(gc, sb, delta) && (this.getCollidedEntity() instanceof Banana);
 	}
 }

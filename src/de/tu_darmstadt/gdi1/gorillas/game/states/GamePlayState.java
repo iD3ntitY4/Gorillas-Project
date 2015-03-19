@@ -55,7 +55,7 @@ public class GamePlayState extends BasicTWLGameState {
 	private Gorilla gorillaOne;
 	private Gorilla gorillaTwo;
 	private Sun sun;
-	Skyscraper[] skyscrapers = new Skyscraper[numSkyscrapers];
+	DestructibleImageEntity[] skyscrapers = new DestructibleImageEntity[numSkyscrapers];
 	
 	
 	private Label gorillaOneNameLabel = new Label();
@@ -380,7 +380,7 @@ public class GamePlayState extends BasicTWLGameState {
 			throwButton2.setEnabled(true);
 		}
 		
-		Skyscraper[] skyline = this.createRandomSkyline(sb.getContainer().getWidth(), 
+		DestructibleImageEntity[] skyline = this.createRandomSkyline(sb.getContainer().getWidth(), 
 				sb.getContainer().getHeight());
 		
 		this.placeGorillasRandom(skyline, gorillaSizeX, gorillaSizeY);
@@ -534,14 +534,14 @@ public class GamePlayState extends BasicTWLGameState {
 	}
 	
 	
-	public Skyscraper[] createRandomSkyline(int frameWidth, int frameHeight)
+	public DestructibleImageEntity[] createRandomSkyline(int frameWidth, int frameHeight)
 	{
 		
 		BufferedImage image = new BufferedImage(frameWidth / 8, frameHeight - 100,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphic = image.createGraphics();
-		//graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
-		graphic.setColor(new Color(34, 34, 34, 255));
+		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC));
+		graphic.setColor(new Color(255, 255, 255, 255));
 		graphic.fillRect(0, 0, frameWidth / 8, frameHeight - 100);
 			
 		if(!debug)
@@ -566,7 +566,7 @@ public class GamePlayState extends BasicTWLGameState {
 				height = (int) (200 + ((frameHeight - 300) * Math.random()));
 			
 		
-			skyscrapers[i] = new Skyscraper(
+			skyscrapers[i] = new DestructibleImageEntity(
 					"skyscraper" + i, image, "gorillas/destruction.png", debug);
 			
 			
@@ -574,6 +574,8 @@ public class GamePlayState extends BasicTWLGameState {
 			
 			skyscrapers[i].setPosition(new Vector2f((frameWidth / 8) * i + (skyscrapers[i].getSize().x / 2),
 					(skyscrapers[i].getSize().y) / 2 + height));
+			
+			skyscrapers[i].setPassable(false);
 
 			entityManager.addEntity(stateID, skyscrapers[i]);
 		}
@@ -582,7 +584,7 @@ public class GamePlayState extends BasicTWLGameState {
 	}
 	
 	
-	public Skyscraper[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
+	public DestructibleImageEntity[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
 				ArrayList<Vector2f> buildingCoordinates) {
 		
 		
@@ -607,11 +609,13 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		for(int i = 0; i < buildingCoordinates.size(); i++)
 		{
-			skyscrapers[i] = new Skyscraper(
+			skyscrapers[i] = new DestructibleImageEntity(
 					"skyscraper" + i, image, "gorillas/destruction.png", debug);
 			
 			skyscrapers[i].setPosition(new Vector2f(buildingCoordinates.get(i).getX(),
 					buildingCoordinates.get(i).getY()));
+			
+			skyscrapers[i].setPassable(false);
 			
 			entityManager.addEntity(stateID, skyscrapers[i]);
 		}
@@ -627,17 +631,19 @@ public class GamePlayState extends BasicTWLGameState {
 		int g1place = (int) (1 + 2 * Math.random());
 		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
 				skyscraperArray[g1place].getPosition().x, 
-				skyscraperArray[g1place].getPosition().y - (skyscraperArray[g1place].getSize().y / 2) - gorillaHeight / 2,
+				skyscraperArray[g1place].getPosition().y - 
+							(skyscraperArray[g1place].getSize().y / 2) - 
+							gorillaHeight / 2 - 1,
 				gorillaWidth,
 				gorillaHeight,
 				debug);
 		
-		
-		
 		int g2place = (int) (8 - 2 * Math.random());
 		gorillaTwo = new Gorilla(Gorilla.GorillaSide.LEFT,
 				(skyscraperArray[g2place].getPosition().x), 
-				(skyscraperArray[g2place].getPosition().y - (skyscraperArray[g2place].getSize().y / 2) - gorillaHeight / 2),
+				(skyscraperArray[g2place].getPosition().y
+						- (skyscraperArray[g2place].getSize().y / 2)
+						- gorillaHeight / 2 - 1),
 				gorillaWidth,
 				gorillaHeight,
 				debug);
