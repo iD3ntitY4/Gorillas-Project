@@ -149,6 +149,7 @@ public class OptionsState extends BasicTWLGameState {
 		if(!debug)
 		{
 			// Update the variable from the Adjuster every frame
+			windStaticSpeed = windSpeedAdjust.getValue();
 			gravity = gravityAdjust.getValue();
 			volume = volumeAdjust.getValue();
 			
@@ -238,7 +239,7 @@ public class OptionsState extends BasicTWLGameState {
 		
 		// Adjust the wind speed in static wind mode
 		windSpeedAdjust.setDisplayPrefix("Speed (m/s)\n");
-		windSpeedAdjust.setMinMaxValue(0, 99);
+		windSpeedAdjust.setMinMaxValue(-15, 15);
 		windSpeedAdjust.setStepSize(0.1f);
 		windSpeedAdjust.setValue(windStaticSpeed);
 		windSpeedAdjust.setEnabled(!windDynamic);

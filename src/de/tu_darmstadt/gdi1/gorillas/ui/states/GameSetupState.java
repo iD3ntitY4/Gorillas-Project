@@ -15,8 +15,10 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
@@ -138,6 +140,16 @@ public class GameSetupState extends BasicTWLGameState {
 	public int getID() {
 		
 		return stateID;
+	}
+	
+	public void startGame() {
+		updateNameFromEdit();
+		World.setPlayerOneName(player1Name);
+		World.setPlayerTwoName(player2Name);
+		World.setRunningGame(true);
+		
+		((GamePlayState) sb.getState(Gorillas.GAMEPLAYSTATE)).initNewGame();
+		sb.enterState(Gorillas.GAMEPLAYSTATE);
 	}
 	
 	/**
@@ -268,11 +280,7 @@ public class GameSetupState extends BasicTWLGameState {
 				
 				if(validatePlayerNames())
 				{
-					updateNameFromEdit();
-					World.setPlayerOneName(player1Name);
-					World.setPlayerTwoName(player2Name);
-					World.setRunningGame(true);
-					sb.enterState(Gorillas.GAMEPLAYSTATE);
+					startGame();
 				}
 				
 			}

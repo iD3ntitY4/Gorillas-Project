@@ -79,7 +79,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		gorillaWidth = gorillaW;
 		gorillaHeight = gorillaH;
 		
-		Skyscraper[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight, gorillaWidth, gorillaHeight);
+		Skyscraper[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight);
 		Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
 		
 		for(int i = 0; i < skyline.length; i++)
