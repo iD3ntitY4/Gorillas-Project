@@ -5,7 +5,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Banana;
 import eea.engine.event.basicevents.CollisionEvent;
-@Deprecated
+
 public class GorillaHitEvent extends CollisionEvent {
 
 	public GorillaHitEvent() {

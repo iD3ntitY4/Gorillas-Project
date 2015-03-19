@@ -8,6 +8,7 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
@@ -51,71 +52,42 @@ public class Banana extends Entity {
 	 */
 	public Banana(String id, float initialAngle, int initialSpeed)
 	{
-		super(id);		
+		super("Banana");		
 		this.setImage(defaultImagePath);		
 		angle = ((initialAngle <= World.MAX_ANGLE) && (initialAngle >= 0)) ? initialAngle : World.MAX_ANGLE;
 		speed = ((initialSpeed <= World.MAX_SPEED) && (initialSpeed >= 0)) ? initialSpeed : World.MAX_SPEED;
 		flightTime = 0;
 		this.setScale(0.5f);
 		initialPosition = this.getPosition();
+		this.setPassable(false);
+		//System.out.println(this.getShape().toString());
 		
-		//Events when hitting bottom
-		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); //TODO: What is about the coordinate system? Should it be zero?
+		// Bounce of:
+		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); 
 		bounceBottom.setOwnerEntity(this);
 		bounceBottom.addAction(new BananaBounceOffAction());
 		this.addComponent(bounceBottom);
 		
-		BananaOutOfBoundsEvent outOfBound = new BananaOutOfBoundsEvent();	 //TODO: What is about the coordinate system? Should it be zero?
+		// Out of Bound:
+		BananaOutOfBoundsEvent outOfBound = new BananaOutOfBoundsEvent();
 		outOfBound.addAction(new DestroyEntityAction());
 		outOfBound.addAction(new EndOfTurnAction());
 		this.addComponent(outOfBound);
-		//Action when hitting bottom
 		
-		//outOfBound.addAction(new DestroyEntityAction());
-		//outOfBound.addAction(new EndOfTurnAction());
-		
-		//Events to end the round
-		/*CollisionEvent colliding = new CollisionEvent();	// Might cause problems with sun. Has to have no collision!
-		colliding.addAction(new DestroyEntityAction());
-		colliding.addAction(new EndOfTurnAction());
-		this.addComponent(colliding);*/
+		// Collision:
 		CollisionWorldEvent collides = new CollisionWorldEvent();
 		collides.addAction(new DestroyEntityAction());
 		collides.addAction(new EndOfTurnAction());
 		this.addComponent(collides);
 		
+		// Collision with Skyscraper:
+		BananaHitSkyscraperEvent colSky = new BananaHitSkyscraperEvent();
+		this.addComponent(colSky);
 		
-		//OutOfBoundsEvent outOfBounds = new OutOfBoundsEvent();		
-		//OREvent endOfRoundEvent = new OREvent(colliding, outOfBounds, new ANDEvent(new NOTEvent(bounceBottom), hitBottom));
-		//endOfRoundEvent.setOwnerEntity(this);
-		
-		//CollisionEvent colliding = new CollisionEvent();
-		//NOTEvent nonColliding = new NOTEvent(colliding);
-		//nonColliding.addAction(new BananaFlyParabolicAction());
-		//nonColliding.addAction(new MoveDownAction(speed));
-		
-		//Actions for end of round
-		//endOfRoundEvent.addAction(new DestroyEntityAction());		
-		//endOfRoundEvent.addAction(new EndOfTurnAction());		// TODO: What is about the interaction with gameplay state?
-		
-		//Event while not colliding
-		//NOTEvent nonColliding = new NOTEvent(colliding);
-		//nonColliding.setOwnerEntity(this);
-		
-		// Actions for not colliding
-		//nonColliding.addAction(new BananaFlyParabolicAction());
-		
-		// Adding combined Events to banana Entity
-		//this.addComponent(nonColliding);
-		//this.addComponent(endOfRoundEvent);	
-		//this.addComponent(bounceBottom);
-		
+		// Fly:
 		LoopEvent loop = new LoopEvent();
 		loop.addAction(new BananaFlyParabolicAction());
 		this.addComponent(loop);	
-		//NOTEvent fly = new NOTEvent(colliding);
-		//fly.addAction(new BananaFlyParabolicAction());
-		//this.addComponent(fly);
 	}
 	
 	/**

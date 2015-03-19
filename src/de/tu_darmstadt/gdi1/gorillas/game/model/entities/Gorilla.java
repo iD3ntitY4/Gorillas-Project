@@ -5,10 +5,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
-
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfRoundAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.GorillaDanceAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.GorillaHitEvent;
+import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.*;
 import eea.engine.event.basicevents.TimeEvent;
@@ -52,14 +52,15 @@ public class Gorilla extends Entity{
 		this.setPosition(new Vector2f(posX, posY));
 		this.setSize(new Vector2f(sizeX, sizeY));
 		
-		//End of round event
+		//Gorilla Hit
 		GorillaHitEvent gorillaHit = new GorillaHitEvent();
-		TimeEvent danceAfterRound = new TimeEvent(200, false);//TODO: Replace false with a variable expressing a won round!
-				
-		//End of round Action
 		gorillaHit.addAction(new EndOfRoundAction());
-		danceAfterRound.addAction(new GorillaDanceAction()); //Problem: Gorilla kann auf falsches Bild enden; also muss "gelöscht" werden.
+		gorillaHit.addAction(new DestroyEntityAction());
 		
+		//Dance Action
+		TimeEvent danceAfterRound = new TimeEvent(200, false);//TODO: Replace false with a variable expressing a won round!
+		danceAfterRound.addAction(new GorillaDanceAction()); 	
+					
 		//Add all events to gorilla
 		this.addComponent(gorillaHit);
 		this.addComponent(danceAfterRound);
