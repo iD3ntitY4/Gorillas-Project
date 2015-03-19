@@ -255,24 +255,24 @@ public class OptionsState extends BasicTWLGameState {
 		
 		
 		// Save settings
-				saveButton.setTheme("menu_button");
-				saveButton.addCallback(new Runnable() {
-					public void run() {
-						
-						World.setGravity(gravity);
-						
-						if(wind)
-							World.setWindType(windDynamic ? World.WIND_DYNAMIC : World.WIND_STATIC);
-						else
-							World.setWindType(0);
-						
-						World.setWind(new Vector2f(windStaticSpeed,World.wind.y));
-						
-						sound.setVolume(volume);
-						
-						sb.enterState(Gorillas.MAINMENUSTATE);
-					}
-				});
+		saveButton.setTheme("menu_button");
+		saveButton.addCallback(new Runnable() {
+			public void run() {
+				
+				World.setGravity(gravity);
+				
+				if(wind)
+					World.setWindType(windDynamic ? World.WIND_DYNAMIC : World.WIND_STATIC);
+				else
+					World.setWindType(0);
+				
+				World.setWind(new Vector2f(windStaticSpeed,World.wind.y));
+				
+				sound.setVolume(volume);
+				
+				sb.enterState(Gorillas.MAINMENUSTATE);
+			}
+		});
 		
 		// Abort all changes to the options
 		cancelButton.setTheme("menu_button");

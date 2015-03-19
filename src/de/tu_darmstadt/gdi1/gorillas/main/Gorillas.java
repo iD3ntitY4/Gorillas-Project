@@ -94,9 +94,9 @@ public class Gorillas extends TWLStateBasedGame {
 		// Add states to the StateBasedGame
 		this.addState(new MainMenuState(MAINMENUSTATE, this));	// Added new parameters which are used in the states
 		this.addState(new GameSetupState(GAMESETUPSTATE, this));
-		//this.addState(new HighScoreState(HIGHSCORESTATE));
+		this.addState(new HighScoreState(HIGHSCORESTATE, this));
 		this.addState(new OptionsState(OPTIONSTATE, this));
-		//this.addState(new InstructionsState(INSTRUCTIONSSTATE));		
+		this.addState(new InstructionsState(INSTRUCTIONSSTATE, this));		
 		this.addState(new GamePlayState(GAMEPLAYSTATE, this));
 
 		// Add states to the StateBasedEntityManager

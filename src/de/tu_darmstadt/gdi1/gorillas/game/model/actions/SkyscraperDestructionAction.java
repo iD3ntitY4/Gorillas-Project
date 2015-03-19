@@ -19,6 +19,7 @@ public class SkyscraperDestructionAction implements Action{
 	 @Override
 	 public void update(GameContainer gc, StateBasedGame sb, int delta,
 	   Component event) {
+		 
 		 DestructibleImageEntity owner;
 		  if(event.getOwnerEntity() instanceof DestructibleImageEntity)
 			 owner = (DestructibleImageEntity) event.getOwnerEntity();

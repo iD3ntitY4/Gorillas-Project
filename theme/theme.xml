@@ -301,6 +301,17 @@
 			<font>menu_button_font</font>
 		</param>
 	</theme>
+	<theme name="container" ref="label">
+		<param name="background">
+			<image>button_background</image>
+		</param>
+		<param name="minHeight">
+			<int>30</int>
+		</param>
+		<param name="minWidth">
+			<int>30</int>
+		</param>
+	</theme>
 	<theme name="score_label" ref="label">
 		<param name="border">
 			<border>6,0</border>

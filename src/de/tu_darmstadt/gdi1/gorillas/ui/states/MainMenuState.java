@@ -1,5 +1,7 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
+import java.io.File;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,6 +11,9 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
+import de.matthiasmann.twl.Container;
+import de.matthiasmann.twl.InfoWindow;
+import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
@@ -46,6 +51,11 @@ public class MainMenuState extends BasicTWLGameState {
 	private Button mainButton2;
 	private Button mainButton3;
 	private Button mainButton4;
+	private Button mainButton5;
+	
+	private Button mainAboutButton = new Button(mainAboutButtonText);
+	private Label mainAboutLabel = new Label(mainAboutLabelText);
+	private Container mainAboutContainer = new Container();
 	
 	//private Button aboutButton;
 	//private PopupWindow aboutWindow;
@@ -55,7 +65,16 @@ public class MainMenuState extends BasicTWLGameState {
 	private static final String mainButton1Text2 = "BACK";
 	private static final String mainButton2Text = "OPTIONS";
 	private static final String mainButton3Text = "HIGHSCORES";
-	private static final String mainButton4Text = "EXIT";
+	private static final String mainButton4Text = "INSTRUCTIONS";
+	private static final String mainButton5Text = "EXIT";
+	
+	private static final String mainAboutButtonText = "about";
+	
+	private static final String mainAboutLabelText = "GORILLAS\n\n\n\n"
+			+ "a project by\n\n"
+			+ "nils   dycke\nniklas   mast,\n"
+			+ "felix   kaiser\nmanuel   ketterer\n\n\n"
+			+ "2015";
 	
 	private int startGameKey = Input.KEY_N;
 	
@@ -179,26 +198,50 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton4.setTheme("menu_button");
 		mainButton4.addCallback(new Runnable() {
 			public void run() {
+				
+				sb.enterState(Gorillas.INSTRUCTIONSSTATE);
+			}
+		});
+		
+		mainButton5 = new Button(mainButton5Text);
+		mainButton5.setTheme("menu_button");
+		mainButton5.addCallback(new Runnable() {
+			public void run() {
 				System.exit(0);
 			}
 		});
 		
-		/*aboutButton = new Button("ABOUT");
-		aboutButton.setTheme("menu_button");
-		aboutButton.addCallback(new Runnable() {
+		mainAboutButton.setTheme("menu_button");
+		mainAboutButton.addCallback(new Runnable() {
 			public void run() {
-				aboutWindow.openPopupCentered();
+				
+				if(mainAboutContainer.isVisible()) {
+					mainAboutContainer.setVisible(false);
+					mainAboutLabel.setVisible(false);
+					mainAboutButton.setText("about");
+				} else {
+					mainAboutContainer.setVisible(true);
+					mainAboutLabel.setVisible(true);
+					mainAboutButton.setText("back");
+				}
 			}
-		});*/
+		});
 		
+		mainAboutContainer.setTheme("menu_button");
+		mainAboutContainer.setVisible(false);
+		
+		mainAboutLabel.setVisible(false);
+		mainAboutLabel.setTheme("menu_font");
 		
 
 		rp.add(mainButton1);
 		rp.add(mainButton2);
 		rp.add(mainButton3);
 		rp.add(mainButton4);
-		//rp.add(aboutButton);
-		//rp.add(aboutWindow);
+		rp.add(mainButton5);
+		rp.add(mainAboutButton);
+		rp.add(mainAboutContainer);
+		rp.add(mainAboutLabel);
 		return rp;
 	}
 
@@ -221,9 +264,25 @@ public class MainMenuState extends BasicTWLGameState {
 		mainButton3.setPosition(paneWidth / 2 - mainButton3.getWidth() / 2,
 				paneHeight / 2 - (mainButton3.getHeight() / 2));
 		
-		mainButton4.setSize(paneWidth / 4, paneHeight / 12);
+		mainButton4.setSize((int) (paneWidth / 2.4f), paneHeight / 12);
 		mainButton4.setPosition(paneWidth / 2 - mainButton4.getWidth() / 2,
 				paneHeight / 2 - (mainButton4.getHeight() / 2) + (paneHeight / 8));
+		
+		mainButton5.setSize(paneWidth / 4, paneHeight / 12);
+		mainButton5.setPosition(paneWidth / 2 - mainButton5.getWidth() / 2,
+				paneHeight / 2 - (mainButton5.getHeight() / 2) + (paneHeight / 4));
+		
+		mainAboutButton.setSize(paneWidth / 6, paneHeight / 20);
+		mainAboutButton.setPosition(paneWidth - mainAboutButton.getWidth(),
+				paneHeight - mainAboutButton.getHeight());
+		
+		mainAboutContainer.setSize((int)(paneWidth / 1.2f), (int) (paneHeight / 1.2f));
+		mainAboutContainer.setPosition(paneWidth / 2 - mainAboutContainer.getWidth() / 2,
+				paneHeight / 2 - mainAboutContainer.getHeight() / 2);
+		
+		mainAboutLabel.setSize(paneWidth / 2, paneHeight / 2);
+		mainAboutLabel.setPosition(paneWidth / 2 - mainAboutLabel.getWidth() / 2,
+				paneHeight / 2 - mainAboutLabel.getHeight() / 2);
 	}
 	
 	

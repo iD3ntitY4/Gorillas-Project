@@ -245,6 +245,7 @@ public class GamePlayState extends BasicTWLGameState {
 			}
 		});
 		
+		//TODO ADD LABELS
 		angleInput1.setMultiLine(false);
 		angleInput1.setMaxTextLength(3);
 		angleInput1.setVisible(player1Turn);
@@ -374,6 +375,7 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		this.removeAllEntities();
 		this.addListeners();
+		
 		if(!debug)
 		{
 			this.addBackground();
@@ -421,19 +423,19 @@ public class GamePlayState extends BasicTWLGameState {
 		escListener.addComponent(escPressed);
 		entityManager.addEntity(stateID, escListener);
 		
-		/*
+		//TODO REMOVE
 		//ONLY ADDED FOR TESTING PURPOSES
 		Entity listener = new Entity("Enter_listener");
 		KeyPressedEvent enter = new KeyPressedEvent(Input.KEY_ENTER);
 		enter.addAction(new EndOfRoundAction());
 		listener.addComponent(enter);
 		entityManager.addEntity(stateID, listener);
-		*/
+		
 	}
 	
 	public void removeAllEntities() {
 		
-		List<Entity> entityList =StateBasedEntityManager.getInstance().getEntitiesByState(Gorillas.GAMEPLAYSTATE);
+		List<Entity> entityList = StateBasedEntityManager.getInstance().getEntitiesByState(Gorillas.GAMEPLAYSTATE);
 		for(int i = 0; i < entityList.size(); i++)
 		{
 			StateBasedEntityManager.getInstance().removeEntity(Gorillas.GAMEPLAYSTATE, entityList.get(i));
@@ -482,11 +484,16 @@ public class GamePlayState extends BasicTWLGameState {
 			throwButton2.setVisible(player2Turn);
 			angleInput2.setVisible(player2Turn);
 			velocityInput2.setVisible(player2Turn);
+			
+			System.out.println("Switched turns");
+			System.out.println("Now is " + (player1Turn ? "Player1" : "Player2") + "'s turn");
 		}
 	}
 	
 	
 	public void endOfRound() {
+		
+		System.out.println("Gorilla was hit");
 		
 		if(!gameOver)
 		{
@@ -499,7 +506,7 @@ public class GamePlayState extends BasicTWLGameState {
 			}
 		}
 		
-		if(scorePlayer1 > 2 || scorePlayer2 > 2) {
+		if(scorePlayer1 >= World.roundsToWin || scorePlayer2 >= World.roundsToWin) {
 			endOfGame();
 		} else {
 			switchTurn();
@@ -572,9 +579,10 @@ public class GamePlayState extends BasicTWLGameState {
 					"skyscraper" + i, image, skyscraperDestructionPath , debug);
 			
 			
-			skyscrapers[i].setSize(new Vector2f(frameWidth / 8, frameHeight - 100));
+			skyscrapers[i].setSize(new Vector2f(frameWidth / numSkyscrapers, frameHeight - 100));
 			
-			skyscrapers[i].setPosition(new Vector2f((frameWidth / 8) * i + (skyscrapers[i].getSize().x / 2),
+			skyscrapers[i].setPosition(new Vector2f((frameWidth / numSkyscrapers) * i 
+					+ (skyscrapers[i].getSize().x / 2),
 					(skyscrapers[i].getSize().y) / 2 + height));
 			
 			skyscrapers[i].setPassable(false);

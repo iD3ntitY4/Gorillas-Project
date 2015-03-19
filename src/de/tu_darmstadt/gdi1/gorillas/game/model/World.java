@@ -56,6 +56,8 @@ public class World {
 	public static String PLAYER_ONE_NAME = "";
 	public static String PLAYER_TWO_NAME = "";
 	
+	public static final int roundsToWin = 3;
+	
 	public static boolean isRunningGame = false;
 	
 	
