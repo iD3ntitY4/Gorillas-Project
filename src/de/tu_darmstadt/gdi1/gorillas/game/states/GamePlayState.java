@@ -56,6 +56,8 @@ public class GamePlayState extends BasicTWLGameState {
 	private Gorilla gorillaTwo;
 	private Sun sun;
 	DestructibleImageEntity[] skyscrapers = new DestructibleImageEntity[numSkyscrapers];
+	private String skyscraperImagePath = ".\\assets\\gorillas\\skyscraper\\skyscraper2.png";
+	private String skyscraperDestructionPath = "gorillas/destruction_banana.png";
 	
 	
 	private Label gorillaOneNameLabel = new Label();
@@ -548,10 +550,10 @@ public class GamePlayState extends BasicTWLGameState {
 		{
 			java.awt.Image img;
 			try {
-				img = ImageIO.read(new File(".\\assets\\gorillas\\skyscraper\\skyscraper2.png"));
+				img = ImageIO.read(new File(skyscraperImagePath));
 				graphic.drawImage(img, 0, 0, frameWidth / 8, frameHeight - 100, null);
 			} catch (IOException e) {
-				System.err.println("Couldn't find file /assets/gorillas/skyscraper/skyscraper2.png");
+				System.err.println("Couldn't find file " + skyscraperImagePath);
 				e.printStackTrace();
 			}
 		}
@@ -567,7 +569,7 @@ public class GamePlayState extends BasicTWLGameState {
 			
 		
 			skyscrapers[i] = new DestructibleImageEntity(
-					"skyscraper" + i, image, "gorillas/destruction.png", debug);
+					"skyscraper" + i, image, skyscraperDestructionPath , debug);
 			
 			
 			skyscrapers[i].setSize(new Vector2f(frameWidth / 8, frameHeight - 100));
@@ -583,7 +585,7 @@ public class GamePlayState extends BasicTWLGameState {
 		return skyscrapers;
 	}
 	
-	
+	//TODO shit
 	public DestructibleImageEntity[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
 				ArrayList<Vector2f> buildingCoordinates) {
 		
@@ -599,10 +601,10 @@ public class GamePlayState extends BasicTWLGameState {
 		{
 			java.awt.Image img;
 			try {
-				img = ImageIO.read(new File(".\\assets\\gorillas\\skyscraper\\skyscraper2.png"));
+				img = ImageIO.read(new File(skyscraperImagePath));
 				graphic.drawImage(img, 0, 0, paneWidth / 8, paneHeight - yOffsetCity, null);
 			} catch (IOException e) {
-				System.err.println("Couldn't find file /assets/gorillas/skyscraper/skyscraper2.png");
+				System.err.println("Couldn't find file " + skyscraperImagePath);
 				e.printStackTrace();
 			}
 		}
@@ -610,7 +612,7 @@ public class GamePlayState extends BasicTWLGameState {
 		for(int i = 0; i < buildingCoordinates.size(); i++)
 		{
 			skyscrapers[i] = new DestructibleImageEntity(
-					"skyscraper" + i, image, "gorillas/destruction.png", debug);
+					"skyscraper" + i, image, skyscraperDestructionPath, debug);
 			
 			skyscrapers[i].setPosition(new Vector2f(buildingCoordinates.get(i).getX(),
 					buildingCoordinates.get(i).getY()));
