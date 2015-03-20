@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.SoundAnimation;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
@@ -21,12 +22,13 @@ public class SkyscraperDestructionAction implements Action{
 	   Component event) {
 		 
 		 DestructibleImageEntity owner;
-		  if(event.getOwnerEntity() instanceof DestructibleImageEntity)
+		 if(event.getOwnerEntity() instanceof DestructibleImageEntity)
 			 owner = (DestructibleImageEntity) event.getOwnerEntity();
-		  else
-			  return;
-		  if(owner.collides(impactPos.getX(), impactPos.getY()))
-			  owner.impactAt(impactPos);	  
+		 else
+			 return;
+			 owner.impactAt(impactPos);	  
+		
+		SoundAnimation explosion = new SoundAnimation();
+		explosion.playSound(SoundAnimation.EXPLOSION);
 	 }
-
 }

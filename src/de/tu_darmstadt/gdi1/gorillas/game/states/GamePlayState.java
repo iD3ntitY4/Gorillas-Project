@@ -463,16 +463,21 @@ public class GamePlayState extends BasicTWLGameState {
 		if(player1Turn)
 		{
 			//tooWeak = bananaCollisionPostion != null && (gorillaTwo.getPosition().getX() > bananaCollisionPostion.getX());
-			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) <=
-														 gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			//tooWeak = bananaCollisionPostion != null && (bananaCollisionPostion.getX() - gorillaOne.getPosition().getX() <=
+			//											 gorillaTwo.getPosition().getX() - gorillaOne.getPosition().getX());
 			System.out.println(bananaCollisionPostion);
-			System.out.println(tooWeak);
+			tooWeak = bananaCollisionPostion != null && gorillaTwo.getPosition().getX() > bananaCollisionPostion.getX();
+			//if(bananaCollisionPostion != null)
+			//	System.out.println("(1) Zu 1: " + (gorillaOne.getPosition().getX() - bananaCollisionPostion.getX()) + " Abstand:" + (gorillaTwo.getPosition().getX() - gorillaOne.getPosition().getX()));
 			gorillaTwo.sayQuote(entityManager, tooWeak);
 		} else {
 			//tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().getX() > bananaCollisionPostion.getX());
-			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) >
-					 									 gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			//tooWeak = bananaCollisionPostion != null && (Math.abs(gorillaTwo.getPosition().getX() - bananaCollisionPostion.getX()) <=
+			//											 Math.abs(gorillaTwo.getPosition().getX() - gorillaOne.getPosition().getX()));
 			System.out.println(bananaCollisionPostion);
+			tooWeak = bananaCollisionPostion != null && gorillaOne.getPosition().getX() < bananaCollisionPostion.getX();
+			//if(bananaCollisionPostion != null)
+				//System.out.println("(2) Zu 2: " + gorillaTwo.getPosition().distance(bananaCollisionPostion) + ". Abstand: " + gorillaTwo.getPosition().distance(gorillaOne.getPosition()));
 			System.out.println(tooWeak);
 			gorillaOne.sayQuote(entityManager, tooWeak);
 		}

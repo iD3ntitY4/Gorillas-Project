@@ -6,7 +6,6 @@ import java.net.URL;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.SkyscraperDestructionAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitsSkyscraperEvent;
 import eea.engine.component.render.DestructionRenderComponent;
 import eea.engine.component.render.ImageDestructionPattern;
 import eea.engine.entity.DestructibleImageEntity;
