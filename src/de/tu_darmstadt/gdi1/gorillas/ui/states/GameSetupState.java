@@ -17,9 +17,11 @@ import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import de.tu_darmstadt.gdi1.gorillas.game.states.*;
 import eea.engine.action.basicactions.ChangeStateAction;
 import eea.engine.component.render.ImageRenderComponent;
+import eea.engine.entity.DestructibleImageEntity;
 import eea.engine.entity.Entity;
 import eea.engine.entity.StateBasedEntityManager;
 import eea.engine.event.basicevents.KeyPressedEvent;
@@ -142,13 +144,24 @@ public class GameSetupState extends BasicTWLGameState {
 	}
 	
 	public void startGame() {
-		updateNameFromEdit();
-		World.setPlayerOneName(player1Name);
-		World.setPlayerTwoName(player2Name);
-		World.setRunningGame(true);
-		
-		((GamePlayState) sb.getState(Gorillas.GAMEPLAYSTATE)).initNewGame();
-		sb.enterState(Gorillas.GAMEPLAYSTATE);
+		if(sb.getClass() == Gorillas.class) {
+			updateNameFromEdit();
+			World.setPlayerOneName(player1Name);
+			World.setPlayerTwoName(player2Name);
+			World.setRunningGame(true);
+			
+			GamePlayState state = ((GamePlayState) sb.getState(Gorillas.GAMEPLAYSTATE));
+			DestructibleImageEntity[] skyline = state.createRandomSkyline(sb.getContainer().getWidth(), sb.getContainer().getHeight());
+			state.initNewGame(skyline, state.placeGorillasRandom(skyline, 54, 64));
+			sb.enterState(Gorillas.GAMEPLAYSTATE);
+		} else {
+			updateNameFromEdit();
+			World.setPlayerOneName(player1Name);
+			World.setPlayerTwoName(player2Name);
+			World.setRunningGame(true);
+			
+			sb.enterState(Gorillas.GAMEPLAYSTATE);
+		}
 	}
 	
 	/**

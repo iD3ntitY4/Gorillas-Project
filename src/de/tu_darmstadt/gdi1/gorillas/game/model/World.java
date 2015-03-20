@@ -41,7 +41,7 @@ public class World {
 	public final static int BOUNCE_SPEED_THRESHOLD = 10;
 	
 	public final static int MAX_SPEED = 200;
-	public final static int MAX_ANGLE = 180;
+	public final static int MAX_ANGLE = 359;
 	
 	public static int worldWidth;
 	public static int worldHeight;

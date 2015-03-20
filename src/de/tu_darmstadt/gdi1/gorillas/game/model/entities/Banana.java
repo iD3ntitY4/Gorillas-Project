@@ -2,16 +2,15 @@ package de.tu_darmstadt.gdi1.gorillas.game.model.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
-//import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitsGorillaEvent;
+import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.component.render.ImageRenderComponent;
@@ -20,13 +19,11 @@ import eea.engine.event.basicevents.LoopEvent;
 
 /**
  * This class represents the entity of the throwing object, in fact a banana, in the game.<p>
- * To destroy the skyscrapers (which extend BufferedImage) bananas extend DestructibleImageEntity.
+ * It destroys skyscrapers, flies parabolicaly and collides with world objects.
  * 
  * @author Nils Dycke
  * @author Niklas Mast, Felix Kaiser, Manuel Ketterer
  * 
- * @version 1.2; Not tested at all. Probably all bullshit.
- *
  * @see eea.engine.entity.DestructibleImageEntity     
  * @see de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper
  */
@@ -35,7 +32,6 @@ public class Banana extends Entity {
 	private float angle;
 	private int speed;
 	private float flightTime;
-	public Vector2f initialPosition;
 	
 	private String defaultImagePath = ".\\assets\\gorillas\\banana_new.png";
 	
@@ -46,41 +42,48 @@ public class Banana extends Entity {
 	 * @param initialAngle the banana is thrown; it should be in <b> range of 0-359 </b>; else it is set to zero.
 	 * @param initialSpeed the banana is thrown; it should be in <b> rang of 0-200 </b>; else it is set to zero.
 	 */
-	public Banana(String id, float initialAngle, int initialSpeed)
+	public Banana(String id, float initialAngle, int initialSpeed, boolean debug)
 	{
-		super("Banana");		
-		this.setImage(defaultImagePath);		
+		super("Banana");	
+		
+		if(!debug)
+			this.setImage(defaultImagePath);	
+		
+		this.setScale(0.5f);
+		this.setPassable(false);
+		
+		//Setting angle and speed, if not it is set to the maximum.
 		angle = ((initialAngle <= World.MAX_ANGLE) && (initialAngle >= 0)) ? initialAngle : World.MAX_ANGLE;
 		speed = ((initialSpeed <= World.MAX_SPEED) && (initialSpeed >= 0)) ? initialSpeed : World.MAX_SPEED;
 		flightTime = 0;
-		this.setScale(0.5f);
-		initialPosition = this.getPosition();
-		this.setPassable(false);
-		//System.out.println(this.getShape().toString());
-		
-		// Bounce of:
+				
+		// Bounce of bottom:
 		BananaBounceOffEvent bounceBottom = new BananaBounceOffEvent(); 
 		bounceBottom.setOwnerEntity(this);
 		bounceBottom.addAction(new BananaBounceOffAction());
 		this.addComponent(bounceBottom);
 		
-		// Out of Bound:
+		// Out of bounds destruction:
 		BananaOutOfBoundsEvent outOfBound = new BananaOutOfBoundsEvent();
 		outOfBound.addAction(new DestroyEntityAction());
 		outOfBound.addAction(new EndOfTurnAction());
 		this.addComponent(outOfBound);
 		
-		// Collision:
+		// Collision with world object "self-destruction":
 		CollisionWorldEvent collides = new CollisionWorldEvent();
 		collides.addAction(new DestroyEntityAction());
 		collides.addAction(new EndOfTurnAction());
 		this.addComponent(collides);
 		
-		// Collision with Skyscraper:
+		// Collision with skyscraper destruction:
 		BananaHitSkyscraperEvent colSky = new BananaHitSkyscraperEvent();
 		this.addComponent(colSky);
 		
-		// Fly:
+		// Collision with gorilla destruction:
+		BananaHitsGorillaEvent colGo = new BananaHitsGorillaEvent();
+		this.addComponent(colGo);
+		
+		// Banana fly loop:
 		LoopEvent loop = new LoopEvent();
 		loop.addAction(new BananaFlyParabolicAction());
 		this.addComponent(loop);	

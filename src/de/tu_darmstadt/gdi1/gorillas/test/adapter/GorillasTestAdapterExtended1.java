@@ -13,6 +13,8 @@ import eea.engine.entity.DestructibleImageEntity;
 public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	
 	ArrayList<Vector2f> buildingCoordinates = new ArrayList<Vector2f>();
+	DestructibleImageEntity[] skyline = new DestructibleImageEntity[0];
+	Gorilla[] gorillasArray = new Gorilla[2];
 	Vector2f positionLeftGorilla = new Vector2f();
 	Vector2f positionRightGorilla = new Vector2f();
 	
@@ -79,8 +81,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		gorillaWidth = gorillaW;
 		gorillaHeight = gorillaH;
 		
-		DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight);
-		Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
+		skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createRandomSkyline(frameWidth, frameHeight);
+		gorillasArray = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasRandom(skyline, gorillaWidth, gorillaHeight);
 		
 		for(int i = 0; i < skyline.length; i++)
 		{
@@ -89,8 +91,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 					skyline[i].getPosition().y - (skyline[i].getSize().y / 2)));
 		}
 		
-		positionLeftGorilla = gorillaEntities[0].getPosition();
-		positionRightGorilla = gorillaEntities[1].getPosition();
+		positionLeftGorilla = gorillasArray[0].getPosition();
+		positionRightGorilla = gorillasArray[1].getPosition();
 	}
 
 	/**
@@ -116,21 +118,18 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 		frameWidth = paneWidth;
 		frameHeight = paneHeight;
 		
-		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
+		skyline = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
+		gorillasArray = ((GamePlayState) gorillas.getState(TestGorillas.GAMEPLAYSTATE)).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
+		
+		/*for(int i = 0; i < skyline.length; i++)
 		{
-			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
-			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
-			
-			/*for(int i = 0; i < skyline.length; i++)
-			{
-				buildingCoordinates.add(new Vector2f(skyline[i].getPosition().x + skyline[i].getSize().x / 2,
-						skyline[i].getPosition().y + skyline[i].getSize().y / 2));
-			}*/
-			
-			this.buildingCoordinates = buildingCoordinates;
-			positionLeftGorilla = gorillaEntities[0].getPosition();
-			positionRightGorilla = gorillaEntities[1].getPosition();
-		}
+			buildingCoordinates.add(new Vector2f(skyline[i].getPosition().x + skyline[i].getSize().x / 2,
+					skyline[i].getPosition().y + skyline[i].getSize().y / 2));
+		}*/
+		
+		this.buildingCoordinates = buildingCoordinates;
+		//positionLeftGorilla = gorillasArray[0].getPosition();
+		//positionRightGorilla = gorillasArray[1].getPosition();
 	}
 
 	/**
@@ -141,7 +140,7 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	public void startCurrrentMap() {
 		if(gorillas.getCurrentState().getID() == TestGorillas.GAMEPLAYSTATE)
 		{
-			
+			((GamePlayState)gorillas.getState(TestGorillas.GAMEPLAYSTATE)).initNewGame(skyline, gorillasArray);
 		}
 	}
 

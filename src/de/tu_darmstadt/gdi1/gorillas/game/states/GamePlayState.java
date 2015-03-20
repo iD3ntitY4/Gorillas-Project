@@ -58,7 +58,7 @@ public class GamePlayState extends BasicTWLGameState {
 	private Gorilla gorillaTwo;
 	private Sun sun;
 	DestructibleImageEntity[] skyscrapers = new DestructibleImageEntity[numSkyscrapers];
-	private String skyscraperImagePath = ".\\assets\\gorillas\\skyscraper\\skyscraper2.png";
+	private String skyscraperImagePath = ".\\assets\\gorillas\\skyscraper\\skyscraper";
 	private String skyscraperDestructionPath = "gorillas/destruction_banana.png";
 	
 	
@@ -109,6 +109,8 @@ public class GamePlayState extends BasicTWLGameState {
 	private boolean player2Turn = false;
 	
 	private boolean gameOver = false;
+	
+	private Vector2f bananaCollisionPostion; //Added
 	
 	
 	public GamePlayState(int sid, StateBasedGame game)
@@ -424,11 +426,12 @@ public class GamePlayState extends BasicTWLGameState {
 				endGameContainer.getY() + endGameContainer.getHeight() / 2 + endGameContainer.getHeight() / 12);
 	}
 	
+
 	/**
 	 * Initialises a new game by replacing all previous entites with new ones
 	 * Sets up new listeners and a random skyline of skyscrapers
 	 */
-	public void initNewGame() {
+	public void initNewGame(DestructibleImageEntity[] skyline, Gorilla[] gorillas) {
 		
 		this.removeAllEntities();
 		this.addListeners();
@@ -440,11 +443,15 @@ public class GamePlayState extends BasicTWLGameState {
 			throwButton1.setEnabled(true);
 			throwButton2.setEnabled(true);
 		}
+
+		for(int i = 0; i < skyline.length; i++) {
+			entityManager.addEntity(Gorillas.GAMEPLAYSTATE, skyline[i]);
+		}
 		
-		DestructibleImageEntity[] skyline = this.createRandomSkyline(sb.getContainer().getWidth(), 
-				sb.getContainer().getHeight());
+		for(int i = 0; i < gorillas.length; i++) {
+			entityManager.addEntity(Gorillas.GAMEPLAYSTATE, gorillas[i]);
+		}
 		
-		this.placeGorillasRandom(skyline, gorillaSizeX, gorillaSizeY);
 		this.placeSun();
 		
 		if(World.WIND_TYPE == World.WIND_DYNAMIC){
@@ -528,12 +535,24 @@ public class GamePlayState extends BasicTWLGameState {
 	 */
 	public void endOfTurn() {
 		
-		// TODO implement sayQuote() in Gorilla
+		boolean tooWeak;
+		
 		if(player1Turn)
 		{
-			//gorillaTwo.sayQuote();
+			//tooWeak = bananaCollisionPostion != null && (gorillaTwo.getPosition().getX() > bananaCollisionPostion.getX());
+			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) <=
+			gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			System.out.println(bananaCollisionPostion);
+			System.out.println(tooWeak);
+			gorillaTwo.sayQuote(entityManager, tooWeak);
+			
 		} else {
-			//gorillaOne.sayQuote();
+			//tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().getX() > bananaCollisionPostion.getX());
+			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) >
+			gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			System.out.println(bananaCollisionPostion);
+			System.out.println(tooWeak);
+			gorillaOne.sayQuote(entityManager, tooWeak);
 		}
 		
 		switchTurn();
@@ -546,6 +565,7 @@ public class GamePlayState extends BasicTWLGameState {
 	{
 		player1Turn = !player1Turn;
 		player2Turn = !player2Turn;
+		System.out.println("Switched turns");
 		
 		canThrow = true;
 		
@@ -575,9 +595,11 @@ public class GamePlayState extends BasicTWLGameState {
 		{
 			if(player1Turn){	
 				scorePlayer1 += 1;
+				System.out.println("Player1 scored");
 				gorillaOne.dance();
 			}else{
 				scorePlayer2 += 1;
+				System.out.println("player2 scored");
 				gorillaTwo.dance();
 			}
 			
@@ -589,7 +611,13 @@ public class GamePlayState extends BasicTWLGameState {
 		} else {
 			switchTurn();
 			this.removeAllEntities();
-			this.initNewGame();
+			
+			DestructibleImageEntity[] skyline = this.createRandomSkyline(sb.getContainer().getWidth(), 
+					sb.getContainer().getHeight());
+		
+			Gorilla[] gorillas = this.placeGorillasRandom(skyline, gorillaSizeX, gorillaSizeY);
+			
+			this.initNewGame(skyline, gorillas);
 		}		
 	}
 	
@@ -657,20 +685,25 @@ public class GamePlayState extends BasicTWLGameState {
 		graphic.setColor(new Color(255, 255, 255, 255));
 		graphic.fillRect(0, 0, frameWidth / 8, frameHeight - 100);
 			
-		if(!debug)
-		{
-			java.awt.Image img;
-			try {
-				img = ImageIO.read(new File(skyscraperImagePath));
-				graphic.drawImage(img, 0, 0, frameWidth / 8, frameHeight - 100, null);
-			} catch (IOException e) {
-				System.err.println("Couldn't find file " + skyscraperImagePath);
-				e.printStackTrace();
-			}
-		}
 		
 		for(int i = 0; i < numSkyscrapers; i++)
 		{
+			if(!debug)
+			{
+				java.awt.Image[] img = new java.awt.Image[4];
+				try {
+					img[0] = ImageIO.read(new File(skyscraperImagePath + "1.png"));
+					img[1] = ImageIO.read(new File(skyscraperImagePath + "2.png"));
+					img[2] = ImageIO.read(new File(skyscraperImagePath + "3.png"));
+					img[3] = ImageIO.read(new File(skyscraperImagePath + "4.png"));
+					
+					graphic.drawImage(img[(int)Math.round(3 * Math.random())], 0, 0, frameWidth / 8, frameHeight - 100, null);
+				} catch (IOException e) {
+					System.err.println("Couldn't find file " + skyscraperImagePath);
+					e.printStackTrace();
+				}
+			}
+			
 			int height;
 			
 			if(i != 0 && i != numSkyscrapers -1)
@@ -690,8 +723,6 @@ public class GamePlayState extends BasicTWLGameState {
 					(skyscrapers[i].getSize().y) / 2 + height));
 			
 			skyscrapers[i].setPassable(false);
-
-			entityManager.addEntity(stateID, skyscrapers[i]);
 		}
 		
 		return skyscrapers;
@@ -742,8 +773,6 @@ public class GamePlayState extends BasicTWLGameState {
 					buildingCoordinates.get(i).getY()));
 			
 			skyscrapers[i].setPassable(false);
-			
-			entityManager.addEntity(stateID, skyscrapers[i]);
 		}
 		
 		return skyscrapers;
@@ -766,7 +795,7 @@ public class GamePlayState extends BasicTWLGameState {
 				skyscraperArray[g1place].getPosition().x, 
 				skyscraperArray[g1place].getPosition().y - 
 							(skyscraperArray[g1place].getSize().y / 2) - 
-							gorillaHeight / 2 - 1,
+							gorillaHeight / 2,
 				gorillaWidth,
 				gorillaHeight,
 				debug);
@@ -776,7 +805,7 @@ public class GamePlayState extends BasicTWLGameState {
 				(skyscraperArray[g2place].getPosition().x), 
 				(skyscraperArray[g2place].getPosition().y
 						- (skyscraperArray[g2place].getSize().y / 2)
-						- gorillaHeight / 2 - 1),
+						- gorillaHeight / 2),
 				gorillaWidth,
 				gorillaHeight,
 				debug);
@@ -852,6 +881,14 @@ public class GamePlayState extends BasicTWLGameState {
 				debug);
 		
 		entityManager.addEntity(stateID, sun);
+	}
+	
+	/**
+	 * @return the sun of the current game
+	 */
+	public Sun getSun() {
+		
+		return sun;
 	}
 	
 	/**
@@ -947,6 +984,11 @@ public class GamePlayState extends BasicTWLGameState {
 	 */
 	public int getAngleInput(){
 		return currentAngle;
+	}
+	
+	public void setBananaCollisionPosition(Vector2f newPos) //Added
+	{
+			bananaCollisionPostion = newPos;
 	}
 	
 	/**

@@ -3,6 +3,8 @@ package de.tu_darmstadt.gdi1.gorillas.test.adapter;
 import org.newdawn.slick.geom.Vector2f;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
+import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
+import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 
 public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 
@@ -85,8 +87,12 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 *         otherwise false
 	 */
 	public boolean isSunAstonished() {
-		// TODO: Implement
-		return false;
+		
+		if(gorillas.getCurrentStateID() == TestGorillas.GAMEPLAYSTATE) {
+			return ((GamePlayState)gorillas.getCurrentState()).getSun().isAstonished;
+		} else {
+			return false;
+		}
 	}
 
 }

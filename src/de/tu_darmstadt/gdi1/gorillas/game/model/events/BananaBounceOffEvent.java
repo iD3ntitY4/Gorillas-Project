@@ -18,10 +18,9 @@ public class BananaBounceOffEvent extends Event {
 	 * 
 	 * @param horizontalBound is the horizontal line the entity may not cross.	 * 
 	 */
-	public BananaBounceOffEvent() {//(int horizontalBound) {
+	public BananaBounceOffEvent() {
 		super("OutOfBoundEvent");
 		bananaOwner = (Banana) owner;
-		//this.horizontalBound = horizontalBound;
 	}
 
 
@@ -31,14 +30,7 @@ public class BananaBounceOffEvent extends Event {
 		float yPos = bananaOwner.getPosition().getY();	
 		if(yPos >= World.worldHeight - owner.getSize().getX())
 		{
-			if(bananaOwner.getSpeed() >= World.BOUNCE_SPEED_THRESHOLD)
-			{
-				//System.out.println("Bounce bro");
-				return true;
-			}else
-			{
-				return false;
-			}
+			return (bananaOwner.getSpeed() >= World.BOUNCE_SPEED_THRESHOLD);
 		}
 		return false;
 	}

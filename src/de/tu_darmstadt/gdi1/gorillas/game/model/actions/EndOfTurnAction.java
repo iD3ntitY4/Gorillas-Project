@@ -23,6 +23,7 @@ public class EndOfTurnAction implements Action {
 		if(sb.getCurrentState().getID() == Gorillas.GAMEPLAYSTATE)
 		{
 			((GamePlayState) sb.getCurrentState()).endOfTurn();
+			((GamePlayState) sb.getCurrentState()).setBananaCollisionPosition(event.getOwnerEntity().getPosition());
 		}
 	}
 }

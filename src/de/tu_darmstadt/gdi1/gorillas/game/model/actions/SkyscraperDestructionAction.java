@@ -24,8 +24,8 @@ public class SkyscraperDestructionAction implements Action{
 			 owner = (DestructibleImageEntity) event.getOwnerEntity();
 		  else
 			  return;
-		  if(owner.collides(impactPos.getX(), impactPos.getY()))
-			  owner.impactAt(impactPos);	  
+		  
+		  owner.impactAt(impactPos);	  
 	 }
 
 }
