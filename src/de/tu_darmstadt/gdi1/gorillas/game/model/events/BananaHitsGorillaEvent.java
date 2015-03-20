@@ -4,12 +4,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfRoundAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.actions.SkyscraperDestructionAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Banana;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Gorilla;
 import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.event.basicevents.CollisionEvent;
-import eea.engine.event.basicevents.TimeEvent;
 
 public class BananaHitsGorillaEvent extends CollisionEvent {
 	public BananaHitsGorillaEvent() {
@@ -23,7 +20,7 @@ public class BananaHitsGorillaEvent extends CollisionEvent {
 			OnceEvent killGorilla = new OnceEvent();
 			killGorilla.setOwnerEntity(super.getCollidedEntity());			  
 			killGorilla.addAction(new DestroyEntityAction());
-			killGorilla.addAction(new EndOfRoundAction());
+			killGorilla.addAction(new EndOfRoundAction((Gorilla) this.getCollidedEntity()));
 			
 			super.getCollidedEntity().addComponent(killGorilla);
 			return true;

@@ -4,7 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.tu_darmstadt.gdi1.gorillas.game.model.SoundAnimation;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Banana;
 import eea.engine.action.Action;
@@ -41,7 +40,6 @@ public class BananaBounceOffAction implements Action {
 
 		owner.setSpeed((int) (owner.getSpeed()/World.BOUNCE_SPEED_DECREASE));
 		owner.setFlightTime(0); 
-		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-10));
-		
+		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-10));		
 	}
 }

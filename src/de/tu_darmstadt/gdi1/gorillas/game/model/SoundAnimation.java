@@ -24,6 +24,7 @@ public class SoundAnimation {
 	 * All necessary sounds with their datapath, to be used as a parameter for the method {@link #playSound()} .
 	 */
 	public static final String FART = ".\\assets\\gorillas\\noise\\soundFart.wav";
+	public static final String FANFARE = ".\\assets\\gorillas\\noise\\fanfareSound.wav";
 	
 	/**
 	 * There is only one clip allowed for background music. Set this variable by {@link setBackgroundMusic()} and erase it's content by {@link flushBackgroundMusic()} 
