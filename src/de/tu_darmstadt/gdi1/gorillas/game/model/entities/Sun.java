@@ -15,14 +15,14 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.*;
  * @author Niklas Mast
  * @author Nils Dycke, Felix Kaiser, Manuel Ketterer
  * 
- * @version 1.0
- *
  * @see eea.engine.entity.Entity
  */
 public class Sun extends Entity {
 	
+	// Path to the default image:
 	public final String standartDataPath = ".\\assets\\gorillas\\sun\\moon.png";
 	
+	// Necessary for the "astonished-action":
 	public final String astonishedDataPath = ".\\assets\\gorillas\\sun\\moon_astonished.png";
 	
 	private int posX;
@@ -38,14 +38,17 @@ public class Sun extends Entity {
 		
 		isAstonished = false;
 		this.setPosition(new Vector2f(posX, posY));
-		BananaHitsSunEvent bananaHit = new BananaHitsSunEvent();
-		bananaHit.addAction(new SunImageAction(astonishedDataPath));
-		this.addComponent(bananaHit);
-		
 		this.setPassable(true);
+					
 		
 		if(!debug)
 		{
+			// Being astonished on hit by banana:
+			BananaHitsSunEvent bananaHit = new BananaHitsSunEvent();
+			bananaHit.addAction(new SunImageAction(astonishedDataPath));
+			this.addComponent(bananaHit);	
+			
+			// Not being astonished without any hit by banana:
 			NOTEvent nonCollision = new NOTEvent(bananaHit);
 			nonCollision.addAction(new SunImageAction(standartDataPath));
 			this.addComponent(nonCollision);
@@ -68,8 +71,5 @@ public class Sun extends Entity {
 		{
 			se.printStackTrace();
 		}
-	}
-	
-	
-	
+	}	
 }

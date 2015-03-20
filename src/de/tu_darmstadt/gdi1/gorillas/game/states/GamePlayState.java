@@ -100,6 +100,8 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	private boolean gameOver = false;
 	
+	private Vector2f bananaCollisionPostion; //Added
+	
 	
 	public GamePlayState(int sid, StateBasedGame game)
 	{
@@ -457,11 +459,22 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		// TODO add Highscore information
 		// TODO implement sayQuote() in Gorilla
+		boolean tooWeak;
 		if(player1Turn)
 		{
-			//gorillaTwo.sayQuote();
+			//tooWeak = bananaCollisionPostion != null && (gorillaTwo.getPosition().getX() > bananaCollisionPostion.getX());
+			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) <=
+														 gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			System.out.println(bananaCollisionPostion);
+			System.out.println(tooWeak);
+			gorillaTwo.sayQuote(entityManager, tooWeak);
 		} else {
-			//gorillaOne.sayQuote();
+			//tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().getX() > bananaCollisionPostion.getX());
+			tooWeak = bananaCollisionPostion != null && (gorillaOne.getPosition().distance(bananaCollisionPostion) >
+					 									 gorillaTwo.getPosition().distance(bananaCollisionPostion));
+			System.out.println(bananaCollisionPostion);
+			System.out.println(tooWeak);
+			gorillaOne.sayQuote(entityManager, tooWeak);
 		}
 		
 		switchTurn();
@@ -812,6 +825,11 @@ public class GamePlayState extends BasicTWLGameState {
 	
 	public boolean isPlayerTwoTurn() {
 		return player2Turn;
+	}
+	
+	public void setBananaCollisionPosition(Vector2f newPos) //Added
+	{
+		bananaCollisionPostion = newPos;
 	}
 	
 }

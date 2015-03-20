@@ -19,7 +19,7 @@ public class GorillaDanceAction implements Action {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta, Component event) {
 		owner = (Gorilla) event.getOwnerEntity();
-		owner.dance();
+		owner.danceImageChange();
 	}
 
 }

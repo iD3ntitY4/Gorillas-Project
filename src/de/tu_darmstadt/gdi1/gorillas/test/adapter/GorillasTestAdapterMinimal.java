@@ -289,7 +289,7 @@ public class GorillasTestAdapterMinimal {
 	 */
 	public float getTimeScalingFactor() {
 		
-		return World.DELTA_TIME_SCALING;
+		return World.DELTA_TIME_SCALING*100;
 	}
 
 	/**

@@ -10,6 +10,15 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Banana;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 
+/**
+ * This Action allows the owning Banana to bounce off the bottom of the screen.
+ * 
+ * @author Nils Dycke
+ * @author Niklas Mast, Felix Kaiser, Manuel Ketterer
+ * 
+ *
+ * @see eea.engine.entity.Entity
+ */
 public class BananaBounceOffAction implements Action {
 		
 	private Banana owner;
@@ -22,19 +31,15 @@ public class BananaBounceOffAction implements Action {
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta, Component event) {
-		owner = (Banana) event.getOwnerEntity();
-		//System.out.println(owner.toString() + " im bouncing!");
-		Vector2f ownerPos = owner.getPosition();
-		//int timeOffset;
-		//System.out.println("Im jumping!");
-		owner.setSpeed((int) (owner.getSpeed()/World.BOUNCE_SPEED_DECREASE));	// Decreases Speed for parabolic fly action	
-		//timeOffset = (int) ((gc.getTime() <= Integer.MAX_VALUE) ? gc.getTime() : 0);//TODO: Change that. Could go wrong with this cast...
-		owner.setFlightTime(0); 
-		//System.out.println(owner.getFlightTime());
-		//float newAngle = (float) (owner.getAngle() + Math.toDegrees(Math.acos(owner.initialPosition.distance(ownerPos) / ownerPos.getX())));
-		//owner.setAngle(owner.getAngle()+45);
-		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-10));// Sets Position to a higher level, to go on flying
+		if(event.getOwnerEntity() instanceof Banana)
+			owner = (Banana) event.getOwnerEntity();
+		else
+			return;
 		
-		//sound.playSound(SoundAnimation.FART);
+		Vector2f ownerPos = owner.getPosition();
+		
+		owner.setSpeed((int) (owner.getSpeed()/World.BOUNCE_SPEED_DECREASE));	
+		owner.setFlightTime(0); 
+		owner.setPosition(new Vector2f(ownerPos.getX(), ownerPos.getY()-10));		
 	}
 }

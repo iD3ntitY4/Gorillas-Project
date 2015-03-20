@@ -17,14 +17,14 @@ public class World {
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static float DELTA_TIME_SCALING = 0.01f;
+	public final static float DELTA_TIME_SCALING = 0.005f;
 	
 	/**
 	 * Scaling variable for the calculation of the impact of wind to movement speed.
 	 * 
 	 * @see de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction
 	 */
-	public final static int WIND_SCALING  = 1;
+	public final static int WIND_SCALING  = 2;
 	
 	/**
 	 * This variable defines, how much the speed is decreased when bouncing on a boundary.
@@ -41,7 +41,7 @@ public class World {
 	public final static int BOUNCE_SPEED_THRESHOLD = 10;
 	
 	public final static int MAX_SPEED = 200;
-	public final static int MAX_ANGLE = 180;
+	public final static int MAX_ANGLE = 359;
 	
 	public static int worldWidth;
 	public static int worldHeight;

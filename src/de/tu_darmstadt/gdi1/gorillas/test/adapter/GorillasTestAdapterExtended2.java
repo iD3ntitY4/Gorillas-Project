@@ -75,7 +75,7 @@ public class GorillasTestAdapterExtended2 extends GorillasTestAdapterExtended1 {
 	 * @return the wind scaling factor for the parabolic flight calculation
 	 */
 	public float getWindScalingFactor() {
-		return World.WIND_SCALING;
+		return World.WIND_SCALING*10;
 	}
 
 	/**
