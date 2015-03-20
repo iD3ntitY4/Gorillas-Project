@@ -14,6 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.Label;
+import de.matthiasmann.twl.Scrollbar;
+import de.matthiasmann.twl.TextArea;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
@@ -37,17 +39,26 @@ public class InstructionsState extends BasicTWLGameState {
 	private String backButtonText = "BACK";
 
 	private Label instructionLabel = new Label();
-	private String instructionText = "Insctruction:\n" 
-									+ "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n"
-									+ " Nunc varius gravida tellus in scelerisque. Vivamus dignissim dolor \n"
-									+ "vitae justo sagittis, eu efficitur urna viverra. Morbi tortor nunc, \n"
-									+ " pretium eu ipsum vel, euismod feugiat lorem. Aliquam \n"
-									+ "condimentum, urna commodo consectetur tincidunt, augue enim consequat odio,eget euismod \n"
-									+ "libero diam condimentum \n"
-									+ "velit. Vivamus rhoncus ut nunc sed gravida. Integer aliquet aliquam vulputate. Cras \n"
-									+ "sapien nulla, placerat a vulputatetristique, placerat vitae nunc. Curabitur metus \n"
-									+ "ex, ultrices eu ante malesuada, rutrum feugiat massa. \n"
-									+ "BCD\n";
+	private String instructionText = "Zum Starten des Spiels „N“ oder den Button „Start“ drücken. Vor Beginn des Spiels müssen die zwei\n"
+			+ "Spieler noch zwei unterschiedliche Namen auswählen. Ziel des Spiels ist es den anderen Gorilla mit\n"
+			+ "einer Banane abzuwerfen. Dazu wählt man einen Wurfwinkel und die Wurfstärke aus, es wird immer\n"
+			+ "abwechselnd geworfen. Wird mit der Banane ein Hochhaus getroffen, so wird ein Teil des Hochhauses\n"
+			+ "zerstört. Wird ein Spieler getroffen so ist diese Runde beendet und der Gegner erhält einen Punkt.\n"
+			+ "Dann beginnt einen neue Runde in einer anderen Welt. Wer als erstes drei Punkte sammeln konnte hat\n"
+			+ "das Spiel gewonnen.\n\n"
+			+ "Im Menü kann man in den Optionen einige Einstellungen tätigen um das Spiel schwerer zu gestalten,\n"
+			+ "zum einen kann man dort die Schwerkraft einstellen. Darunter kann man über die Buttons die\n"
+			+ "Schwerkraft auch auf voreingestellte Werte setzen.\n"
+			+ "Zudem ist auch statischer oder dynamischer der Wind einstellbar. Soll der Wind statisch sein muss\n"
+			+ "dafür die Windstärke angegeben werden, diese muss zwischen -15 und 15 liegen. Ist der Wind dynamisch\n"
+			+ "so wird die Windstärke jede Runde zufällig generiert.\n"
+			+ "Des Weiteren kann man durch einen dritten Regler die Lautstärke anpassen.\n"
+			+ "Wenn während eines laufenden Spiels die Escape-Taste gedrückt wird, so kommt man zurück ins Menü,\n"
+			+ "durch das Drücken des „Back“ Buttons kann das Spiel fortgesetzt werden.\n"
+			+ "Im Menüpunkt Highscores kann man eine Highscore-Liste der besten Spieler einsehen. \n"
+			+ "Über den „Exit“ Button wird das Spiel geschlossen.\n";
+	
+	
 	public InstructionsState(int sid, StateBasedGame game) {
 		stateID = sid;
 		entityManager = StateBasedEntityManager.getInstance();
@@ -70,7 +81,7 @@ public class InstructionsState extends BasicTWLGameState {
 		background.setPosition(new Vector2f(400, 300));
 
 		background.addComponent(new ImageRenderComponent(new Image(
-				"/assets/gorillas/background/background.png")));
+				"/assets/gorillas/background/text_background.png")));
 		StateBasedEntityManager.getInstance().addEntity(stateID, background);
 		
 		if(sb.getClass().equals(Gorillas.class))
@@ -118,6 +129,7 @@ public class InstructionsState extends BasicTWLGameState {
 		
 		instructionLabel.setTheme("white_label");
 		instructionLabel.setText(instructionText);
+		
 		rp.add(backButton);
 		rp.add(instructionLabel);
 		
@@ -131,13 +143,12 @@ public class InstructionsState extends BasicTWLGameState {
 		int paneWidth = this.getRootPane().getWidth();
 
 		backButton.setSize(paneWidth / 4, paneHeight / 12);
-		backButton
-				.setPosition(
+		backButton.setPosition(
 						(paneWidth / 7) - backButton.getWidth() / 2,
 						(paneHeight - (paneHeight / 12))
 								- (backButton.getHeight() / 2));
 		
-		instructionLabel.adjustSize();
-		instructionLabel.setPosition(paneWidth/10, paneHeight/12);
+		instructionLabel.setSize(paneWidth, paneHeight - (paneHeight - backButton.getY()));
+		instructionLabel.setPosition(0, 0);
 	}
 }

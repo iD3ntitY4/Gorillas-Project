@@ -11,11 +11,13 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.Highscores;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfRoundAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.*;
 import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
+import de.tu_darmstadt.gdi1.gorillas.ui.states.*;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -69,6 +71,8 @@ public class GamePlayState extends BasicTWLGameState {
 	private Container scoreContainer = new Container();
 	private int scorePlayer1 = 0;
 	private int scorePlayer2 = 0;
+	private int player1Shots = 0;
+	private int player2Shots = 0;
 	
 	private Label windLabel = new Label();
 	private Label windNameLabel = new Label("WIND");
@@ -450,6 +454,8 @@ public class GamePlayState extends BasicTWLGameState {
 		canThrow = true;
 		player1Turn = true;
 		player2Turn = false;
+		player1Shots = 0;
+		player2Shots = 0;
 	}
 	
 	
@@ -528,6 +534,12 @@ public class GamePlayState extends BasicTWLGameState {
 		
 		throwButton1.setEnabled(false);
 		throwButton2.setEnabled(false);
+		
+		Highscores.updateScore(World.PLAYER_ONE_NAME, World.PLAYER_TWO_NAME,
+						scorePlayer1, scorePlayer2,
+						player1Shots, player2Shots);
+		
+		((HighScoreState) sb.getState(Gorillas.HIGHSCORESTATE)).updateHighScoreState();
 	}
 	
 	public void leaveGame() {
@@ -730,9 +742,15 @@ public class GamePlayState extends BasicTWLGameState {
 				currentVelocity > -1 && currentVelocity <= 200 && canThrow)
 		{
 			if(player1Turn)
+			{
 				gorillaOne.throwBanana(entityManager, currentAngle, currentVelocity);
+				player1Shots += 1;
+			}
 			else
+			{
 				gorillaTwo.throwBanana(entityManager, currentAngle, currentVelocity);
+				player2Shots += 1;
+			}
 			
 			resetPlayerInput();
 			
