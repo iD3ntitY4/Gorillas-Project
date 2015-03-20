@@ -1,7 +1,5 @@
 package de.tu_darmstadt.gdi1.gorillas.ui.states;
 
-import java.io.File;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -12,7 +10,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import de.matthiasmann.twl.Button;
 import de.matthiasmann.twl.Container;
-import de.matthiasmann.twl.InfoWindow;
 import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
@@ -219,10 +216,22 @@ public class MainMenuState extends BasicTWLGameState {
 					mainAboutContainer.setVisible(false);
 					mainAboutLabel.setVisible(false);
 					mainAboutButton.setText("about");
+					
+					mainButton1.setVisible(true);
+					mainButton2.setVisible(true);
+					mainButton3.setVisible(true);
+					mainButton4.setVisible(true);
+					mainButton5.setVisible(true);
 				} else {
 					mainAboutContainer.setVisible(true);
 					mainAboutLabel.setVisible(true);
 					mainAboutButton.setText("back");
+					
+					mainButton1.setVisible(false);
+					mainButton2.setVisible(false);
+					mainButton3.setVisible(false);
+					mainButton4.setVisible(false);
+					mainButton5.setVisible(false);
 				}
 			}
 		});
@@ -233,7 +242,7 @@ public class MainMenuState extends BasicTWLGameState {
 		mainAboutLabel.setVisible(false);
 		mainAboutLabel.setTheme("menu_font");
 		
-
+		
 		rp.add(mainButton1);
 		rp.add(mainButton2);
 		rp.add(mainButton3);

@@ -49,8 +49,8 @@ public class GamePlayState extends BasicTWLGameState {
 	private boolean debug = true;
 	
 	private int numSkyscrapers = 8;
-	private int skyscraperOffset = 300;
-	private int skyscraperHeightOffset = 200;
+	//private int skyscraperOffset = 300;
+	//private int skyscraperHeightOffset = 200;
 	
 	private SoundEngine sound;
 	
@@ -73,6 +73,7 @@ public class GamePlayState extends BasicTWLGameState {
 	private int scorePlayer2 = 0;
 	private int player1Shots = 0;
 	private int player2Shots = 0;
+	private int playedRounds = 0;
 	
 	private Label windLabel = new Label();
 	private Label windNameLabel = new Label("WIND");
@@ -84,6 +85,11 @@ public class GamePlayState extends BasicTWLGameState {
 	private EditField velocityInput1 = new EditField();
 	private EditField angleInput2 = new EditField();
 	private EditField velocityInput2 = new EditField();
+	
+	private Label angleInputLabel1 = new Label();
+	private Label velocityInputLabel1 = new Label();
+	private Label angleInputLabel2 = new Label();
+	private Label velocityInputLabel2 = new Label();
 	
 	private boolean keepInputs = true;
 	
@@ -135,6 +141,10 @@ public class GamePlayState extends BasicTWLGameState {
 		
 	}
 
+	/**
+	 * Is getting called every frame
+	 * Keeps everything updated
+	 */
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
@@ -212,7 +222,9 @@ public class GamePlayState extends BasicTWLGameState {
 		return stateID;
 	}
 	
-	
+	/**
+	 * Adds all GUI elements to the root pane
+	 */
 	protected RootPane createRootPane()
 	{
 		RootPane rp = super.createRootPane();
@@ -249,7 +261,7 @@ public class GamePlayState extends BasicTWLGameState {
 			}
 		});
 		
-		//TODO ADD LABELS
+		
 		angleInput1.setMultiLine(false);
 		angleInput1.setMaxTextLength(3);
 		angleInput1.setVisible(player1Turn);
@@ -265,6 +277,19 @@ public class GamePlayState extends BasicTWLGameState {
 		velocityInput2.setMultiLine(false);
 		velocityInput2.setMaxTextLength(3);
 		velocityInput2.setVisible(player2Turn);
+		
+		angleInputLabel1.setText("ANGLE");
+		angleInputLabel1.setTheme("white_label");
+		angleInputLabel1.setVisible(player1Turn);
+		angleInputLabel2.setText("ANGLE");
+		angleInputLabel2.setTheme("white_label");
+		angleInputLabel2.setVisible(player2Turn);
+		velocityInputLabel1.setText("SPEED");
+		velocityInputLabel1.setTheme("white_label");
+		velocityInputLabel1.setVisible(player1Turn);
+		velocityInputLabel2.setText("SPEED");
+		velocityInputLabel2.setTheme("white_label");
+		velocityInputLabel2.setVisible(player2Turn);
 		
 		endGameContainer.setVisible(false);
 		endGameContainer.setTheme("menu_button");
@@ -294,6 +319,10 @@ public class GamePlayState extends BasicTWLGameState {
 		rp.add(velocityInput1);
 		rp.add(angleInput2);
 		rp.add(velocityInput2);
+		rp.add(velocityInputLabel1);
+		rp.add(velocityInputLabel2);
+		rp.add(angleInputLabel1);
+		rp.add(angleInputLabel2);
 		rp.add(gorillaOneNameLabel);
 		rp.add(gorillaTwoNameLabel);
 		rp.add(endGameContainer);
@@ -302,39 +331,60 @@ public class GamePlayState extends BasicTWLGameState {
 		return rp;
 	}
 	
-	
+	/**
+	 * Sets the correct size and position of all GUI elements
+	 */
 	protected void layoutRootPane()
 	{
 		int paneHeight = this.getRootPane().getHeight();
 		int paneWidth = this.getRootPane().getWidth();
 		
 		
-		
-		throwButton1.setSize(paneWidth / 10, paneHeight / 20);
-		throwButton1.setPosition(paneWidth / 80,
+		angleInputLabel1.setSize(paneWidth / 10, paneHeight / 30);
+		angleInputLabel1.setPosition(paneWidth / 80,
 				paneHeight / 60);
 		
 		angleInput1.setSize(paneWidth / 10, paneHeight / 20);
 		angleInput1.setPosition(paneWidth / 80,
-				throwButton1.getY() + angleInput1.getHeight() + paneHeight / 60);
+				angleInputLabel1.getY() + angleInput1.getHeight());
+		
+		velocityInputLabel1.setSize(paneWidth / 10, paneHeight / 30);
+		velocityInputLabel1.setPosition(paneWidth / 80,
+				angleInput1.getY() + paneHeight / 60 + velocityInputLabel1.getHeight());
 		
 		velocityInput1.setSize(paneWidth / 10, paneHeight / 20);
 		velocityInput1.setPosition(paneWidth / 80,
-				angleInput1.getY() + velocityInput1.getHeight() + paneHeight / 60);
+				velocityInputLabel1.getY() + velocityInput1.getHeight());
 		
+		throwButton1.setSize(paneWidth / 10, paneHeight / 20);
+		throwButton1.setPosition(paneWidth / 40 + angleInputLabel1.getWidth(),
+				paneHeight / 60);
 		
+		///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		throwButton2.setSize(paneWidth / 10, paneHeight / 20);
-		throwButton2.setPosition(paneWidth - (throwButton2.getWidth()) - paneWidth / 80,
+		angleInputLabel2.setSize(paneWidth / 10, paneHeight / 30);
+		angleInputLabel2.setPosition(paneWidth - paneWidth / 80 - angleInputLabel2.getWidth(),
 				paneHeight / 60);
 		
 		angleInput2.setSize(paneWidth / 10, paneHeight / 20);
-		angleInput2.setPosition(paneWidth - (throwButton2.getWidth()) - paneWidth / 80,
-				throwButton1.getY() + angleInput2.getHeight() + paneHeight / 60);
+		angleInput2.setPosition(angleInputLabel2.getX(),
+				angleInputLabel2.getY() + angleInput2.getHeight());
+		
+		velocityInputLabel2.setSize(paneWidth / 10, paneHeight / 30);
+		velocityInputLabel2.setPosition(angleInputLabel2.getX(),
+				angleInput2.getY() + paneHeight / 60 + velocityInputLabel2.getHeight());
 		
 		velocityInput2.setSize(paneWidth / 10, paneHeight / 20);
-		velocityInput2.setPosition(paneWidth - (throwButton2.getWidth()) - paneWidth / 80,
-				angleInput1.getY() + velocityInput2.getHeight() + paneHeight / 60);
+		velocityInput2.setPosition(angleInputLabel2.getX(),
+				velocityInputLabel2.getY() + velocityInput2.getHeight());
+		
+		throwButton2.setSize(paneWidth / 10, paneHeight / 20);
+		throwButton2.setPosition(angleInputLabel2.getX() - (paneWidth / 40) - (throwButton2.getWidth()),
+				paneHeight / 60);
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
 		
 		scoreLabel.setSize(paneWidth / 8, paneHeight / 16);
 		scoreLabel.setPosition(paneWidth / 2 - (scoreLabel.getWidth() / 2),
@@ -374,7 +424,10 @@ public class GamePlayState extends BasicTWLGameState {
 				endGameContainer.getY() + endGameContainer.getHeight() / 2 + endGameContainer.getHeight() / 12);
 	}
 	
-	
+	/**
+	 * Initialises a new game by replacing all previous entites with new ones
+	 * Sets up new listeners and a random skyline of skyscrapers
+	 */
 	public void initNewGame() {
 		
 		this.removeAllEntities();
@@ -403,6 +456,9 @@ public class GamePlayState extends BasicTWLGameState {
 		
 	}
 	
+	/**
+	 * Adds a background to the scene
+	 */
 	public void addBackground() {
 
 		Entity background = new Entity("background"); 
@@ -419,6 +475,9 @@ public class GamePlayState extends BasicTWLGameState {
 		entityManager.addEntity(stateID, background);
 	}
 	
+	/**
+	 * Adds needed listeners to the state
+	 */
 	public void addListeners() {
 		// Escape Listener
 		Entity escListener = new Entity("ESC_Listener");
@@ -437,6 +496,9 @@ public class GamePlayState extends BasicTWLGameState {
 		
 	}
 	
+	/**
+	 * Removes all entities from the state
+	 */
 	public void removeAllEntities() {
 		
 		List<Entity> entityList = StateBasedEntityManager.getInstance().getEntitiesByState(Gorillas.GAMEPLAYSTATE);
@@ -446,6 +508,9 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
+	/**
+	 * Resets all variables needed for the game
+	 */
 	public void resetVariables() {
 		scorePlayer1 = 0;
 		scorePlayer2 = 0;
@@ -458,10 +523,11 @@ public class GamePlayState extends BasicTWLGameState {
 		player2Shots = 0;
 	}
 	
-	
+	/**
+	 * Is called at the end of a turn
+	 */
 	public void endOfTurn() {
 		
-		// TODO add Highscore information
 		// TODO implement sayQuote() in Gorilla
 		if(player1Turn)
 		{
@@ -473,7 +539,9 @@ public class GamePlayState extends BasicTWLGameState {
 		switchTurn();
 	}
 	
-	
+	/**
+	 * Switches the player sides and sets the visibility of the GUI elements
+	 */
 	public void switchTurn()
 	{
 		player1Turn = !player1Turn;
@@ -486,21 +554,23 @@ public class GamePlayState extends BasicTWLGameState {
 			throwButton1.setVisible(player1Turn);
 			angleInput1.setVisible(player1Turn);
 			velocityInput1.setVisible(player1Turn);
+			velocityInputLabel1.setVisible(player1Turn);
+			angleInputLabel1.setVisible(player1Turn);
 			
 			throwButton2.setVisible(player2Turn);
 			angleInput2.setVisible(player2Turn);
 			velocityInput2.setVisible(player2Turn);
-			
-			System.out.println("Switched turns");
-			System.out.println("Now is " + (player1Turn ? "Player1" : "Player2") + "'s turn");
+			velocityInputLabel2.setVisible(player2Turn);
+			angleInputLabel2.setVisible(player2Turn);
 		}
 	}
 	
-	
+	/**
+	 * Gets called at the end of a round (when a gorilla was hit)
+	 * Increments the score and checks if the game is over
+	 */
 	public void endOfRound() {
-		
-		System.out.println("Gorilla was hit");
-		
+	
 		if(!gameOver)
 		{
 			if(player1Turn){	
@@ -510,6 +580,8 @@ public class GamePlayState extends BasicTWLGameState {
 				scorePlayer2 += 1;
 				gorillaTwo.dance();
 			}
+			
+			playedRounds += 1;
 		}
 		
 		if(scorePlayer1 >= World.roundsToWin || scorePlayer2 >= World.roundsToWin) {
@@ -521,7 +593,11 @@ public class GamePlayState extends BasicTWLGameState {
 		}		
 	}
 	
-	
+	/**
+	 * Gets called as soon as one player reaches the maximum points
+	 * Displays the winner screen and disables throwing actions
+	 * Adds a new Highscore entry for both players
+	 */
 	public void endOfGame() {
 		
 		gameOver = true;
@@ -535,13 +611,22 @@ public class GamePlayState extends BasicTWLGameState {
 		throwButton1.setEnabled(false);
 		throwButton2.setEnabled(false);
 		
-		Highscores.updateScore(World.PLAYER_ONE_NAME, World.PLAYER_TWO_NAME,
+		//Old version
+		/*Highscores.updateScore(World.PLAYER_ONE_NAME, World.PLAYER_TWO_NAME, playedRounds,
 						scorePlayer1, scorePlayer2,
-						player1Shots, player2Shots);
+						player1Shots, player2Shots);*/
+		
+		Highscores.addHighscore(World.PLAYER_ONE_NAME, playedRounds, scorePlayer1, player1Shots);
+		Highscores.addHighscore(World.PLAYER_TWO_NAME, playedRounds, scorePlayer2, player2Shots);
 		
 		((HighScoreState) sb.getState(Gorillas.HIGHSCORESTATE)).updateHighScoreState();
 	}
 	
+	/**
+	 * Is called as soon as the back to menu button in the end game screen is pressed
+	 * Resets end game screen and removes all entites for a new game
+	 * Tells the world that the game is now over
+	 */
 	public void leaveGame() {
 		endGameContainer.setVisible(false);
 		endGameWinnerLabel.setVisible(false);
@@ -554,7 +639,14 @@ public class GamePlayState extends BasicTWLGameState {
 		gameOver = false;
 	}
 	
-	
+	/**
+	 * Creates a random skyline of skyscrapers (DestructibleImageEntities)
+	 * 
+	 * @param frameWidth the width of the current frame
+	 * @param frameHeight the height of the current frame
+	 * 
+	 * @return an array with all skyscraper objects
+	 */
 	public DestructibleImageEntity[] createRandomSkyline(int frameWidth, int frameHeight)
 	{
 		
@@ -605,7 +697,15 @@ public class GamePlayState extends BasicTWLGameState {
 		return skyscrapers;
 	}
 	
-	//TODO shit
+	/**
+	 * Creates a custom skyline, which is the same with same parameters
+	 * @param paneWidth the width of the current frame
+	 * @param paneHeight the height of the current frame
+	 * @param yOffsetCity the offset of the city to the top of the frame
+	 * @param buildingCoordinates an ArrayList with Vector positions of the buildings
+	 * 
+	 * @return an Array with all skyscrapers
+	 */
 	public DestructibleImageEntity[] createCustomSkyline(int paneWidth, int paneHeight, int yOffsetCity,
 				ArrayList<Vector2f> buildingCoordinates) {
 		
@@ -634,6 +734,10 @@ public class GamePlayState extends BasicTWLGameState {
 			skyscrapers[i] = new DestructibleImageEntity(
 					"skyscraper" + i, image, skyscraperDestructionPath, debug);
 			
+			
+			skyscrapers[i].setSize(new Vector2f(paneWidth / buildingCoordinates.size(),
+													paneHeight - yOffsetCity));
+			
 			skyscrapers[i].setPosition(new Vector2f(buildingCoordinates.get(i).getX(),
 					buildingCoordinates.get(i).getY()));
 			
@@ -646,7 +750,14 @@ public class GamePlayState extends BasicTWLGameState {
 		
 	}
 	
-	
+	/**
+	 * Places the Gorillas random on a skyline
+	 * @param skyscraperArray the array of skyscrapers where the gorillas should be placed on
+	 * @param gorillaWidth the width of a gorilla
+	 * @param gorillaHeight the height of a gorilla
+	 * 
+	 * @return a 2 element array with both gorillas
+	 */
 	public Gorilla[] placeGorillasRandom(DestructibleImageEntity[] skyscraperArray, int gorillaWidth, int gorillaHeight)
 	{
 		
@@ -691,18 +802,24 @@ public class GamePlayState extends BasicTWLGameState {
 		return gorillas;
 	}
 	
-	
+	/**
+	 * Places two Gorillas based on given coordinates
+	 * @param leftGorillaCoordinate the coordinates for the left gorilla
+	 * @param rightGorillaCoordinate the coordinates fo the right gorilla
+	 * 
+	 * @return a 2 element array with both gorillas
+	 */
 	public Gorilla[] placeGorillasCustom(Vector2f leftGorillaCoordinate, Vector2f rightGorillaCoordinate)
 	{
 		gorillaOne = new Gorilla(Gorilla.GorillaSide.RIGHT, 
-				(int) leftGorillaCoordinate.getX(), 
-				(int) leftGorillaCoordinate.getY(), 
+				(int) leftGorillaCoordinate.x, 
+				(int) leftGorillaCoordinate.y, 
 				gorillaSizeX,
 				gorillaSizeY,
 				debug);
 		gorillaOne = new Gorilla(Gorilla.GorillaSide.LEFT, 
-				(int) rightGorillaCoordinate.getX(), 
-				(int) rightGorillaCoordinate.getY(), 
+				(int) rightGorillaCoordinate.x, 
+				(int) rightGorillaCoordinate.y, 
 				gorillaSizeX,
 				gorillaSizeY,
 				debug);
@@ -724,7 +841,9 @@ public class GamePlayState extends BasicTWLGameState {
 		return gorillas;
 	}
 	
-	
+	/**
+	 * Places the sun in the world
+	 */
 	public void placeSun() {
 		
 		sun = new Sun("Sun",
@@ -735,7 +854,10 @@ public class GamePlayState extends BasicTWLGameState {
 		entityManager.addEntity(stateID, sun);
 	}
 	
-	
+	/**
+	 * Action when the throw button is being pressed
+	 * Checks the inputs and tells the gorilla to throw a banana if all inputs are valid
+	 */
 	public void throwButtonPressed()
 	{
 		if(currentAngle > -1 && currentAngle <= 360 && 
@@ -758,7 +880,9 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
-	
+	/**
+	 * Resets the players inputs, so the other player can throw
+	 */
 	public void resetPlayerInput()
 	{
 		currentAngle = -1;
@@ -777,7 +901,10 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 		
-	
+	/**
+	 * Sets the velocity input
+	 * @param velocity the velocity as a single character
+	 */
 	public void setVelocityInput(char velocity)
 	{
 		if(Character.isDigit(velocity))
@@ -791,12 +918,17 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
-	
+	/**
+	 * @return the current velocity
+	 */
 	public int getVelocityInput(){
 		return currentVelocity;
 	}
 	
-	
+	/**
+	 * Sets the angle input
+	 * @param angle the angle as a single character
+	 */
 	public void setAngleInput(char angle)
 	{
 		if(Character.isDigit(angle))
@@ -810,24 +942,36 @@ public class GamePlayState extends BasicTWLGameState {
 		}
 	}
 	
-	
+	/**
+	 * @return the current angle
+	 */
 	public int getAngleInput(){
 		return currentAngle;
 	}
 	
-	
+	/**
+	 * @return the score of player 1
+	 */
 	public int getPlayerOneScore() {
 		return scorePlayer1;
 	}
-	
+	/**
+	 * @return the score of player 2
+	 */
 	public int getPlayerTwoScore() {
 		return scorePlayer2;
 	}
 	
+	/**
+	 * @return true if it's player 1's turn, false if not
+	 */
 	public boolean isPlayerOneTurn() {
 		return player1Turn;
 	}
 	
+	/**
+	 * @return true if it's player 2's turn, false if not
+	 */
 	public boolean isPlayerTwoTurn() {
 		return player2Turn;
 	}

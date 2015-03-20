@@ -4,12 +4,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.SkyscraperDestructionAction;
-import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
-import eea.engine.action.basicactions.DestroyEntityAction;
 import eea.engine.entity.DestructibleImageEntity;
-import eea.engine.event.Event;
 import eea.engine.event.basicevents.CollisionEvent;
-import eea.engine.event.basicevents.TimeEvent;
 
 public class BananaHitSkyscraperEvent extends CollisionEvent{
 

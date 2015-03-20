@@ -13,7 +13,7 @@ import eea.engine.component.Component;
 public class BananaBounceOffAction implements Action {
 		
 	private Banana owner;
-	private SoundAnimation sound = new SoundAnimation();
+	//private SoundAnimation sound = new SoundAnimation();
 	
 	public BananaBounceOffAction()
 	{

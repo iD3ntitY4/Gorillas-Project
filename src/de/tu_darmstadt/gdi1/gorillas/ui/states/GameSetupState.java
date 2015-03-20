@@ -15,7 +15,6 @@ import de.matthiasmann.twl.Label;
 import de.matthiasmann.twl.slick.BasicTWLGameState;
 import de.matthiasmann.twl.slick.RootPane;
 import de.tu_darmstadt.gdi1.gorillas.game.model.World;
-import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import de.tu_darmstadt.gdi1.gorillas.game.sound.SoundEngine;
 import de.tu_darmstadt.gdi1.gorillas.main.Gorillas;
 import de.tu_darmstadt.gdi1.gorillas.game.states.*;

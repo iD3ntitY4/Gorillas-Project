@@ -9,19 +9,13 @@ import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaBounceOffAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.BananaFlyParabolicAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.actions.EndOfTurnAction;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
-import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitsGorillaEvent;
 //import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaHitSkyscraperEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaOutOfBoundsEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.BananaBounceOffEvent;
 import de.tu_darmstadt.gdi1.gorillas.game.model.events.CollisionWorldEvent;
 import eea.engine.action.basicactions.DestroyEntityAction;
-import eea.engine.action.basicactions.MoveDownAction;
 import eea.engine.component.render.ImageRenderComponent;
 import eea.engine.entity.Entity;
-import eea.engine.event.ANDEvent;
-import eea.engine.event.NOTEvent;
-import eea.engine.event.OREvent;
-import eea.engine.event.basicevents.CollisionEvent;
 import eea.engine.event.basicevents.LoopEvent;
 
 /**

@@ -4,7 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import eea.engine.action.Action;
 import eea.engine.component.Component;
 import eea.engine.entity.DestructibleImageEntity;

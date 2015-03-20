@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import de.tu_darmstadt.gdi1.gorillas.game.model.Highscores;
 import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Gorilla;
-import de.tu_darmstadt.gdi1.gorillas.game.model.entities.Skyscraper;
 import de.tu_darmstadt.gdi1.gorillas.game.states.GamePlayState;
 import de.tu_darmstadt.gdi1.gorillas.test.setup.TestGorillas;
 import eea.engine.entity.DestructibleImageEntity;
@@ -121,12 +121,13 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 			DestructibleImageEntity[] skyline = ((GamePlayState) gorillas.getCurrentState()).createCustomSkyline(paneWidth, paneHeight, yOffsetCity, buildingCoordinates);
 			Gorilla[] gorillaEntities = ((GamePlayState) gorillas.getCurrentState()).placeGorillasCustom(leftGorillaCoordinate, rightGorillaCoordinate);
 			
-			for(int i = 0; i < skyline.length; i++)
+			/*for(int i = 0; i < skyline.length; i++)
 			{
 				buildingCoordinates.add(new Vector2f(skyline[i].getPosition().x + skyline[i].getSize().x / 2,
 						skyline[i].getPosition().y + skyline[i].getSize().y / 2));
-			}
+			}*/
 			
+			this.buildingCoordinates = buildingCoordinates;
 			positionLeftGorilla = gorillaEntities[0].getPosition();
 			positionRightGorilla = gorillaEntities[1].getPosition();
 		}
@@ -230,7 +231,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 */
 	public void addHighscore(String name, int numberOfRounds, int roundsWon,
 			int bananasThrown) {
-		// TODO: Implement
+		
+		Highscores.addHighscore(name, numberOfRounds, roundsWon, bananasThrown);
 	}
 
 	/**
@@ -238,7 +240,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * {@link #getHighscoreCount()} should return 0.
 	 */
 	public void resetHighscore() {
-		// TODO: Implement
+		
+		Highscores.resetScore();
 	}
 
 	/**
@@ -247,8 +250,8 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 * @return number of highscore entries
 	 */
 	public int getHighscoreCount() {
-		// TODO: Implement
-		return -1;
+		
+		return Highscores.getHighScoreList().size();
 	}
 
 	/**
@@ -263,8 +266,11 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         if position is invalid
 	 */
 	public String getNameAtHighscorePosition(int position) {
-		// TODO: Implement
-		return null;
+		
+		if(position >= 0 && position <= Highscores.getHighScoreList().size())
+			return Highscores.getHighScoreList().get(position).getPlayerName();
+		else
+			return null;
 	}
 
 	/**
@@ -279,8 +285,11 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         passed position or -1 if position is invalid
 	 */
 	public int getRoundsPlayedAtHighscorePosition(int position) {
-		// TODO: Implement
-		return -1;
+		
+		if(position >= 0 && position <= Highscores.getHighScoreList().size())
+			return Highscores.getHighScoreList().get(position).getRoundsPlayed();
+		else
+			return -1;
 	}
 
 	/**
@@ -295,8 +304,11 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         position or -1 if position is invalid
 	 */
 	public int getRoundsWonAtHighscorePosition(int position) {
-		// TODO: Implement
-		return -1;
+		
+		if(position >= 0 && position <= Highscores.getHighScoreList().size())
+			return Highscores.getHighScoreList().get(position).getRoundsWon();
+		else
+			return -1;
 	}
 
 	/**
@@ -311,8 +323,11 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         position or -1 if position is invalid
 	 */
 	public int getPercentageWonAtHighscorePosition(int position) {
-		// TODO: Implement
-		return -1;
+		
+		if(position >= 0 && position <= Highscores.getHighScoreList().size())
+			return Highscores.getHighScoreList().get(position).getWonStats();
+		else
+			return -1;
 	}
 
 	/**
@@ -327,8 +342,11 @@ public class GorillasTestAdapterExtended1 extends GorillasTestAdapterMinimal {
 	 *         if position is invalid
 	 */
 	public double getMeanAccuracyAtHighscorePosition(int position) {
-		// TODO: Implement
-		return -1;
+		
+		if(position >= 0 && position <= Highscores.getHighScoreList().size())
+			return Highscores.getHighScoreList().get(position).getThrowStats();
+		else
+			return -1;
 	}
 
 	/**
