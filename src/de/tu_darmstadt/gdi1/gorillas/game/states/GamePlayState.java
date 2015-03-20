@@ -1018,4 +1018,11 @@ public class GamePlayState extends BasicTWLGameState {
 		return player2Turn;
 	}
 	
+	/**
+	 * @return the soundEngine of the game
+	 */
+	public SoundEngine getSoundEngine() {
+		return sound;
+	}
+	
 }

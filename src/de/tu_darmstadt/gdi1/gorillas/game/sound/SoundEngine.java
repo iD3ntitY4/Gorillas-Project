@@ -10,6 +10,8 @@ import org.newdawn.slick.util.ResourceLoader;
 public class SoundEngine {
 	
 	private Audio oggStream;
+	
+	private Audio oggEffect;
  
 	private float pausePosition = 0.0f;
 	
@@ -22,6 +24,8 @@ public class SoundEngine {
 	    // a URL here so it can be reopened when the stream is complete. Probably
 	    // should have reset the stream by thats not how the original stuff worked
 	    oggStream = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("assets/gorillas/music/Itty_Bitty_8_Bit.ogg"));
+	    
+	    //oggEffect = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("assets/gorillas/sounds/explosion.ogg"));
 
         } catch (IOException e) {
 	    e.printStackTrace();
@@ -39,6 +43,11 @@ public class SoundEngine {
 		// queue buffers.
 		SoundStore.get().poll(0);
 		SoundStore.get().setMusicVolume(volume);
+	}
+	
+	public void playExplosion() {
+		
+		//oggEffect.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 	
 	public void pause() {
