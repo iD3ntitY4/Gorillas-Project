@@ -91,7 +91,7 @@ public class HighScoreState extends BasicTWLGameState implements Serializable {
 		//System.out.println(scoreList.get(0).getWonStats());
 		//System.out.println(scoreList.get(1).getWonStats());
 		//System.out.println(scoreList.get(2).getWonStats());
-		Highscores.resetScore();
+		//Highscores.resetScore();
 		
 		
 		// enable GUI version
